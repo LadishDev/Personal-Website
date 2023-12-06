@@ -1,0 +1,143 @@
+html, body {
+  text-align: center;
+  height: 100%;
+  background-color: #131516;
+  color: #d8d4cf;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  margin: 0;
+  flex: 1; /* Grow to fill available space */
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h3, .header h1 {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.row, .container {
+  width: 100%;
+  text-align: center;
+}
+
+.header {
+  padding: 30px;
+  text-align: center;
+}
+
+.active-page {
+  background-color: #8a46b5;
+  color: #fff;
+}
+
+.nav-links {
+  overflow: hidden;
+  background-color: rgba(22, 22, 23, .8);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+}
+
+.nav-links a {
+  color: #f2f2f2;
+  text-decoration: none;
+  padding: 10px 15px;
+  margin-right: 15px;
+}
+
+.nav-links a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#typewriter a {
+  color: white;
+  text-decoration: none;
+}
+
+.system-info {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-left: 10px;
+  font-size: smaller;
+  line-height: 1.2;
+}
+
+.p-picture {
+  text-align: center;
+  margin: 0 auto;
+  flex-basis: 250px;
+  max-width: 250px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.p-picture img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.p-picture h1 {
+  margin-top: 8px;
+  text-decoration: none;
+  white-space: normal;
+}
+
+.columns-home-main, .columns-home-main a {
+  width: 33%;
+  min-width: 280px;
+  vertical-align: top;
+  display: inline-block;
+  background-color: #561085;
+  color: #fff;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  border-radius: 10px;
+  position: relative;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.social-container {
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: -1%;
+}
+
+.social {
+  text-align: center;
+  margin: 0 auto;
+  flex-basis: 125px;
+  max-width: 125px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.social img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+
+footer {
+  background-color: rgba(22, 22, 23, .8);
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  margin-top: auto; /* Move the footer to the bottom */
+}
