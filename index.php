@@ -15,9 +15,14 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
     </head>
     <body>
 
-      <div class="nav-links">
-        <a href="index.php" <?php if ($_SERVER['REQUEST_URI'] === '/index.php') echo 'class="active-page"'; ?>>Home</a>
-        <a href="socials.php" <?php if ($_SERVER['REQUEST_URI'] === '/socials.php') echo 'class="active-page"'; ?>>Socials</a>
+      <div class="navbar">
+        <div class="nav-logo">
+          <img src="images/logo.svg" alt="Ladish Logo">
+        </div>
+        <div class="nav-links">
+          <a href="index.php" <?php if ($_SERVER['REQUEST_URI'] === '/index.php') echo 'class="active-page"'; ?>>Home</a>
+          <a href="socials.php" <?php if ($_SERVER['REQUEST_URI'] === '/socials.php') echo 'class="active-page"'; ?>>Socials</a>
+        </div>
       </div>
     
       <div class="container">

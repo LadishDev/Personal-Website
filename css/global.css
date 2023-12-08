@@ -51,6 +51,27 @@ h1, h3, .header h1 {
   object-fit: cover;
 }
 
+/* The navigation bar */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  display: flex;
+  padding-left: 10px;
+  align-items: center;
+  width: 95px;
+  height: 24px;
+}
+
+.nav-logo img {
+  max-width: 100%; /* Ensure the SVG image doesn't exceed the container width */
+  max-height: 100%; /* Ensure the SVG image doesn't exceed the container height */
+}
+
 .active-page {
   background-color: #8a46b5;
   color: #fff;
