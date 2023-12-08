@@ -22,11 +22,11 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
     
       <div class="container">
         <!-- This is the header of the webpage for the information above the navbar to show u where u are -->
-        <div class="header">
+        <div class="first-container-element">
           <div class="p-picture"> <!-- Adds my pfp into a circle and puts my name under at top of page -->
-            <img src="images/index-page/ladish.jpg" alt="Picture of Ladish pfp"></a>
-            <h1>Ladish</h1>
-
+            <img src="images/index-page/ladish.webp" alt="Picture of Ladish pfp"></a>
+          </div>
+          <div class="text-information">
             <h2 id="typewriter">
               <a href="" class="typewrite" data-period="2000" data-type='["I am a developer", "A tech enthusiast", "A photographer" ]'>
                 <span class="wrap"></span>
@@ -38,7 +38,7 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
 	  
       <footer>
         <p>Author: Ladish</p>
-	<p>Server Uptime: <?php echo $uptime; ?></p 
+	      <p>Server Uptime: <?php echo $uptime; ?></p>
       </footer>
 
     </body>
