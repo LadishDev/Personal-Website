@@ -13,10 +13,13 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
         <!-- <link rel="stylesheet" type="text/css" href="CSS/global.css" /> -->
     </head>
     <body>
-        <div class="topnav-container">
+        <div class="navbar">
+            <div class="nav-logo">
+                <img src="images/logo.svg" alt="Callum.B Logo">
+            </div>
             <div class="nav-links">
                 <a href="index.php" <?php if ($_SERVER['REQUEST_URI'] === '/index.php') echo 'class="active-page"'; ?>>Home</a>
-  <a href="socials.php" <?php if ($_SERVER['REQUEST_URI'] === '/socials.php') echo 'class="active-page"'; ?>>Socials</a>
+                <a href="socials.php" <?php if ($_SERVER['REQUEST_URI'] === '/socials.php') echo 'class="active-page"'; ?>>Socials</a>
             </div>
         </div>
 
@@ -64,7 +67,7 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
 
         <footer>
         	<p>Author: Ladish</p>
-		<p>Server Uptime: <?php echo $uptime; ?></p
+		    <p>Server Uptime: <?php echo $uptime; ?></p>
         </footer>
     </body>
 </html>

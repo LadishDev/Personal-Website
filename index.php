@@ -25,7 +25,7 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
 
       <div class="navbar">
         <div class="nav-logo">
-          <img src="images/logo.svg" alt="Ladish Logo">
+          <img src="images/logo.svg" alt="Callum.B Logo">
         </div>
         <div class="nav-links">
           <a href="index.php" <?php if ($_SERVER['REQUEST_URI'] === '/index.php') echo 'class="active-page"'; ?>>Home</a>
