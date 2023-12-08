@@ -42,7 +42,8 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
       </div>
 	  
       <footer>
-        <p>Author: Ladish</p>
+        <p>Author: Callum Baldwin</p>
+        <p> | </p>
 	      <p>Server Uptime: <?php echo $uptime; ?></p>
       </footer>
 
