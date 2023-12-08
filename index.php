@@ -9,9 +9,17 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
     <head> <!-- This is the title of the webpage and also links to the css file for the styling of the site -->
       <!-- <link rel="icon" href="/images/site-favicon.jpg" type="image/x-icon"> -->
       <title>Ladish</title>
-      <link rel="stylesheet" type="text/css" href="css/global.css"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <script src="js/typewriter.js"></script>
+      
+      
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- This is to make the site responsive -->
+      <meta content="Callums Site" property="og:title" />
+      <meta content="My portfolio containing everything about me there is to know. What am I up to? What have I already been doing?" property="og:description" />
+      <meta content="https://ladish.dev" property="og:url" />
+      <meta content="#8a46b5" data-react-helmet="true" name="theme-color" />
+
+
+      <link rel="stylesheet" type="text/css" href="css/global.css"/> <!-- This is the link to the css file -->
+      <script src="js/typewriter.js"></script> <!-- This is the link to the typewriter script -->
     </head>
     <body>
 
