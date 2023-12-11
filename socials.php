@@ -18,56 +18,67 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
                 <img src="images/logo.svg" alt="Callum.B Logo">
             </div>
             <div class="nav-links">
-                <a href="index.php" <?php if ($_SERVER['REQUEST_URI'] === '/index.php') echo 'class="active-page"'; ?>>Home</a>
-                <a href="socials.php" <?php if ($_SERVER['REQUEST_URI'] === '/socials.php') echo 'class="active-page"'; ?>>Socials</a>
+                <a href="index.php" <?php if (basename($_SERVER['REQUEST_URI']) === 'index.php') echo 'class="active-page"'; ?>>Home</a>
+                <a href="socials.php" <?php if (basename($_SERVER['REQUEST_URI']) === 'socials.php') echo 'class="active-page"'; ?>>Socials</a>
             </div>
         </div>
 
         <div class="container">
-            <div class="header">
+            <section class="socials">
                 <h1>Socials</h1>
-            </div>
-            <div class="social-container">
-                <div class="row">
-                    <div class="columns-home-main">
-                        <a href="https://www.instagram.com/callumb.photography" target="_blank">
-                            <h1>Photography</h1>
-                            <div class="social">
-                                <img src="images/socials-page/instagram.png" alt="Instagram Logo">
-                            </div>
-                            <h4>@callumb.photography</h4>
-                            <p>
-                                <br>
-                                I have a photography instagram where I post Photos I have taken. <br>
-                                Its a side hobby of mine that I enjoy doing. Every now and then I will upload a picture to instagram.
-                                <br><br>
-                                Click this box to go to my instagram page.
-                            </p>
+                <div class="social-container">
+                    <article class="social">
+                        <a href=" https://www.instagram.com/callumb.photography" target="_blank">
+                            <img src="images/socials-page/instagram.svg" alt="Instagram Logo">
+                            <h2>Instagram</h2>
                         </a>
-                    </div>
-                    <div class="columns-home-main">
-                        <a href="https://www.github.com/ladishdev" target="_blank">
-                            <h1>Github</h1>
-                            <div class="social">
-                                <img src="images/socials-page/github.png" alt="Github Logo">
-                            </div>
-                            <h4>@ladishdev</h4>
-                            <p>
-                                <br>
-                                I have a Github page when I create and upload my code for some projects I do time to time. <br>
-                                I really enjoy coding and once I can come up with a project to do I get stuck into it and try to make it the best I can.
-                                <br><br>
-                                Click this box to go to my Github page.
-                            </p>
+                        <div class="social-text">
+                            <p>My Instagram account where I post my photography.</p>
+                        </div>
+                    </article>
+                    <article class="social">
+                        <a href="https://www.linkedin.com/in/callumbdev" target="_blank">
+                            <img src="images/socials-page/linkedin.svg" alt="Linkedin Logo">
+                            <h2>Linkedin</h2>
                         </a>
-                    </div>
+                        <div class="social-text">
+                            <p>TEXT HERE</p>
+                        </div>
+                    </article>
+                    <article class="social">
+                        <a href="mailto:developer@ladish.dev" target="_blank">
+                            <img src="images/socials-page/email.svg" alt="Email Logo">
+                            <h2>Email</h2>
+                        </a>
+                        <div class="social-text">
+                            <p>TEXT HERE</p>
+                        </div>
+                    </article>
+                    <article class="social">
+                        <a href="https://github.com/LadishDev" target="_blank">
+                            <img src="images/socials-page/github.svg" alt="GitHub Logo">
+                            <h2>GitHub</h2>
+                        </a>
+                        <div class="social-text">
+                            <p>TEXT HERE</p>
+                        </div>
+                    </article>
+                    <article class="social">
+                        <a href="https://gitlab.com/LadishDev" target="_blank">
+                            <img src="images/socials-page/gitlab.svg" alt="GitLab Logo">
+                            <h2>GitLab</h2>
+                        </a>
+                        <div class="social-text">
+                            <p>TEXT HERE</p>
+                        </div>
+                    </article>
                 </div>
-            </div>
+            </section>
         </div>
-
         <footer>
-        	<p>Author: Ladish</p>
-		    <p>Server Uptime: <?php echo $uptime; ?></p>
+            <p>Author: Callum Baldwin</p>
+            <p> | </p>
+	        <p>Server Uptime: <?php echo $uptime; ?></p>
         </footer>
     </body>
 </html>
