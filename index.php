@@ -36,51 +36,46 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
     
       <div class="container">
         <!-- This is the header of the webpage for the information above the navbar to show u where u are -->
-        <section class="first-container-element">
-          <div class="p-picture">
-            <img src="images/index-page/ladish.webp" alt="Profile picture of Ladish">
-          </div>
-          <div class="text-information">
-            <h2 id="typewriter">
-              <a href="" class="typewrite" data-period="2000" data-type='["I am a developer", "A tech enthusiast", "A photographer" ]'>
-              <span class="wrap"></span></a>
-            </h2>
-            <p>
-              My name is Callum, I am <span id="myAgeResult"></span> years old and I am from the UK.
-              I am currently studying Cyber Security at University and I am looking to go into the Cyber Security industry.
-              I also have a passion for developing things and am currently working on a few projects.
-              Also, on the side I am a photographer and I love to take photos of nature and landscapes.
-            </p>
-          </div>
+        <section class="section-containers">
+          <section class="aboutme-container">
+            <div class="p-picture">
+              <img src="images/index-page/ladish.webp" alt="Profile picture of Ladish">
+            </div>
+            <div class="text-information">
+              <h2 id="typewriter">
+                <a href="" class="typewrite" data-period="2000" data-type='["I am a developer", "A tech enthusiast", "A photographer" ]'>
+                <span class="wrap"></span></a>
+              </h2>
+              <p>
+                My name is Callum, I am <span id="myAgeResult"></span> years old and I am from the UK.
+                I am currently studying Cyber Security at University and I am looking to go into the Cyber Security industry.
+                I also have a passion for developing things and am currently working on a few projects.
+                Also, on the side I am a photographer and I love to take photos of nature and landscapes.
+              </p>
+            </div>
+          </section>
         </section>
-      </div>
 
-        <section class="second-container-element">
+        <section class="section-containers">
           <section class="projects">
             <h1>Projects</h1>
             <div class="projects-container">
               <article class="project">
-                <figure class="project-image">
-                  <img src="images/index-page/website-image.webp" alt="Screenshot of my web portfolio">
-                </figure>
+                <img src="images/index-page/website-image.webp" alt="Screenshot of my web portfolio">
                 <div class="project-text">
                   <h2>Web portfolio</h2>
                   <p>My portfolio website that you are currently on.</p>
                 </div>
               </article>
               <article class="project">
-                <figure class="project-image">
-                  <img src="images/index-page/database-project.webp" alt="Screenshot of Interactive Database System">
-                </figure>
+                <img src="images/index-page/database-project.webp" alt="Screenshot of Interactive Database System">
                 <div class="project-text">
                   <h2>Interactive Database System</h2>
                   <p>A dnd game database system that allows you to store all your characters and their info.</p>
                 </div>
               </article>
               <article class="project">
-                <figure class="project-image">
-                  <img src="images/index-page/discord-bot.webp" alt="Screenshot of Discord Bot project">
-                </figure>
+                <img src="images/index-page/discord-bot.webp" alt="Screenshot of Discord Bot project">
                 <div class="project-text">
                   <h2>Discord Bot</h2>
                   <p>Currently in proccess of development.</p>
@@ -96,6 +91,5 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
         <p> | </p>
 	      <p>Server Uptime: <?php echo $uptime; ?></p>
       </footer>
-
     </body>
 </html>

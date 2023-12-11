@@ -26,32 +26,6 @@ html, body {
   text-align: center;
 }
 
-.first-container-element {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 20px;
-  padding: 20px;
-}
-
-.text-information {
-  display: flex;
-  justify-content: center;
-  font-size: 1.8em;
-}
-
-.p-picture {
-  display: flex;
-  justify-content: center;
-  grid-column: 1;
-  grid-row: 1;
-  padding-top: 20px;
-}
-
-.p-picture img {
-  width: 100%;
-  object-fit: cover;
-}
-
 /* The navigation bar */
 
 .navbar {
@@ -184,6 +158,39 @@ html, body {
   border-radius: 50%;
 }
 
+.section-containers {
+  padding-bottom: 3em;
+}
+
+
+.aboutme-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+.p-picture {
+  display: flex;
+  justify-content: center;
+  grid-column: 1;
+  grid-row: 1;
+  padding-top: 20px;
+}
+
+.p-picture img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.text-information {
+  display: flex;
+  justify-content: center;
+  font-size: 1.8em;
+}
+
+
+
 .projects-container {
   display: grid;
   grid-template-columns: 1fr; 
@@ -206,7 +213,7 @@ html, body {
 
 .projects img {
   width: auto;
-  height: 5rem;
+  height: 7rem;
   object-fit: cover;
 }
 
@@ -230,28 +237,28 @@ footer p {
 /* Css Media Queries */
 /* CSS for small mobile (360px to 539px) */
 @media (min-width: 360px) and (max-width: 539px) {
-  .first-container-element {
+  .aboutme-container {
       grid-template-columns: 1fr; /* Make the grid 1 column */
   }
 }
 
 /* CSS for large mobile (540px to 719px) */
 @media (min-width: 540px) and (max-width: 719px) {
-  .first-container-element {
+  .aboutme-container {
       grid-template-columns: 1fr; /* Make the grid 1 column */
   }
 }
 
 /* CSS for tablet (720px to 1023px) */
 @media (min-width: 720px) and (max-width: 1023px) {
-  .first-container-element, .projects-container {
+  .aboutme-container, .projects-container {
       grid-template-columns: 1fr 1fr; /* Make the grid 2 columns */
   }
 }
 
 /* CSS for desktop (1024px and larger) */
 @media (min-width: 1024px) {
-  .first-container-element {
+  .aboutme-container {
       grid-template-columns: 1fr 1fr; /* Make the grid 2 columns */
   }
   .projects-container {
