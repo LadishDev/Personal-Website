@@ -57,6 +57,41 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
         </section>
 
         <section class="section-containers">
+          <section class="experiences">
+            <h1>Experience</h1>
+            <div class="experience-container">
+              <article class="experience">
+                <h2>Company Name<h2>
+                <h3>Job Title</h3>
+                <div class="experience-text">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, quis ultricies nisl nisl eget nunc. Donec euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, quis ultricies nisl nisl eget nunc. Donec euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, quis ultricies nisl nisl eget nunc.
+                  </p>
+                </div>
+              </article>
+              <article class="experience">
+                <h2>Company Name<h2>
+                <h3>Job Title</h3>
+                <div class="experience-text">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, quis ultricies nisl nisl eget nunc. Donec euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, quis ultricies nisl nisl eget nunc. Donec euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, quis ultricies nisl nisl eget nunc.
+                  </p>
+                </div>
+              </article>
+              <article class="experience">
+                <h2>Company Name<h2>
+                <h3>Job Title</h3>
+                <div class="exerience-text">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, quis ultricies nisl nisl eget nunc. Donec euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, quis ultricies nisl nisl eget nunc. Donec euismod, nisl eget ultricies ultrices, nunc nisl ultricies nunc, quis ultricies nisl nisl eget nunc.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </section>
+        </section>
+
+        <section class="section-containers">
           <section class="projects">
             <h1>Projects</h1>
             <div class="projects-container">

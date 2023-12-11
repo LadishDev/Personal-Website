@@ -1,20 +1,25 @@
 html, body {
-    min-height: 100%;
-    margin: 0;
-    background-color: #131516;
-    color: #d8d4cf;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    flex-direction: column;
-  }
+  min-height: 100%;
+  margin: 0;
+  background-color: #131516;
+  color: #d8d4cf;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
   
-  body {
-    margin: 0;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
+body {
+  margin: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0;
+  padding-bottom: 1.5em;
+}
 
 .header h1 {
   text-align: center;
@@ -25,6 +30,7 @@ html, body {
   width: 100%;
   text-align: center;
 }
+
 
 /* The navigation bar */
 
@@ -63,7 +69,6 @@ html, body {
   z-index: 100; /* Ensure it appears above other content */
 }
 
-
 .nav-links a {
   color: #f2f2f2;
   text-decoration: none;
@@ -88,6 +93,8 @@ html, body {
   padding-top: 60px;
 }
 
+/* The Typewriter Effect */
+
 .text-information {
   display: flex;
   justify-content: center;
@@ -104,64 +111,8 @@ html, body {
   min-height: 120px;
 }
 
-.system-info {
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding-left: 10px;
-  font-size: smaller;
-  line-height: 1.2;
-}
 
-.p-picture h1 {
-  margin-top: 8px;
-  text-decoration: none;
-  white-space: normal;
-}
-
-.columns-home-main, .columns-home-main a {
-  width: 33%;
-  min-width: 280px;
-  vertical-align: top;
-  display: inline-block;
-  background-color: #561085;
-  color: #fff;
-  margin-bottom: 20px;
-  margin-right: 20px;
-  border-radius: 10px;
-  position: relative;
-  text-decoration: none;
-  color: #ffffff;
-}
-
-.social-container {
-  padding-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: -1%;
-}
-
-.social {
-  text-align: center;
-  margin: 0 auto;
-  flex-basis: 125px;
-  max-width: 125px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.social img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.section-containers {
-  padding-bottom: 3em;
-}
-
+/* About Me Section */
 
 .aboutme-container {
   display: grid;
@@ -189,12 +140,38 @@ html, body {
   font-size: 1.8em;
 }
 
+ /* Experience Section */
 
+.experiences {
+  text-align: center;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+}
 
-.projects-container {
+.experience-container {
   display: grid;
   grid-template-columns: 1fr; 
   grid-gap: 20px;
+}
+
+.experience {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+
+/* Projects Section */
+
+.project {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
 }
 
 .projects {
@@ -204,11 +181,10 @@ html, body {
   overflow: hidden;
 }
 
-.project {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.projects-container {
+  display: grid;
+  grid-template-columns: 1fr; 
+  grid-gap: 20px;
 }
 
 .projects img {
@@ -217,6 +193,8 @@ html, body {
   object-fit: cover;
 }
 
+
+/* Footer Section */
 
 footer {
   display: flex;
@@ -251,7 +229,7 @@ footer p {
 
 /* CSS for tablet (720px to 1023px) */
 @media (min-width: 720px) and (max-width: 1023px) {
-  .aboutme-container, .projects-container {
+  .aboutme-container, .experience-container, .projects-container {
       grid-template-columns: 1fr 1fr; /* Make the grid 2 columns */
   }
 }
@@ -261,7 +239,7 @@ footer p {
   .aboutme-container {
       grid-template-columns: 1fr 1fr; /* Make the grid 2 columns */
   }
-  .projects-container {
+  .experience-container, .projects-container {
     grid-template-columns: 1fr 1fr 1fr; /* Make the grid 3 columns */
   }
 }
