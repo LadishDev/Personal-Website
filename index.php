@@ -19,6 +19,7 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
 
 
       <link rel="stylesheet" type="text/css" href="css/global.css"/> <!-- This is the link to the css file -->
+      <script src="js/age-caculate.js"></script> <!-- This is the link to the age script -->
       <script src="js/typewriter.js"></script> <!-- This is the link to the typewriter script -->
     </head>
     <body>
@@ -36,15 +37,20 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
       <div class="container">
         <!-- This is the header of the webpage for the information above the navbar to show u where u are -->
         <section class="first-container-element">
-          <div class="p-picture"> <!-- Adds my pfp into a circle and puts my name under at top of page -->
+          <div class="p-picture">
             <img src="images/index-page/ladish.webp" alt="Profile picture of Ladish">
           </div>
           <div class="text-information">
             <h2 id="typewriter">
               <a href="" class="typewrite" data-period="2000" data-type='["I am a developer", "A tech enthusiast", "A photographer" ]'>
-                <span class="wrap"></span>
-              </a>
+              <span class="wrap"></span></a>
             </h2>
+            <p>
+              My name is Callum, I am <span id="myAgeResult"></span> years old and I am from the UK.
+              I am currently studying Cyber Security at University and I am looking to go into the Cyber Security industry.
+              I also have a passion for developing things and am currently working on a few projects.
+              Also, on the side I am a photographer and I love to take photos of nature and landscapes.
+            </p>
           </div>
         </section>
       </div>

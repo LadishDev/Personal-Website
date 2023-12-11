@@ -115,13 +115,19 @@ html, body {
 }
 
 .text-information {
-  min-height: 195px; /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 #typewriter a {
   color: white;
   text-decoration: none;
-  font-size: 1em;
+}
+
+#typewriter {
+  min-height: 120px;
 }
 
 .system-info {
