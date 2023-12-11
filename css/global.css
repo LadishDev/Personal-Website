@@ -15,7 +15,7 @@ body {
   flex-direction: column;
 }
 
-h1, h3, .header h1 {
+.header h1 {
   text-align: center;
   text-decoration: underline;
 }
@@ -61,7 +61,7 @@ h1, h3, .header h1 {
 
 .nav-logo {
   display: flex;
-  padding-left: 10px;
+  padding-left: 15px;
   align-items: center;
   width: 95px;
   height: 24px;
@@ -167,6 +167,33 @@ h1, h3, .header h1 {
 }
 
 .social img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.sceond-container-element {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+.projects-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+  grid-gap: 20px;
+}
+
+.projects {
+  text-align: center;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.projects img {
   width: 100%;
   height: auto;
   object-fit: cover;

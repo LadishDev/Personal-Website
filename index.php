@@ -28,17 +28,17 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
           <img src="images/logo.svg" alt="Callum.B Logo">
         </div>
         <div class="nav-links">
-          <a href="index.php" <?php if ($_SERVER['REQUEST_URI'] === '/index.php') echo 'class="active-page"'; ?>>Home</a>
-          <a href="socials.php" <?php if ($_SERVER['REQUEST_URI'] === '/socials.php') echo 'class="active-page"'; ?>>Socials</a>
+          <a href="index.php" <?php if (basename($_SERVER['REQUEST_URI']) === 'index.php') echo 'class="active-page"'; ?>>Home</a>
+          <a href="socials.php" <?php if (basename($_SERVER['REQUEST_URI']) === 'socials.php') echo 'class="active-page"'; ?>>Socials</a>
         </div>
       </div>
     
       <div class="container">
         <!-- This is the header of the webpage for the information above the navbar to show u where u are -->
-        <div class="first-container-element">
-          <div class="p-picture"> <!-- Adds my pfp into a circle and puts my name under at top of page -->
-            <img src="images/index-page/ladish.webp" alt="Picture of Ladish pfp"></a>
-          </div>
+        <section class="first-container-element">
+          <figure class="p-picture"> <!-- Adds my pfp into a circle and puts my name under at top of page -->
+            <img src="images/index-page/ladish.webp" alt="Profile picture of Ladish">
+          </figure>
           <div class="text-information">
             <h2 id="typewriter">
               <a href="" class="typewrite" data-period="2000" data-type='["I am a developer", "A tech enthusiast", "A photographer" ]'>
@@ -46,7 +46,43 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
               </a>
             </h2>
           </div>
-        </div>
+        </section>
+      </div>
+
+        <section class="second-container-element">
+          <section class="projects">
+            <h1>Projects</h1>
+            <div class="projects-container">
+              <article class="project">
+                <figure class="project-image">
+                  <img src="images/index-page/website-image.webp" alt="Screenshot of my web portfolio">
+                </figure>
+                <div class="project-text">
+                  <h2>Web portfolio</h2>
+                  <p>My portfolio website that you are currently on.</p>
+                </div>
+              </article>
+              <article class="project">
+                <figure class="project-image">
+                  <img src="images/index-page/website.webp" alt="Screenshot of Interactive Database System">
+                </figure>
+                <div class="project-text">
+                  <h2>Interactive Database System</h2>
+                  <p>A dnd game database system that allows you to store all your characters and their info.</p>
+                </div>
+              </article>
+              <article class="project">
+                <figure class="project-image">
+                  <img src="images/index-page/website.webp" alt="Screenshot of Discord Bot project">
+                </figure>
+                <div class="project-text">
+                  <h2>Discord Bot</h2>
+                  <p>Currently in proccess of development.</p>
+                </div>
+              </article>
+            </div>
+          </section>
+        </section>
       </div>
 	  
       <footer>
