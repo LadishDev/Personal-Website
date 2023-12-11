@@ -113,6 +113,10 @@ body {
   padding-top: 60px;
 }
 
+.text-information {
+  min-height: 195px; /* Adjust as needed */
+}
+
 #typewriter a {
   color: white;
   text-decoration: none;
@@ -173,16 +177,9 @@ body {
   border-radius: 50%;
 }
 
-.sceond-container-element {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 20px;
-  padding: 20px;
-}
-
 .projects-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+  grid-template-columns: 1fr; 
   grid-gap: 20px;
 }
 
@@ -193,11 +190,17 @@ body {
   overflow: hidden;
 }
 
+.project {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .projects img {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 5rem;
   object-fit: cover;
-  border-radius: 50%;
 }
 
 
@@ -234,7 +237,7 @@ footer p {
 
 /* CSS for tablet (720px to 1023px) */
 @media (min-width: 720px) and (max-width: 1023px) {
-  .first-container-element {
+  .first-container-element, .projects-container {
       grid-template-columns: 1fr 1fr; /* Make the grid 2 columns */
   }
 }
@@ -243,5 +246,8 @@ footer p {
 @media (min-width: 1024px) {
   .first-container-element {
       grid-template-columns: 1fr 1fr; /* Make the grid 2 columns */
+  }
+  .projects-container {
+    grid-template-columns: 1fr 1fr 1fr; /* Make the grid 3 columns */
   }
 }

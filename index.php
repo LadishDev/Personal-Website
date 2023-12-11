@@ -36,9 +36,9 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
       <div class="container">
         <!-- This is the header of the webpage for the information above the navbar to show u where u are -->
         <section class="first-container-element">
-          <figure class="p-picture"> <!-- Adds my pfp into a circle and puts my name under at top of page -->
+          <div class="p-picture"> <!-- Adds my pfp into a circle and puts my name under at top of page -->
             <img src="images/index-page/ladish.webp" alt="Profile picture of Ladish">
-          </figure>
+          </div>
           <div class="text-information">
             <h2 id="typewriter">
               <a href="" class="typewrite" data-period="2000" data-type='["I am a developer", "A tech enthusiast", "A photographer" ]'>
@@ -64,7 +64,7 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
               </article>
               <article class="project">
                 <figure class="project-image">
-                  <img src="images/index-page/website.webp" alt="Screenshot of Interactive Database System">
+                  <img src="images/index-page/database-project.webp" alt="Screenshot of Interactive Database System">
                 </figure>
                 <div class="project-text">
                   <h2>Interactive Database System</h2>
@@ -73,7 +73,7 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
               </article>
               <article class="project">
                 <figure class="project-image">
-                  <img src="images/index-page/website.webp" alt="Screenshot of Discord Bot project">
+                  <img src="images/index-page/discord-bot.webp" alt="Screenshot of Discord Bot project">
                 </figure>
                 <div class="project-text">
                   <h2>Discord Bot</h2>
