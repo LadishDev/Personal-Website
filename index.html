@@ -1,9 +1,3 @@
-<?php 
-$status = file_get_contents("http://localhost/server-status?auto");
-$uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
-?>
-
-
 <!DOCTYPE html>
 <html>
     <head> <!-- This is the title of the webpage and also links to the css file for the styling of the site -->
@@ -29,8 +23,7 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
           <img src="images/logo.svg" alt="Callum.B Logo">
         </div>
         <div class="nav-links">
-          <a href="index.php" <?php if (basename($_SERVER['REQUEST_URI']) === 'index.php') echo 'class="active-page"'; ?>>Home</a>
-          <a href="socials.php" <?php if (basename($_SERVER['REQUEST_URI']) === 'socials.php') echo 'class="active-page"'; ?>>Socials</a>
+          <a href="index.html">Home</a>
         </div>
       </div>
     
@@ -119,12 +112,71 @@ $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
             </div>
           </section>
         </section>
+
+        <section class="section-containers">
+          <section class="repositorys">
+            <h1>Repository's</h1>
+            <article class="repo-container">
+              <article class="social">
+                <a href="https://github.com/LadishDev" target="_blank">
+                  <img src="images/socials/github.svg" alt="GitHub Logo">
+                  <h2>GitHub</h2>
+                </a>
+                <div class="social</article>-text">
+                  <p>TEXT HERE</p>
+                </div>
+              </article>
+              <article class="social">
+                <a href="https://gitlab.com/LadishDev" target="_blank">
+                  <img src="images/socials/gitlab.svg" alt="GitLab Logo">
+                  <h2>GitLab</h2>
+                </a>
+                <div class="social-text">
+                  <p>TEXT HERE</p>
+                </div>
+              </article>
+            </article>
+
+
+          </section>
+          <section class="section-containers">
+            <h1>Contact Me</h1>
+            <div class="social-container">
+              <article class="social">
+                <a href=" https://www.instagram.com/callumb.photography" target="_blank">
+                  <img src="images/socials/instagram.svg" alt="Instagram Logo">
+                  <h2>Instagram</h2>
+                </a>
+                <div class="social-text">
+                  <p>My Instagram account where I post my photography.</p>
+                </div>
+              </article>
+              <article class="social">
+                <a href="https://www.linkedin.com/in/callumbdev" target="_blank">
+                  <img src="images/socials/linkedin.svg" alt="Linkedin Logo">
+                  <h2>Linkedin</h2>
+                </a>
+                <div class="social-text">
+                  <p>TEXT HERE</p>
+                </div>
+              </article>
+              <article class="social">
+                <a href="mailto:developer@ladish.dev" target="_blank">
+                  <img src="images/socials/email.svg" alt="Email Logo">
+                  <h2>Email</h2>
+                </a>
+                <div class="social-text">
+                  <p>TEXT HERE</p>
+              </article>
+            </div>
+          </section>
+        </section>
       </div>
 	  
       <footer>
         <p>Author: Callum Baldwin</p>
         <p> | </p>
-	      <p>Server Uptime: <?php echo $uptime; ?></p>
+	      <p>Server Uptime: </p>
       </footer>
     </body>
 </html>
