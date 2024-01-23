@@ -118,7 +118,8 @@ h1 {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 20px;
-  padding: 20px;
+  padding-bottom: 70px;
+  height: 90vh;
 }
 
 .p-picture {
@@ -196,6 +197,12 @@ h1 {
 
 /*          SOCIALS PAGE         */
 
+.repositories {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+}
+
 .social-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -252,14 +259,14 @@ footer p {
 
 /* CSS for tablet (720px to 1023px) */
 @media (min-width: 720px) and (max-width: 1023px) {
-  .aboutme-container, .experience-container, .projects-container, .social-container{
+  .aboutme-container, .experience-container, .projects-container, .social-container, .repositories{
       grid-template-columns: 1fr 1fr; /* Make the grid 2 columns */
   }
 }
 
 /* CSS for desktop (1024px and larger) */
 @media (min-width: 1024px) {
-  .aboutme-container {
+  .aboutme-container, .repositories {
       grid-template-columns: 1fr 1fr; /* Make the grid 2 columns */
   }
   .experience-container, .projects-container, .social-container {
