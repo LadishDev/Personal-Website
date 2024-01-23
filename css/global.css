@@ -100,13 +100,6 @@ h1 {
 
 /* The Typewriter Effect */
 
-.text-information {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
 #typewriter a {
   color: white;
   text-decoration: none;
@@ -124,7 +117,7 @@ h1 {
   grid-template-columns: 1fr;
   grid-gap: 20px;
   padding-bottom: 70px;
-  height: 90vh;
+  min-height: 90vh;
 }
 
 .p-picture {
@@ -143,10 +136,13 @@ h1 {
 .text-information {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
   font-size: 1.8em;
+  padding: 15px;
 }
 
- /* Experience Section */
+ /* Experience Section  - Not in use  Currently
 
 .experiences {
   text-align: center;
@@ -168,6 +164,8 @@ h1 {
   align-items: center;
   padding: 15px;
 }
+
+*/
 
 
 /* Projects Section */
@@ -202,10 +200,20 @@ h1 {
 
 /*          SOCIALS PAGE         */
 
-.repositories {
+.repositorys {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 20px;
+}
+
+.repo-text {
+  display: flex;
+  justify-content: center;
+}
+
+.repo-container {
+  display: flex;
+  justify-content: center;
 }
 
 .social-container {
@@ -264,28 +272,28 @@ footer p {
 /* Css Media Queries */
 /* CSS for small mobile (360px to 539px) */
 @media (min-width: 360px) and (max-width: 539px) {
-  .aboutme-container {
+  .aboutme-container, .repositorys {
       grid-template-columns: 1fr; /* Make the grid 1 column */
   }
 }
 
 /* CSS for large mobile (540px to 719px) */
 @media (min-width: 540px) and (max-width: 719px) {
-  .aboutme-container {
+  .aboutme-container, .repositorys {
       grid-template-columns: 1fr; /* Make the grid 1 column */
   }
 }
 
 /* CSS for tablet (720px to 1023px) */
 @media (min-width: 720px) and (max-width: 1023px) {
-  .aboutme-container, .experience-container, .projects-container, .social-container, .repositories{
+  .aboutme-container, .experience-container, .projects-container, .social-container, .repositorys{
       grid-template-columns: 1fr 1fr; /* Make the grid 2 columns */
   }
 }
 
 /* CSS for desktop (1024px and larger) */
 @media (min-width: 1024px) {
-  .aboutme-container, .repositories {
+  .aboutme-container, .repositorys {
       grid-template-columns: 1fr 1fr; /* Make the grid 2 columns */
   }
   .experience-container, .projects-container, .social-container {
