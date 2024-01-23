@@ -17,7 +17,6 @@
       <script src="js/typewriter.js"></script> <!-- This is the link to the typewriter script -->
     </head>
     <body>
-
       <div class="navbar">
         <div class="nav-logo">
           <img src="images/logo.svg" alt="Callum.B Logo">
@@ -102,7 +101,7 @@
                     I've created this web portfolio page to showcase my various projects and involvements. Being here enables me to consolidate all my work in one central location, 
                     providing a comprehensive overview of my professional journey.
                   </p>
-                  <button class="project-button" onclick="window.location.href='test'">View Project</button>
+                  <button class="button" data-url="https://gitlab.com/LadishDev/personal-website">View Project</button>
                 </div>
               </article>
               <article class="project">
@@ -115,8 +114,8 @@
                     the 2019 General Election results and storing them in a database. Then pulling them again to display them on a website.
                   </p>
                   
-                  <button class="project-button" onclick="window.location.href='test'">View Game Database</button>
-                  <button class="project-button" onclick="window.location.href='test'">View Election Database</button>
+                  <button class="button" data-url="https://github.com/LadishDev/Assessment-Cariryn-Enterprise">View Game Database</button>
+                  <button class="button" data-url="https://github.com/LadishDev/Electoral-System">View Election Database</button>
                 </div>
               </article>
               <article class="project">
@@ -127,7 +126,7 @@
                     This project is currently in development as since my previous bot was no longer working due to the API being updated. I am currently working on a new bot in my free time to replace the old one.
                     This bot will be able to do moderation things such as kick, ban, mute, etc. It also will have a few fun commands that I will be adding to in the future after the main functionality is complete.
                   </p>
-                  <button class="project-button" onclick="window.location.href='test'">Currently In Progress</button>
+                  <button class="button" data-url="https://gitlab.com/LadishDev/discord-bot">Currently In Progress</button>
                 </div>
               </article>
             </div>
@@ -168,40 +167,37 @@
           <h1>Contact Me</h1>
           <div class="social-container">
             <article class="social">
-              <a href=" https://www.instagram.com/callumb.photography" target="_blank">
-                <img src="images/socials/instagram.svg" alt="Instagram Logo">
-                <h2>Instagram</h2>
-              </a>
+              <img src="images/socials/instagram.svg" alt="Instagram Logo">
+              <h2>Instagram</h2>
               <div class="social-text">
                 <p>
                   As I mentioned above in my free time I love to take photos of nature and landscapes. Here you can find my photography Instagram page where I post my photos.
                   I dont post as often as I would like to but when I do get some time and take some photos I will post them here.
                 </p>
-                <button class="social-button" onclick="window.location.href='test'">View Instagram</button>
+                <button class="button" data-url="https://www.instagram.com/callumb.photography">View Instagram</button>
               </div>
             </article>
             <article class="social">
-              <a href="https://www.linkedin.com/in/callumbdev" target="_blank">
-                <img src="images/socials/linkedin.svg" alt="Linkedin Logo">
-                <h2>Linkedin</h2>
-              </a>
+              <img src="images/socials/linkedin.svg" alt="Linkedin Logo">
+              <h2>Linkedin</h2>
               <div class="social-text">
                 <p>
                   I also have a Linkedin page where I have a few Certificates on that I have completed. You can also find my work experience on there as well as my education. If you would like to connect with me on Linkedin
                   then feel free to do so.
                 </p>
-                <button class="social-button" onclick="window.location.href='test'">View Linkedin</button>
+                <button class="button" data-url="https://www.linkedin.com/in/callumbdev">View Linkedin</button>
               </div>
             </article>
             <article class="social">
-              <a href="mailto:developer@ladish.dev" target="_blank">
-                <img src="images/socials/email.svg" alt="Email Logo">
-                <h2>Email</h2>
-              </a>
+              <img src="images/socials/email.svg" alt="Email Logo">
+              <h2>Email</h2>
               <div class="social-text">
                 <p>
                   If you would like to get in contact with me for any reason then feel free to send me an email. I will try to get back to you as soon as possible but please be aware that I may not be able to reply straight away.
+                  My email is <a href="mailto:developer@ladish.dev" target="_blank">developer@ladish.dev</a>
                 </p>
+                <button class="button" data-url="mailto:developer@ladish.dev">Send Email</button>
+              </div>
             </article>
           </div>
         </section>
@@ -212,5 +208,13 @@
         <p> | </p>
 	      <p id="server-status"></p>
       </footer>
+
+      <script>
+        document.querySelectorAll('.button').forEach(function(button) {
+          button.addEventListener('click', function() {
+            window.location.href = this.getAttribute('data-url');
+          });
+        });
+      </script>
     </body>
 </html>

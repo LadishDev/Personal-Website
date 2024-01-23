@@ -93,6 +93,11 @@ h1 {
   padding-top: 60px;
 }
 
+.container {
+  max-width: 2000px;
+  margin: auto;
+}
+
 /* The Typewriter Effect */
 
 .text-information {
@@ -239,6 +244,20 @@ footer {
 
 footer p {
   margin: 0 10px;
+}
+
+/* BUTTONS */
+.button {
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  background: linear-gradient(0deg, rgb(167, 21, 216) 0%, rgb(229, 41, 242) 100%);
+  border: none;
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  cursor: pointer;
+  margin: 10px;
 }
 
 
