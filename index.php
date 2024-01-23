@@ -1,3 +1,23 @@
+<?php
+$status = file_get_contents("http://localhost/server-status?auto");
+$uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
+
+if ($uptime != "N/A") {
+    // Check if the uptime contains "day" or "days"
+    if (strpos($uptime, 'day') !== false) {
+        // Extract only the days from the uptime string
+        preg_match('/(\d+)\s+day/', $uptime, $dayMatches);
+        $uptime = $dayMatches[1] . ' days';
+    } else {
+        // Extract only the hours from the uptime string
+        preg_match('/(\d+:\d+:\d+)/', $uptime, $hourMatches);
+        $uptime = $hourMatches[1] . ' hour(s)';
+    }
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html>
     <head> <!-- This is the title of the webpage and also links to the css file for the styling of the site -->
@@ -206,15 +226,7 @@
       <footer>
         <p>Author: Callum Baldwin</p>
         <p> | </p>
-	      <p id="server-status"></p>
+        <p>Server Uptime: <?php echo $uptime; ?></p>
       </footer>
-
-      <script>
-        document.querySelectorAll('.button').forEach(function(button) {
-          button.addEventListener('click', function() {
-            window.location.href = this.getAttribute('data-url');
-          });
-        });
-      </script>
     </body>
 </html>
