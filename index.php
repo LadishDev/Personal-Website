@@ -42,7 +42,7 @@ if ($uptime != "N/A") {
           <img src="images/logo.svg" alt="Callum.B Logo">
         </div>
         <div class="nav-links">
-          <a href="index.html">Home</a>
+          <a href="index.php">Home</a>
         </div>
       </div>
     
