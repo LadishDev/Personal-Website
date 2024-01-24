@@ -19,7 +19,7 @@ if ($uptime != "N/A") {
 
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head> <!-- This is the title of the webpage and also links to the css file for the styling of the site -->
       <link rel="icon" href="/images/site-favicon.png" type="image/x-icon">
       <title>Ladish</title>
