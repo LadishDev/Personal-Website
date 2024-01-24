@@ -231,7 +231,7 @@ if ($uptime != "N/A") {
       <script>
         document.querySelectorAll('.button').forEach(function(button) {
           button.addEventListener('click', function() {
-            window.location.href = this.getAttribute('data-url');
+            window.open(this.getAttribute('data-url'), '_blank');
           });
         });
       </script>
