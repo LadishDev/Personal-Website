@@ -228,5 +228,12 @@ if ($uptime != "N/A") {
         <p> | </p>
         <p>Server Uptime: <?php echo $uptime; ?></p>
       </footer>
+      <script>
+        document.querySelectorAll('.button').forEach(function(button) {
+          button.addEventListener('click', function() {
+            window.location.href = this.getAttribute('data-url');
+          });
+        });
+      </script>
     </body>
 </html>
