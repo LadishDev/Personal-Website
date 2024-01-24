@@ -3,18 +3,17 @@ $status = file_get_contents("http://localhost/server-status?auto");
 $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
 
 if ($uptime != "N/A") {
-    // Check if the uptime contains "day" or "days"
-    if (strpos($uptime, 'day') !== false) {
-        // Extract only the days from the uptime string
-        preg_match('/(\d+)\s+day/', $uptime, $dayMatches);
-        $uptime = $dayMatches[1] . ' days';
-    } else {
-        // Extract only the hours from the uptime string
-        preg_match('/(\d+:\d+:\d+)/', $uptime, $hourMatches);
-        $uptime = $hourMatches[1] . ' hour(s)';
-    }
+  // Check if the uptime contains "day" or "days"
+  if (strpos($uptime, 'day') !== false) {
+    // Extract only the days from the uptime string
+    preg_match('/(\d+)\s+day/', $uptime, $dayMatches);
+    $uptime = $dayMatches[1] . ' days';
+  } else {
+    // Extract only the hours from the uptime string
+    preg_match('/(\d+)\s+hours/', $uptime, $hourMatches);
+    $uptime = $hourMatches[1] . ' hour(s)';
+  }
 }
-
 ?>
 
 
