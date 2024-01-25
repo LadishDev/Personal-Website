@@ -1,3 +1,4 @@
+<!-- php code to get the uptime of the server and store it to display to the user -->
 <?php
 $status = file_get_contents("http://localhost/server-status?auto");
 $uptime = preg_match('/Uptime: (.+)/', $status, $matches) ? $matches[1] : "N/A";
@@ -23,7 +24,7 @@ if ($uptime != "N/A") {
       <link rel="icon" href="/images/site-favicon.png" type="image/x-icon">
       <title>Ladish</title>
       
-      
+      <!-- This is the meta tags for the site -->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- This is to make the site responsive -->
       <meta content="My Portfolio" property="og:title" />
       <meta content="My portfolio containing everything about me there is to know. What am I up to? What have I already been doing?" property="og:description" />
@@ -36,6 +37,7 @@ if ($uptime != "N/A") {
       <script src="js/typewriter.js"></script> <!-- This is the link to the typewriter script -->
     </head>
     <body>
+      <!-- This is the navbar for the site includding logo & home page link -->
       <div class="navbar">
         <div class="nav-logo">
           <img src="images/logo.svg" alt="Callum.B Logo">
@@ -45,10 +47,9 @@ if ($uptime != "N/A") {
         </div>
       </div>
     
-      <div class="container">
-        <!-- This is the header of the webpage for the information above the navbar to show u where u are -->
+      <div class="container"> <!-- Main container with everything within to set max width of content -->
         <section class="section-containers">
-          <section class="aboutme-container">
+          <section class="aboutme-container"> <!-- This is the about me section of the site -->
             <div class="p-picture">
               <img src="images/index-page/ladish.webp" alt="Profile picture of Ladish">
             </div>
@@ -57,7 +58,7 @@ if ($uptime != "N/A") {
                 <a href="" class="typewrite" data-period="2000" data-type='["I am a developer", "A tech enthusiast", "A photographer" ]'>
                 <span class="wrap"></span></a>
               </h2>
-              <p>
+              <p> <!-- This is the about me text and used span with an id to grab my calculated age from the age-caculate.js and display it -->
                 My name is Callum, I am <span id="myAgeResult"></span> years old and I am from the UK.
                 I am currently studying Cyber Security at University and I am looking to go into the Cyber Security industry.
                 I also have a passion for developing things and am currently working on a few projects.
@@ -110,10 +111,11 @@ if ($uptime != "N/A") {
         </section>
 -->
 
+        <!-- This is a section container so that I can section each one off and style them -->
         <section class="section-containers">
-          <section class="projects">
+          <section class="projects"> 
             <h1>Projects</h1>
-            <div class="projects-container">
+            <div class="projects-container"> <!-- This is the projects container that holds all the projects that I am showing off -->
               <article class="project">
                 <img src="images/index-page/website-image.webp" alt="Screenshot of my web portfolio">
                 <div class="project-text">
@@ -122,7 +124,7 @@ if ($uptime != "N/A") {
                     I've created this web portfolio page to showcase my various projects and involvements. Being here enables me to consolidate all my work in one central location, 
                     providing a comprehensive overview of my professional journey.
                   </p>
-                  <button class="button" data-url="https://gitlab.com/LadishDev/personal-website">View Project</button>
+                  <button class="button" data-url="https://gitlab.com/LadishDev/personal-website">View Project</button> <!-- Simple button that links to the page where the project is located -->
                 </div>
               </article>
               <article class="project">
@@ -155,7 +157,7 @@ if ($uptime != "N/A") {
 
         <section class="section-containers">
           <h1>Repository's</h1>
-          <section class="repositorys">
+          <section class="repositorys"> <!-- This is the repositorys section of the site -->
             <article class="repo-text">
               <p>
                 I currently maintain accounts on both GitHub and GitLab to host my repositories. While I initially began my coding journey on GitHub and still rely on it for some University projects, 
@@ -215,7 +217,7 @@ if ($uptime != "N/A") {
                   If you would like to get in contact with me for any reason then feel free to send me an email. I will try to get back to you as soon as possible but please be aware that I may not be able to reply straight away.
                   My email is <a href="mailto:developer@ladish.dev" target="_blank">developer@ladish.dev</a>
                 </p>
-                <button class="button" data-url="mailto:developer@ladish.dev">Send Email</button>
+                <button class="button" data-url="mailto:developer@ladish.dev">Send Email</button> <!-- This is a button that links to my email address and will open their default email application with my email as the to field -->
               </div>
             </article>
           </div>
@@ -225,8 +227,9 @@ if ($uptime != "N/A") {
       <footer>
         <p>Author: Callum Baldwin</p>
         <p> | </p>
-        <p>Server Uptime: <?php echo $uptime; ?></p>
+        <p>Server Uptime: <?php echo $uptime; ?></p> <!-- grabs the value of the uptime variable and displays it -->
       </footer>
+       <!-- Little js here just for the buttons to open in a new tab -->
       <script>
         document.querySelectorAll('.button').forEach(function(button) {
           button.addEventListener('click', function() {
