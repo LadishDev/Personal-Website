@@ -1,5 +1,4 @@
-// Basic variable declaration for the typewriter effect
-var TxtType = function(el, toRotate, period) { 
+var TxtType = function(el, toRotate, period) {
     this.toRotate = toRotate;
     this.el = el;
     this.loopNum = 0;
@@ -9,7 +8,6 @@ var TxtType = function(el, toRotate, period) {
     this.isDeleting = false;
 };
 
-//  Types out the text in the array toRotate in the html element el deleting and writing characters 
 TxtType.prototype.tick = function() {
     var i = this.loopNum % this.toRotate.length;
     var fullTxt = this.toRotate[i];
@@ -36,13 +34,11 @@ TxtType.prototype.tick = function() {
     delta = 500;
     }
 
-    // Calls the function again after a certain amount of time to create the typewriter effect
     setTimeout(function() {
     that.tick();
     }, delta);
 };
 
-// Runs the typewriter effect on the element when the page loads
 window.onload = function() {
     var elements = document.getElementsByClassName('typewrite');
     for (var i=0; i<elements.length; i++) {

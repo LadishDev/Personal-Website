@@ -1,4 +1,3 @@
-/* BODY CSS */
 html, body {
   min-height: 100%;
   margin: 0;
@@ -82,7 +81,17 @@ h1 {
   color: black;
 }
 
-/* CONTAINER THAT HOLDS ALL THE CONTENT */
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 60px;
+}
 
 .container {
   max-width: 2000px;
@@ -230,19 +239,68 @@ h1 {
 
 /* Footer Section */
 
-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(22, 22, 23, 0.8);
-  color: #fff;
-  text-align: center;
-  padding: 10px;
-  margin-top: auto; /* Push the footer to the bottom */
+.footer {
+  background-color: #1a1a1a;
+  padding: 40px 20px;
 }
 
-footer p {
-  margin: 0 10px;
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-column {
+  min-width: 180px;
+}
+
+.footer-column h4 {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.footer-column li a {
+  text-decoration: none;
+}
+
+.footer-column li:hover {
+  text-decoration: underline;
+}
+
+.footer-column li a:visited {
+  color: #d8d4cf;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  color: #aaa;
+}
+
+.footer-bottom a {
+  color: #aaa;
+  text-decoration: none;
+  margin: 0 8px;
+}
+
+.footer-bottom a:hover {
+  text-decoration: underline;
 }
 
 /* BUTTONS */
