@@ -2,7 +2,7 @@
 title: 'Strengthening Contactless Systems: RFID/NFC Security Improvements'
 description: ''
 pubDate: 'Jan 28 2025'
-heroImage: '../../assets/RFID.NFC Security Enhancement.jpg'
+heroImage: '../../assets/RFID NFC Security Enhancement.jpg'
 ---
 
 Developed Protypes: https://github.com/LadishDev/nfc-mfa-research
