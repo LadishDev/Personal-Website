@@ -1,9 +1,11 @@
 ---
 title: 'Strengthening Contactless Systems: RFID/NFC Security Improvements'
-description: 'Lorem ipsum dolor sit amet'
+description: ''
 pubDate: 'Jan 28 2025'
 heroImage: '../../assets/RFID.NFC Security Enhancement.jpg'
 ---
+
+Developed Protypes: https://github.com/LadishDev/nfc-mfa-research
 
 This was part of a Research Project for University in which we had to go about developing new things that would help improve the world with either new tech or ideas that havent done before and explore how they would benefit and providing evidence.
 
