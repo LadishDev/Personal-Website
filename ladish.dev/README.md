@@ -1,62 +1,95 @@
-# Astro Starter Kit: Blog
+<div align="center" id="top"> 
+  <img src="https://avatars.githubusercontent.com/u/53581256?v=4" alt="Ladish Dev" />
 
-```sh
-npm create astro@latest -- --template blog
+  &#xa0;
+
+  <!-- <a href="https://ladishdev.netlify.app">Demo</a> -->
+</div>
+
+<h1 align="center">ladish.dev</h1>
+
+<p align="center">
+  <img style="margin-right:8px;" alt="Github top language" src="https://img.shields.io/github/languages/top/LadishDev/personal-website?color=56BEB8">
+  <img style="margin-right:8px;" alt="Github language count" src="https://img.shields.io/github/languages/count/LadishDev/personal-website?color=56BEB8">
+  <img style="margin-right:8px;" alt="Repository size" src="https://img.shields.io/github/repo-size/LadishDev/personal-website?color=56BEB8">
+  <img alt="License" src="https://img.shields.io/github/license/LadishDev/personal-website?color=56BEB8">
+
+  <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/LadishDev/ladish-dev?color=56BEB8" /> -->
+
+  <!-- <img alt="Github forks" src="https://img.shields.io/github/forks/LadishDev/ladish-dev?color=56BEB8" /> -->
+
+  <!-- <img alt="Github stars" src="https://img.shields.io/github/stars/LadishDev/ladish-dev?color=56BEB8" /> -->
+</p>
+
+<h2> Status </h2>
+
+<h4 align="center"> 
+	🚧  Ladish Dev 🚀 Under construction...  🚧
+</h4> 
+
+<hr>
+<br>
+<p align="center">
+  <a href="#dart-about">About</a> &#xa0; | &#xa0; 
+  <!-- <a href="#sparkles-features">Features</a> &#xa0; | &#xa0; -->
+  <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
+  <a href="#white_check_mark-requirements">Requirements</a> &#xa0; | &#xa0;
+  <a href="#checkered_flag-starting">Starting</a> &#xa0; | &#xa0;
+  <a href="#memo-license">License</a> &#xa0; | &#xa0;
+  <a href="https://github.com/LadishDev" target="_blank">Author</a>
+</p>
+
+<br>
+
+## 🎯 About ##
+
+Personal Website to display my skills and Projects I have worked on.
+
+<!-- 
+## ✨ Features ##
+
+:heavy_check_mark: Feature 1;\
+:heavy_check_mark: Feature 2;\
+:heavy_check_mark: Feature 3;
+
+-->
+
+## 🚀 Technologies ##
+
+The following tools were used in this project:
+
+- [Astro](https://astro.build/)
+- [Node.js](https://nodejs.org/en/)
+
+## ✔️ Requirements ##
+
+Before starting, you need to have [Git](https://git-scm.com) and [Node](https://nodejs.org/en/) installed.
+
+## 🏁 Starting ##
+
+```bash
+# Clone this project
+$ git clone https://github.com/LadishDev/personal-website
+
+# Access
+$ cd ladish-dev
+
+# Install dependencies
+$ npm install
+
+# Run the project
+$ npm run dev
+
+# The server will initialize in the <http://localhost:4321>
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 📝 License ##
 
-Features:
+This project is under license from MIT. For more details, see the [LICENSE](/LICENSE.md) file.
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
 
-## 🚀 Project Structure
+Made with :heart: by <a href="https://github.com/LadishDev" target="_blank">Callum Baldwin</a>
 
-Inside of your Astro project, you'll see the following folders and files:
+&#xa0;
 
-```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+<a href="#top">Back to top</a>
