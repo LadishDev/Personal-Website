@@ -3,6 +3,8 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+import "../styles/index.css";
 ---
 
 <!doctype html>
@@ -12,6 +14,28 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	</head>
 	<body>
 		<Header />
+		<div class="container">
+			<section class="section-containers">
+				<section class="aboutme-container">
+					<div class="p-picture">
+						<img src="src/assets/ladish.webp" alt="Profile picture of Ladish" />
+					</div>
+					<div class="text-information">
+						<h2 id="typewriter">
+						<a href="#" class="typewrite" data-period="2000" data-type='["I am a developer", "A tech enthusiast", "A photographer"]'>
+							<span class="wrap"></span>
+						</a>
+						</h2>
+						<p>
+							My name is Callum, I am <span id="myAgeResult">--</span> years old and I am from the UK.
+							I am a recent Cyber Security Graduate.
+							I have a passion for developing things and am currently working on a few projects.
+							Also, on the side I am a photographer and I love to take photos of nature and landscapes.
+						</p>
+					</div>
+				</section>
+			</section>
+		</div>
 		<main>
 			<h1>Hello, There!</h1>
 			<p>
@@ -40,5 +64,19 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			</p>
 		</main>
 		<Footer />
+		<!-- @ts-ignore -->
+		<script client:load>
+			// dynamic import so it's available in the browser context
+			Promise.all([
+				import('/scripts/typewriter.js'),
+				import('/scripts/age-calculate.js')
+			]).then(([{ initTypewriter }, { updateAge }]) => {
+				console.log('Client script running');
+				initTypewriter();
+				updateAge('myAgeResult', '2003-11-15');
+			}).catch((e) => {
+				console.error('Failed to load client modules', e);
+			});
+		</script>
 	</body>
 </html>
