@@ -73,7 +73,13 @@ body {
 }
 
 #typewriter {
-  min-height: 120px;
+  height: 2em;               /* reserve space for 2 lines of text */
+  max-height: 2em;           /* ensures it doesn't grow beyond this */
+  display: flex;             /* use flex to center vertically */
+  align-items: center;       /* vertical center */
+  justify-content: center;   /* horizontal center */
+  overflow: hidden;          /* prevent any overflow */
+  text-align: center;
 }
 
 /* About Me Section */
@@ -81,7 +87,7 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 20px;
-  padding-bottom: 70px;
+  /* padding-bottom: 70px; */
   min-height: 90vh;
 }
 
@@ -103,7 +109,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-size: 1.8em;
+/*  font-size: 20px; */
   padding: 15px;
 }
 

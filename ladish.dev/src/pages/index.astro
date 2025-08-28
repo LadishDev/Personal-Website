@@ -4,6 +4,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
+import "../styles/global.css";
 import "../styles/index.css";
 ---
 
@@ -21,11 +22,17 @@ import "../styles/index.css";
 						<img src="src/assets/ladish.webp" alt="Profile picture of Ladish" />
 					</div>
 					<div class="text-information">
+						<!--
+
+						Currently broken, needs fixing for mobile and tablet screen sizes
+
 						<h2 id="typewriter">
 						<a href="#" class="typewrite" data-period="2000" data-type='["I am a developer", "A tech enthusiast", "A photographer"]'>
 							<span class="wrap"></span>
 						</a>
 						</h2>
+						-->
+						<h1>Hello, There!</h1>
 						<p>
 							My name is Callum, I am <span id="myAgeResult">--</span> years old and I am from the UK.
 							I am a recent Cyber Security Graduate.
@@ -37,12 +44,6 @@ import "../styles/index.css";
 			</section>
 		</div>
 		<main>
-			<h1>Hello, There!</h1>
-			<p>
-				Welcome to my Personal Portfolio site built with Astro!. This space is dedicated to showcasing my work,
-				sharing my thoughts, and connecting with others in the tech community.
-			</p>
-			<br>
 			<h2>About Me</h2>
 			<p>
 				I am Callum, a dedicated Cyber Security Graduate with a passion for Network Security. My background includes
@@ -65,6 +66,7 @@ import "../styles/index.css";
 		</main>
 		<Footer />
 		<!-- @ts-ignore -->
+		<!--
 		<script client:load>
 			// dynamic import so it's available in the browser context
 			Promise.all([
@@ -78,5 +80,15 @@ import "../styles/index.css";
 				console.error('Failed to load client modules', e);
 			});
 		</script>
+		-->
+		<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			document.querySelector('.hamburger')?.addEventListener('click', () => {
+			document.querySelector('.nav-links')?.classList.toggle('expanded');
+			console.log('Hamburger menu clicked');
+			});
+		});
+		</script>
+
 	</body>
 </html>
