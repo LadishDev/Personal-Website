@@ -1,0 +1,40 @@
+---
+const { title, description } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #0d1117;
+        color: #e6edf3;
+      }
+      header {
+        background: #161b22;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid #30363d;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 1.8rem;
+      }
+      main {
+        max-width: 960px;
+        margin: auto;
+        padding: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>{title}</h1>
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
