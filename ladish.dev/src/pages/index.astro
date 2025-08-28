@@ -81,6 +81,19 @@ import "../styles/index.css";
 			});
 		</script>
 		-->
+
+		<!-- @ts-ignore -->
+		<script client:load>
+			// dynamic import so it's available in the browser context
+			import('/scripts/age-calculate.js')
+			.then(({ updateAge }) => {
+				console.log('Client script running');
+				updateAge('myAgeResult', '2003-11-15');
+			}).catch((e) => {
+				console.error('Failed to load client modules', e);
+			});
+		</script>
+		
 		<script>
 		document.addEventListener("DOMContentLoaded", () => {
 			document.querySelector('.hamburger')?.addEventListener('click', () => {
