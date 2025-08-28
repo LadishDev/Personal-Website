@@ -1,7 +1,5 @@
 ---
 // src/components/ExternalLink.astro
-const { href, children } = Astro.props;
+const { href, label } = Astro.props;
 ---
-<a href={href} target="_blank" rel="noopener noreferrer">
-  {children ? children : href}
-</a>
+<a href={href} target="_blank" rel="noopener noreferrer">{label}</a>
