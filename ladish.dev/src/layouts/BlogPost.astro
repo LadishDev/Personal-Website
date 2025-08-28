@@ -80,6 +80,7 @@ const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, heroI
 						height={510}
 						src={heroImage}
 						alt={heroImageAlt || title}
+						loading="eager"
 						/>
 						{heroImageCaption && (
 							<p class="hero-caption" set:html={heroImageCaption}></p>
