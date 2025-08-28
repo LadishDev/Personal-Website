@@ -93,15 +93,8 @@ import "../styles/index.css";
 				console.error('Failed to load client modules', e);
 			});
 		</script>
-		
 		<script>
-		document.addEventListener("DOMContentLoaded", () => {
-			document.querySelector('.hamburger')?.addEventListener('click', () => {
-			document.querySelector('.nav-links')?.classList.toggle('expanded');
-			console.log('Hamburger menu clicked');
-			});
-		});
+		import "../scripts/menu.js";
 		</script>
-
 	</body>
 </html>
