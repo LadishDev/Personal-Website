@@ -1,18 +1,16 @@
 ---
-import AboutHeroImage from '../assets/projects-placeholder-about.jpg';
-import Layout from '../layouts/ProjectsPost.astro';
-
-
+// filepath: src/pages/about.astro
+import Layout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
-import photography1 from "../assets/photography1.jpg"; // Image is 1600x900
+import photography1 from "../assets/photography1.jpg";
 ---
 
 <Layout
   title="About Me"
   description="Learn more about me, my skills, projects, and interests."
-  pubDate={new Date('August 28 2025')}
-  heroImage={AboutHeroImage}
 >
+  <h1>About Me</h1>
+
   <!-- INTRO SECTION -->
   <section id="intro" class="section">
     <h2>Hi, I’m Callum 👋</h2>
@@ -104,6 +102,13 @@ import photography1 from "../assets/photography1.jpg"; // Image is 1600x900
       margin: 4rem auto;
       max-width: 720px;
       padding: 0 1rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
     }
 
     h2 {
