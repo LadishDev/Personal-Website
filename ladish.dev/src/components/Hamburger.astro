@@ -1,0 +1,140 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.svg';
+---
+
+<header>
+  <nav>
+    <!-- Left side: hamburger + logo -->
+    <div class="left">
+      <div class="hamburger" id="hamburger">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+      <a href="/" class="logo">
+        <Image 
+          src={logo} 
+          alt="Logo" 
+          loading="eager"
+          width="132"
+          height="24"
+          style="vertical-align: middle; margin-right: 0.5em;"
+        />
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- Fullscreen overlay menu -->
+<div class="overlay" id="overlay">
+  <div class="overlay-content">
+    <HeaderLink href="/">Home</HeaderLink>
+    <HeaderLink href="/projects">Projects</HeaderLink>
+    <HeaderLink href="/about">About</HeaderLink>
+  </div>
+</div>
+
+<style>
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;          /* lock navbar height */
+        background: #131516;
+        z-index: 1200;
+        display: flex;
+        align-items: center;
+    }
+
+    body {
+        margin: 0;
+        padding-top: 70px;     /* match the navbar height */
+    }
+
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+    }
+
+
+    .left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    /* Hamburger button */
+    .hamburger {
+        display: block;
+        cursor: pointer;
+        padding: 5px;
+        z-index: 1100; /* above overlay */
+    }
+
+    .hamburger .line {
+        display: block;
+        width: 28px;
+        height: 3px;
+        margin: 5px 0;
+        background-color: var(--accent);
+        transition: 0.3s;
+    }
+
+    .logo img {
+        display: block;
+    }
+
+    /* Fullscreen overlay */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(20, 20, 20, 0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .overlay.show {
+        display: flex;
+    }
+
+    .overlay-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .overlay-content a {
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: color 0.2s;
+    }
+
+    .overlay-content a:hover {
+        color: var(--accent);
+    }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const hamburger = document.getElementById("hamburger");
+    const overlay = document.getElementById("overlay");
+
+    hamburger?.addEventListener("click", () => {
+      overlay.classList.toggle("show");
+    });
+  });
+</script>

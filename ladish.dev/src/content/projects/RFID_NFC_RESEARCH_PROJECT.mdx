@@ -1,0 +1,21 @@
+---
+title: 'Strengthening Contactless Systems: RFID/NFC Security Improvements'
+description: ''
+pubDate: 'Jan 28 2025'
+heroImage: '../../assets/RFID NFC Security Enhancement.jpg'
+---
+import ExternalLink from '../../components/ExternalLink.astro';
+
+Developed Prototypes: <ExternalLink href="https://github.com/LadishDev/nfc-mfa-research" label="https://github.com/LadishDev/nfc-mfa-research"/>
+
+This was part of a university research project where we were tasked with developing new technologies or ideas that could improve the world, exploring their potential benefits, and providing supporting evidence.
+
+For my project, I focused on improving the security of RFID/NFC tags. These systems are fundamentally vulnerable, as they can be easily cloned using specialised tools. While there are ongoing developments aimed at enhancing the security of these cards, hackers often catch up, eventually finding ways to bypass new protections and clone even the latest cards.
+
+To address this, I decided to develop a solution based on Multi-Factor Authentication (MFA), focusing on two main approaches: One-Time Passwords (OTP) and facial recognition. I chose these methods because they are relatively easy to implement without requiring costly rewiring of an entire building.
+
+After further research and prototyping, I selected the OTP solution. It was the simplest to implement, cost-effective, and accessible for businesses to adopt. I opted against facial recognition due to potential employee resistance to sharing biometric data with their employer or the security system provider. Therefore, OTP codes became the preferred solution.
+
+During development, I also designed the system to integrate with employees’ scheduled work hours. Cards would only function during assigned hours, preventing unauthorized access outside of those times. If an employee needed access for overtime or emergencies, they could use their OTP code via an authenticator app to verify their identity.
+
+Additionally, I introduced random OTP verification as an extra security measure. Depending on a business’s threat model, users could be required to enter their OTP code periodically—e.g., monthly—to ensure compliance. For organizations with sensitive areas, the system could implement sector-based controls, requiring OTP verification for high-security zones to guarantee that the individual accessing these areas is authorized.

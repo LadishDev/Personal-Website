@@ -1,0 +1,66 @@
+---
+title: 'FineTrack App'
+description: 'A cross-platform app for tracking vehicle fines, charges, MOT, insurance, and related expenses.'
+pubDate: '2025-09-16'
+heroImage: '../../assets/FineTrack-Images/app_logo.png'
+heroImageAlt: 'FineTrack App Logo'
+---
+
+🔗 Project Repo - https://github.com/LadishDev/FineTrack
+
+**FineTrack** is a cross-platform mobile app designed to help vehicle owners track fines, charges, MOT, insurance, and other vehicle-related expenses in one place. The app provides a secure, user-friendly dashboard for managing multiple vehicles, setting reminders, and analyzing spending trends.
+
+## 🚗 Why FineTrack?
+
+Managing a vehicle involves juggling MOT renewals, insurance, fines, and various expenses. FineTrack was created to centralize all this information, making it easy to stay organized and avoid missed deadlines or unexpected costs.
+
+## ✨ Features
+
+- **Fine Tracking:** Log and categorize fines and charges with details like date, amount, and notes.
+- **MOT & Insurance Reminders:** Set and receive notifications for upcoming renewals.
+- **Expense Management:** Track repairs, fuel, maintenance, and other costs.
+- **Dashboard Overview:** View a summary of vehicle status and upcoming deadlines.
+- **Multi-Vehicle Support:** Manage several vehicles from a single account.
+- **Data Privacy:** All data is stored securely and never shared with third parties.
+
+### Supported Fine Types
+
+- Speeding
+- Parking
+- Congestion/ULEZ/LEZ
+- Bus Lane
+- Red Light
+- Toll/Bridge/Other
+
+## 🛠️ Technology Stack
+
+- **Frontend:** React Native (cross-platform mobile)
+- **Backend:** Node.js with Express
+- **Database:** Stored Locally in App
+- **Notifications:** Push notifications for reminders
+
+## 📱 Usage
+
+1. Register and log in securely
+2. Add your vehicle(s) and enter details
+3. Log fines, expenses, and set reminders
+4. View dashboard for upcoming deadlines and spending trends
+
+## � Data Privacy
+
+FineTrack does **not** share your data with third parties. All sensitive information is encrypted in transit and at rest. User privacy and security are top priorities.
+
+## 🏗️ Roadmap & Future Plans
+
+- Allow users to signup and sync data across devices
+- Store data in MongoDB Atlas (cloud-hosted)
+- DVLA integration for automatic vehicle data import
+- Document uploads (e.g., insurance certificates)
+- Advanced analytics for spending and fine trends
+- Web dashboard for desktop access
+
+## 📈 Lessons Learned
+
+- Architecting a full-stack mobile app from scratch
+- Implementing secure authentication and data storage
+- The value of user feedback in shaping features and UI

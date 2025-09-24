@@ -1,0 +1,182 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+
+type Props = CollectionEntry<'projects'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, heroImageCaption } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: calc(100% - 2em);
+				max-width: 100%;
+				margin: 0;
+			}
+
+			/* Hero container for project detail */
+			.hero-image {
+				width: 100%;
+				max-width: 720px; /* match .prose width so hero image stays visually consistent */
+                margin: 0 auto;
+				aspect-ratio: 2 / 1;   /* 2:1 -> 720x360 */
+				overflow: hidden;
+				display: flex;
+				flex-direction: column; /* stack image then caption */
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+                background: #111;
+                border-radius: 12px;
+            }
+
+            /* Ensure astro:assets rendered img fills the container and crops/zooms */
+			.hero-image :global(img) {
+				width: 100% !important;
+				height: 100% !important;
+				object-fit: cover !important; /* crop if too big, zoom if too small */
+				display: block;
+				border-radius: inherit; /* match container rounding */
+				box-shadow: var(--box-shadow);
+			}
+
+            /* Special handling for logos to avoid harsh upscaling/cropping */
+            .hero-image :global(.logo-img) {
+                object-fit: contain !important;
+                max-height: 80% !important;
+                max-width: 90% !important;
+                width: auto !important;
+                height: auto !important;
+                padding: 1rem;
+                background: #fff;
+                border-radius: 8px;
+            }
+
+			.prose {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 1em;
+				color: rgb(var(--white-text)); /* rgb(var(--gray-dark)); */
+			}
+			.title {
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: center;
+				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+				font-size: 2.5rem;   /* adjust to your preference */
+			}
+			.date {
+				margin-bottom: 0.5em;
+				color: rgb(var(--gray));
+			}
+			.last-updated-on {
+				font-style: italic;
+			}
+
+			.hero-caption a {
+				color: rgb(var(--accent));
+				text-decoration: underline;
+			}
+
+			.hero-caption {
+				width: 100%;
+				text-align: center;
+				font-size: 0.9rem;
+				color: rgb(var(--gray));
+				font-style: italic;
+				margin: 0; /* spacing handled by container gap */
+			}
+
+			.hero-caption a {
+				color: rgb(var(--accent));
+				text-decoration: underline;
+			}
+
+			.back-button {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: 1em auto;
+				padding: 0.5em 1em;
+				background: rgb(var(--accent));
+				border-radius: 4px;
+				text-align: left;
+			}
+			
+			.back-button a {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5em;
+				color: rgb(var(--bg));
+				text-decoration: none;
+				font-weight: 500;
+			}
+			
+			.back-button:hover {
+				background: rgb(var(--accent), 0.8);
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			{Astro.url.pathname.startsWith('/projects') && (
+				<div class="back-button">
+					<a href="/projects">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M19 12H5M12 19l-7-7 7-7"/>
+						</svg>
+						Back to Projects
+					</a>
+				</div>
+			)}
+			<article>
+				<div class="hero-image">
+					{heroImage && (
+					<>
+						<Image
+						width={1020}
+						height={510}
+						src={heroImage}
+						alt={heroImageAlt || title}
+						loading="eager"
+						/>
+						{heroImageCaption && (
+							<p class="hero-caption" set:html={heroImageCaption}></p>
+						)}
+					</>
+					)}
+				</div>
+				<div class="prose">
+					<div class="title">
+						<div class="date">
+							<FormattedDate date={pubDate} />
+							{
+								updatedDate && (
+									<div class="last-updated-on">
+										Last updated on <FormattedDate date={updatedDate} />
+									</div>
+								)
+							}
+						</div>
+						<h1>{title}</h1>
+						<hr />
+					</div>
+					<slot />
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>

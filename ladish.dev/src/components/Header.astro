@@ -1,0 +1,25 @@
+---
+import Hamburger from './Hamburger.astro';
+import Navigation from './Navigation.astro';
+---
+
+<header>
+  <nav>
+    <div class="mobile-nav">
+      <Hamburger />
+    </div>
+    <div class="desktop-nav">
+      <Navigation />
+    </div>
+  </nav>
+</header>
+
+<style>
+  .mobile-nav { display: block; }
+  .desktop-nav { display: none; }
+
+  @media screen and (min-width: 721px) {
+    .mobile-nav { display: none; }
+    .desktop-nav { display: flex; }
+  }
+</style>
