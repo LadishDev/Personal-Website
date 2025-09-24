@@ -1,5 +1,7 @@
 ---
 import HeaderLink from './HeaderLink.astro';
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.svg';
 ---
 
 <header>
@@ -12,11 +14,13 @@ import HeaderLink from './HeaderLink.astro';
         <span class="line"></span>
       </div>
       <a href="/" class="logo">
-        <img
-          src="/src/assets/logo.svg"
-          alt="Logo"
+        <Image 
+          src={logo} 
+          alt="Logo" 
+          loading="eager"
           width="132"
           height="24"
+          style="vertical-align: middle; margin-right: 0.5em;"
         />
       </a>
     </div>
