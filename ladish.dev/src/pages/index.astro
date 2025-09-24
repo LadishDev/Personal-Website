@@ -90,14 +90,22 @@ import "../styles/index.css";
 		</script>
 		-->
 
-		<!-- @ts-ignore -->
-		<script client:load>
-			import('../../src/scripts/age-calculate.js')
-			.then(({ updateAge }) => {
-				updateAge('myAgeResult');  // No need to pass the date here
-			}).catch((e) => {
-				console.error('Failed to load client modules', e);
-			});
+		<script>
+			(function(){
+				var d="MjAwMy0xMS0xNQ==";
+				try{
+					var b=new Date(atob?atob(d):window.Buffer?Buffer.from(d,"base64").toString("utf8"):d),
+							t=new Date(),
+							a=t.getFullYear()-b.getFullYear(),
+							m=t.getMonth()-b.getMonth();
+					if(m<0||(m===0&&t.getDate()<b.getDate()))a--;
+					var e=document.getElementById("myAgeResult");
+					if(e)e.textContent=String(a);
+				}catch(_){
+					var e=document.getElementById("myAgeResult");
+					if(e)e.textContent="-";
+				}
+			})();
 		</script>
 		<script>
 			import "../scripts/menu.js";
