@@ -18,4 +18,16 @@ const projects = defineCollection({
 		}),
 });
 
-export const collections = { projects };
+const homelab = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    heroImage: z.string().optional(),
+    heroImageAlt: z.string().optional(),
+  }),
+});
+
+export const collections = { 
+	projects, 
+	homelab,
+};
