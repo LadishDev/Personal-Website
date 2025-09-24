@@ -1,20 +1,29 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
 import ProjectsPost from '../../layouts/ProjectsPost.astro';
+import { getCollection, getEntry, render } from 'astro:content';
 
+// build static paths (keeps prerendering)
 export async function getStaticPaths() {
-	const posts = await getCollection('projects');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
+    const posts = await getCollection('projects');
+    return posts.map((post) => ({
+        params: { slug: post.id }, // keep same id format as your collection
+    }));
 }
-type Props = CollectionEntry<'projects'>;
 
-const post = Astro.props;
-const { Content } = await render(post);
+// read slug from params and load the entry server-side
+const rawSlug = Astro.params.slug;
+const slug = Array.isArray(rawSlug) ? rawSlug.join('/') : rawSlug;
+const entry = await getEntry('projects', slug);
+
+if (!entry) {
+    throw new Response(null, { status: 404 });
+}
+
+// Use the content renderer helper (entry.render may not exist)
+const rendered = await render(entry);
+const { Content } = rendered;
 ---
 
-<ProjectsPost {...post.data}>
-	<Content />
+<ProjectsPost {...entry.data}>
+    <Content />
 </ProjectsPost>
