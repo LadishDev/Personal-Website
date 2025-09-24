@@ -20,15 +20,45 @@ const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, heroI
 				max-width: 100%;
 				margin: 0;
 			}
+
+			/* Hero container for project detail */
 			.hero-image {
 				width: 100%;
-			}
-			.hero-image img {
+				max-width: 720px; /* match .prose width so hero image stays visually consistent */
+                margin: 0 auto;
+				aspect-ratio: 2 / 1;   /* 2:1 -> 720x360 */
+				overflow: hidden;
+				display: flex;
+				flex-direction: column; /* stack image then caption */
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+                background: #111;
+                border-radius: 12px;
+            }
+
+            /* Ensure astro:assets rendered img fills the container and crops/zooms */
+			.hero-image :global(img) {
+				width: 100% !important;
+				height: 100% !important;
+				object-fit: cover !important; /* crop if too big, zoom if too small */
 				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
+				border-radius: inherit; /* match container rounding */
 				box-shadow: var(--box-shadow);
 			}
+
+            /* Special handling for logos to avoid harsh upscaling/cropping */
+            .hero-image :global(.logo-img) {
+                object-fit: contain !important;
+                max-height: 80% !important;
+                max-width: 90% !important;
+                width: auto !important;
+                height: auto !important;
+                padding: 1rem;
+                background: #fff;
+                border-radius: 8px;
+            }
+
 			.prose {
 				width: 720px;
 				max-width: calc(100% - 2em);
@@ -60,11 +90,17 @@ const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, heroI
 			}
 
 			.hero-caption {
+				width: 100%;
+				text-align: center;
 				font-size: 0.9rem;
 				color: rgb(var(--gray));
-				text-align: center;
-				margin-top: 0.5em;
 				font-style: italic;
+				margin: 0; /* spacing handled by container gap */
+			}
+
+			.hero-caption a {
+				color: rgb(var(--accent));
+				text-decoration: underline;
 			}
 
 			.back-button {

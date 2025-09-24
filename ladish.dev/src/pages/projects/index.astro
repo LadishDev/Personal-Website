@@ -40,16 +40,26 @@ const posts = (await getCollection('projects')).sort(
 				margin-bottom: 1rem;
 				text-align: center;
 			}
+			/* Make all images share the same aspect ratio and fill their card */
+			ul li img {
+				width: 100%;
+				aspect-ratio: 16 / 9; /* consistent thumbnail ratio */
+				object-fit: cover;
+				display: block;
+				margin-bottom: 0.5rem;
+				border-radius: 12px;
+			}
+
+			/* First item spans full width and therefore will be wider (visually larger) */
 			ul li:first-child img {
+				/* keeps same ratio but fills the row */
+				aspect-ratio: 16 / 9; /* a wider banner look for the top item */
 				width: 100%;
 			}
 			ul li:first-child .title {
 				font-size: 2.369rem;
 			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
+			/* (moved image styles above) */
 			ul li a {
 				display: block;
 			}
