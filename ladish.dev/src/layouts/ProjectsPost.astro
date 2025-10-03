@@ -26,19 +26,25 @@ const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, heroI
 				width: 100%;
 				max-width: 720px; /* match .prose width so hero image stays visually consistent */
                 margin: 0 auto;
-				aspect-ratio: 2 / 1;   /* 2:1 -> 720x360 */
-				overflow: hidden;
 				display: flex;
 				flex-direction: column; /* stack image then caption */
-				align-items: center;
-				justify-content: center;
 				gap: 0.5rem;
-                background: #111;
-                border-radius: 12px;
             }
 
+			/* Image wrapper with fixed aspect ratio */
+			.image-wrapper {
+				width: 100%;
+				aspect-ratio: 2 / 1;   /* 2:1 -> 720x360 */
+				overflow: hidden;
+				background: #111;
+				border-radius: 12px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
             /* Ensure astro:assets rendered img fills the container and crops/zooms */
-			.hero-image :global(img) {
+			.image-wrapper :global(img) {
 				width: 100% !important;
 				height: 100% !important;
 				object-fit: cover !important; /* crop if too big, zoom if too small */
@@ -48,7 +54,7 @@ const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, heroI
 			}
 
             /* Special handling for logos to avoid harsh upscaling/cropping */
-            .hero-image :global(.logo-img) {
+            .image-wrapper :global(.logo-img) {
                 object-fit: contain !important;
                 max-height: 80% !important;
                 max-width: 90% !important;
@@ -145,13 +151,15 @@ const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, heroI
 				<div class="hero-image">
 					{heroImage && (
 					<>
-						<Image
-						width={1020}
-						height={510}
-						src={heroImage}
-						alt={heroImageAlt || title}
-						loading="eager"
-						/>
+						<div class="image-wrapper">
+							<Image
+							width={1020}
+							height={510}
+							src={heroImage}
+							alt={heroImageAlt || title}
+							loading="eager"
+							/>
+						</div>
 						{heroImageCaption && (
 							<p class="hero-caption" set:html={heroImageCaption}></p>
 						)}
