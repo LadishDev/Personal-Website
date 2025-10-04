@@ -101,6 +101,37 @@
     gap: 0.5rem;
 }
 
+/* Collapsible Section Styles */
+.section-toggle {
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.section-toggle:hover {
+    color: #a259f7;
+}
+
+.toggle-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    min-width: 20px;
+    flex-shrink: 0;
+}
+
+.section-content {
+    max-height: 5000px;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.4s ease;
+    opacity: 1;
+}
+
+.resume-section.collapsed .section-content {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
 .resume-section h2::before {
     content: '';
     width: 4px;

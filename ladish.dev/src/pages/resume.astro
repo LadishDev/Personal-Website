@@ -48,18 +48,31 @@ import '../styles/resume.css';
                 </div>
             </section>
 
-            <section class="resume-section">
-                <h2>Summary</h2>
+            <section class="resume-section collapsible">
+                <h2 class="section-toggle">
+                    <svg class="toggle-icon" width="20" height="20" fill="currentColor" style="transform: rotate(0deg);">
+                        <use href="#icon-arrow-down"/>
+                    </svg>
+                    Summary
+                </h2>
+                <div class="section-content">
                 <div class="resume-item">
                     <p>
                         Detail-Oriented Cyber Security Graduate with a strong background in digital forensics and network hardening. 
                         Combines technical expertise with proven skills in process compliance, team leadership, and autonomous execution gained through retail management.
                     </p>
                 </div>
+                </div>
             </section>
 
-            <section class="resume-section">
-                <h2>Experience</h2>
+            <section class="resume-section collapsible collapsed">
+                <h2 class="section-toggle">
+                    <svg class="toggle-icon" width="20" height="20" fill="currentColor" style="transform: rotate(-90deg);">
+                        <use href="#icon-arrow-down"/>
+                    </svg>
+                    Experience
+                </h2>
+                <div class="section-content" style="max-height: 0;">
                 <div class="resume-item">
                     <div class="resume-item-header">
                         <div>
@@ -92,10 +105,17 @@ import '../styles/resume.css';
                         <li>Coordinated with team members to transport equipment and supplies efficiently, directly supporting the seamless operation of a large-scale facility.</li>
                     </ul>
                 </div>
+                </div>
             </section>
 
-            <section class="resume-section">
-                <h2>Education</h2>
+            <section class="resume-section collapsible collapsed">
+                <h2 class="section-toggle">
+                    <svg class="toggle-icon" width="20" height="20" fill="currentColor" style="transform: rotate(-90deg);">
+                        <use href="#icon-arrow-down"/>
+                    </svg>
+                    Education
+                </h2>
+                <div class="section-content" style="max-height: 0;">
                 <div class="resume-item">
                     <div class="resume-item-header">
                         <div>
@@ -129,10 +149,17 @@ import '../styles/resume.css';
                         <li>Strengthened analytical thinking, project management, and teamwork through practical projects and computing modules.</li>
                     </ul>
                 </div>
+                </div>
             </section>
 
-            <section class="resume-section">
-                <h2>Certifications</h2>
+            <section class="resume-section collapsible collapsed">
+                <h2 class="section-toggle">
+                    <svg class="toggle-icon" width="20" height="20" fill="currentColor" style="transform: rotate(-90deg);">
+                        <use href="#icon-arrow-down"/>
+                    </svg>
+                    Certifications
+                </h2>
+                <div class="section-content" style="max-height: 0;">
                 <div class="resume-item">
                     <ul>
                         <li>Introduction to Cybersecurity - Cisco (2025) <a href="https://www.credly.com/badges/c49795b9-0de2-4243-a48e-ca4b48e706a0" target="_blank">View Certificate</a></li>
@@ -145,10 +172,17 @@ import '../styles/resume.css';
                         All certifications can be found on my <a href="https://www.linkedin.com/in/callumbdev" target="_blank">LinkedIn Profile</a>.
                     </p>
                 </div>
+                </div>
             </section>
 
-            <section class="resume-section">
-                <h2>Skills</h2>
+            <section class="resume-section collapsible collapsed">
+                <h2 class="section-toggle">
+                    <svg class="toggle-icon" width="20" height="20" fill="currentColor" style="transform: rotate(-90deg);">
+                        <use href="#icon-arrow-down"/>
+                    </svg>
+                    Skills
+                </h2>
+                <div class="section-content" style="max-height: 0;">
                 <section class="resume-item">
                     <h3>Programming Languages</h3>
                     <ul class="resume-skills">
@@ -204,9 +238,38 @@ import '../styles/resume.css';
                         <li>NCSC Framework</li>
                     </ul>
                 </section>
+                </div>
             </section>
         </main>
         <Footer />
         <SvgIcons />
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const toggles = document.querySelectorAll('.section-toggle');
+                
+                toggles.forEach(toggle => {
+                    toggle.addEventListener('click', () => {
+                        const section = toggle.closest('.resume-section');
+                        const content = section?.querySelector('.section-content') as HTMLElement;
+                        const icon = toggle.querySelector('.toggle-icon') as SVGElement;
+                        
+                        if (!section || !content || !icon) return;
+                        
+                        if (section.classList.contains('collapsed')) {
+                            // Expand
+                            section.classList.remove('collapsed');
+                            content.style.maxHeight = content.scrollHeight + 'px';
+                            icon.style.transform = 'rotate(0deg)';
+                        } else {
+                            // Collapse
+                            section.classList.add('collapsed');
+                            content.style.maxHeight = '0';
+                            icon.style.transform = 'rotate(-90deg)';
+                        }
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
