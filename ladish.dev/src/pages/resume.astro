@@ -1,0 +1,197 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import '../styles/resume.css';
+---
+
+<html lang="en">
+    <head>
+        <BaseHead title="Resume" description="Professional resume and CV of Callum Baldwin - Cyber Security Graduate & Full-Stack Developer" />
+    </head>
+    <body>
+        <Header />
+        <main class="resume-container">
+            <section class="resume-header">
+                <div class="resume-download">
+                    <a href="/Callum-Baldwin-Resume.pdf" class="download-button" download>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download PDF
+                    </a>
+                </div>
+                <h1>Callum Baldwin</h1>
+                <p class="resume-title">Cyber Security Graduate & Full-Stack Developer</p>
+                <div class="resume-contact">
+                    <span>📍 UK</span>
+                    <span>💼 <a href="https://www.linkedin.com/in/callum-ladish/" target="_blank">LinkedIn</a></span>
+                    <span>🌐 <a href="https://ladish.dev">ladish.dev</a></span>
+                    <span>🔗 <a href="https://github.com/LadishDev" target="_blank">GitHub</a></span>
+                </div>
+            </section>
+
+            <section class="resume-section">
+                <h2>Summary</h2>
+                <div class="resume-item">
+                    <p>
+                        Detail-Oriented Cyber Security Graduate with a strong background in digital forensics and network hardening. 
+                        Combines technical expertise with proven skills in process compliance, team leadership, and autonomous execution gained through retail management.
+                    </p>
+                </div>
+            </section>
+
+            <section class="resume-section">
+                <h2>Experience</h2>
+                <div class="resume-item">
+                    <div class="resume-item-header">
+                        <div>
+                            <h3>Retail Assistant</h3>
+                            <span class="resume-company">Sainsbury's</span>
+                        </div>
+                        <span class="resume-date">September 2023 – May 2025</span>
+                        <span class="resume-location">Bath</span>
+                    </div>
+                    <ul>
+                        <li>Assumed an interim supervisory role during manager changeovers to ensure procedural compliance and coordinate the night team’s workflow, maintaining operational momentum.</li>
+                        <li>Independently managed set aisles and sections to achieve 100% completion of stocking and merchandising goals nightly without direct supervision</li>
+                        <li>Streamlined the breakdown and handling of time-sensitive fresh and frozen deliveries, accelerating the process for the incoming floor team by an estimated 15%.</li>
+                        <li>Maintained strict inventory rotation and presentation standards, ensuring full compliance with safety protocols and minimizing product spoilage within assigned sections.</li>
+                </div>
+                
+                <div class="resume-item">
+                    <div class="resume-item-header">
+                        <div>
+                            <h3>Porter</h3>
+                            <span class="resume-company">Clarity Housekeeping</span>
+                        </div>
+                        <span class="resume-date">July 2022 – August 2022</span>
+                        <span class="resume-location">Cheshunt</span>
+                    </div>
+                    <ul>
+                        <li>Optimized storage capacity and implemented a systematic organization method for 3+ storage rooms, reducing the time spent locating essential supplies by an estimated 15%.</li>
+                        <li>Proactively replenished and managed equipment inventory across 3 floors, ensuring 100% availability of necessary materials for the housekeeping team's daily operations.</li>
+                        <li>Resolved guest inquiries and issues promptly and professionally, enhancing their stay and consistently leading to positive feedback.</li>
+                        <li>Coordinated with team members to transport equipment and supplies efficiently, directly supporting the seamless operation of a large-scale facility.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="resume-section">
+                <h2>Education</h2>
+                <div class="resume-item">
+                    <div class="resume-item-header">
+                        <div>
+                            <h3>BSc (Hons) Cyber Security</h3>
+                            <span class="resume-company">Bath Spa University</span>
+                        </div>
+                        <span class="resume-date">2025</span>
+                    </div>
+                    <ul>
+                        <li>Developed practical skills in C++ programming, web development, and database design to build and analyse applications.</li>
+                        <li>Applied industry tools in digital forensics and intrusion analysis to investigate threats and respond to security incidents.</li>
+                        <li>Configured and administered routers, networks, and security protocols, strengthening knowledge of infrastructure management.</li>
+                        <li>Explored cyber offence, cyber defence, IoT security, and critical infrastructure protection to understand real-world attack and defence strategies.</li>
+                        <li>Gained awareness of cyber resilience, law, and ethics, applying this to organisational and regulatory contexts.</li>
+                        <li>Completed a research project addressing a contemporary cybersecurity challenge, combining technical and analytical skills.</li>
+                    </ul>
+                </div>
+
+                <div class="resume-item">
+                    <div class="resume-item-header">
+                        <div>
+                            <h3>BTEC National Extended Diploma Computing</h3>
+                            <span class="resume-company">Ada National College For Digital Skills</span>
+                        </div>
+                        <span class="resume-date">2022</span>
+                    </div>
+                    <ul>
+                        <li>Achieved D* D* D, gaining hands-on experience in programming (Python, Java), web and mobile development, game development, software design, and database management.</li>
+                        <li>Developed practical skills in network configuration, system administration, IT security, and encryption.</li>
+                        <li>Built expertise in digital forensics, human-computer interaction, and IT problem-solving, applying knowledge to real-world challenges</li>
+                        <li>Strengthened analytical thinking, project management, and teamwork through practical projects and computing modules.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="resume-section">
+                <h2>Certifications</h2>
+                <div class="resume-item">
+                    <ul>
+                        <li>Introduction to Cybersecurity - Cisco (2025) <a href="https://www.credly.com/badges/c49795b9-0de2-4243-a48e-ca4b48e706a0" target="_blank">View Certificate</a></li>
+                        <li>Networking Essentials - Cisco (2021) <a href="https://www.credly.com/badges/900f0a06-8109-44cc-8a65-98ea51de1ce7" target="_blank">View Certificate</a></li>
+                        <li>NDG Linux Essentials – Cisco (2021) - Received Physical Certificate</li>
+                        <li>Introduction to Packet Tracer – Cisco (2021) <a href="https://www.credly.com/badges/710fdb10-d8fb-45f2-9e6b-f947f2268772" target="_blank">View Certificate</a></li>
+                    </ul><br>
+                    <p> 
+                        * Physical certificates available upon request * <br>
+                        All certifications can be found on my <a href="https://www.linkedin.com/in/callumbdev" target="_blank">LinkedIn Profile</a>.
+                    </p>
+                </div>
+            </section>
+
+            <section class="resume-section">
+                <h2>Skills</h2>
+                <section class="resume-item">
+                    <h3>Programming Languages</h3>
+                    <ul class="resume-skills">
+                        <li>Python</li>
+                        <li>Java</li>
+                        <li>C++</li>
+                        <li>SQL</li>
+                        <li>JavaScript</li>
+                        <li>Astro</li>
+                        <li>HTML & CSS</li>
+                    </ul>
+                </section>
+
+                <section class="resume-item">
+                    <h3>Cyber Security</h3>
+                    <ul class="resume-skills">
+                        <li>Threat Analysis</li>
+                        <li>Digital Forensics</li>
+                        <li>Network Hardening</li>
+                        <li>Intrusion Detection/Prevention</li>
+                        <li>Vulnerability Assessment</li>
+                        <li>Encryption</li>
+                        <li>Risk Management</li>
+                    </ul>
+                </section>
+
+                <section class="resume-item">
+                    <h3>Tools & Platforms</h3>
+                    <ul class="resume-skills">
+                        <li>Wireshark</li>
+                        <li>Metasploit</li>
+                        <li>Nmap</li>
+                        <li>Kali Linux</li>
+                        <li>VMware</li>
+                        <li>QEMU</li>
+                        <li>MySQL</li>
+                        <li>Burp Suite</li>
+                        <li>Cisco Packet Tracer</li>
+                        <li>Proxmox</li>
+                    </ul>
+                </section>
+
+                <section class="resume-item">
+                    <h3>Methodologies</h3>
+                    <ul class="resume-skills">
+                        <li>Agile Methodology</li>
+                        <li>Web Security</li>
+                        <li>OSINT</li>
+                        <li>Technical Documentation</li>
+                        <li>Project Management</li>
+                        <li>Incident Response</li>
+                        <li>Nist Framework</li>
+                        <li>NCSC Framework</li>
+                    </ul>
+                </section>
+            </section>
+        </main>
+        <Footer />
+    </body>
+</html>
