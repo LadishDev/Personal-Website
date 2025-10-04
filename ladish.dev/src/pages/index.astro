@@ -3,112 +3,199 @@ import { Image } from 'astro:assets';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import SvgIcons from '../components/SvgIcons.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-
-// Import your image asset
 import ladishImg from '../assets/ladish.webp';
-
+import photography1 from "../assets/photography1.jpg";
 import "../styles/global.css";
 import "../styles/index.css";
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<div class="container">
-			<section class="section-containers">
-				<section class="aboutme-container">
-					<div class="p-picture">
-						<Image 
-							src={ladishImg} 
-							alt="camera and person in mirror" 
-							loading="eager"
-						/>
-					</div>
-					<div class="text-information">
-						<!--
-
-						Currently broken, needs fixing for mobile and tablet screen sizes
-
-						<h2 id="typewriter">
-						<a href="#" class="typewrite" data-period="2000" data-type='["I am a developer", "A tech enthusiast", "A photographer"]'>
-							<span class="wrap"></span>
-						</a>
-						</h2>
-						-->
-						<h1>Hello, There!</h1>
-						<p>
-							My name is Callum, I am <span id="myAgeResult">--</span> years old and I am from the UK.
-							I am a recent Cyber Security Graduate.
-							I have a passion for developing things and am currently working on a few projects.
-							Also, on the side I am a photographer and I love to take photos of nature and landscapes.
-						</p>
-					</div>
-				</section>
-			</section>
-		</div>
-		<main>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <div class="home-container">
+      <section class="hero-section">
+        <div class="hero-image">
+          <div class="image-frame">
+            <Image 
+              src={ladishImg} 
+              alt="Callum Ladish" 
+              loading="eager"
+            />
+          </div>
+        </div>
+        <div class="hero-content">
+          <h1 class="hero-title">
+            I am <span class="hero-highlight">Callum Baldwin</span>
+          </h1>
+          <div class="hero-subtitle">Cyber Security Graduate & Full-Stack Developer</div>
+          <p class="hero-description">
+            <strong>Age: <span id="myAgeResult">21</span> | UK</strong><br>
+           	Passionate about development and currently working on several projects. Outside of tech, I enjoy photography, especially capturing nature and landscapes.
+          </p>
+          <div class="action-buttons">
+            <a href="/resume" class="action-button primary">View Resume</a>
+            <a href="/projects" class="action-button secondary">View Projects</a>
+          </div>
+          <div class="hero-links">
+            <a href="https://bsky.app/profile/ladishdev.bsky.social" aria-label="BlueSky" target="_blank" rel="noopener">
+              <svg width="20" height="20" fill="currentColor"><use href="#icon-bluesky"/></svg>
+            </a>
+            <a href="https://github.com/LadishDev" aria-label="GitHub" target="_blank" rel="noopener">
+              <svg width="20" height="20" fill="currentColor"><use href="#icon-github"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/callumbdev" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg width="20" height="20" fill="currentColor"><use href="#icon-linkedin"/></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+      <div class="scroll-indicator">
+        <span class="scroll-text">Scroll to explore</span>
+        <svg class="scroll-arrow" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <use href="#icon-arrow-down"/>
+        </svg>
+      </div>
+    </div>
+    <main>
+	  <p class="content-subtitle">
+		Passionate about cybersecurity, development, and emerging tech that makes an impact.
+	  </p>
+	
+	  <div class="content-grid">
+		<section class="bubble-section feature-card">
+		  <div class="card-header">
+			<span class="card-icon">👨‍💻</span>
 			<h2>About Me</h2>
-			<p>
-				I am Callum, a dedicated Cyber Security Graduate with a passion for Network Security. My background includes
-				a BSc (Hons) in Cyber Security and a strong interest in network security, particularly in the areas of
-				network monitoring, intrusion detection, and incident response. You can find a detailed overview of my
-				education and experience in my <a href="/about">About</a> page.
-			</p>
-			<br>
-			<h2>Projects</h2>
-			<p>
-				In the Projects section, you'll discover a selection of my work, including personal projects highlighting my
-				skills and creativity. Each project showcases my approach to problem solving and my passion for technology.
-				Feel free to explore the <a href="/projects">Projects</a> for insights
-			</p>
-			<br>
-			<h2>Connect with Me</h2>
-			<p>
-				I love networking and connecting with like-minded individuals. If you have any questions, suggestions, or just want to chat about tech, feel free to reach out!
-			</p>
-		</main>
-		<Footer />
-		<!-- @ts-ignore -->
-		<!--
-		<script client:load>
-			// dynamic import so it's available in the browser context
-			Promise.all([
-				import('/scripts/typewriter.js'),
-				import('/scripts/age-calculate.js')
-			]).then(([{ initTypewriter }, { updateAge }]) => {
-				console.log('Client script running');
-				initTypewriter();
-				updateAge('myAgeResult', '2003-11-15');
-			}).catch((e) => {
-				console.error('Failed to load client modules', e);
-			});
-		</script>
-		-->
-
-		<script>
-			(function(){
-				var d="MjAwMy0xMS0xNQ==";
-				try{
-					var b=new Date(atob?atob(d):window.Buffer?Buffer.from(d,"base64").toString("utf8"):d),
-							t=new Date(),
-							a=t.getFullYear()-b.getFullYear(),
-							m=t.getMonth()-b.getMonth();
-					if(m<0||(m===0&&t.getDate()<b.getDate()))a--;
-					var e=document.getElementById("myAgeResult");
-					if(e)e.textContent=String(a);
-				}catch(_){
-					var e=document.getElementById("myAgeResult");
-					if(e)e.textContent="-";
-				}
-			})();
-		</script>
-		<script>
-			import "../scripts/menu.js";
-		</script>
-	</body>
+		  </div>
+		  <p>
+			I’m a passionate tech enthusiast and software developer with a strong interest in cybersecurity, IoT, and innovative software solutions. 
+			I thrive on solving complex challenges, designing secure systems, and continuously exploring new technologies. 
+			Alongside development, I enjoy sharing knowledge through my projects and contributions, aiming to create impactful and reliable solutions.
+		  </p>
+		</section>
+	
+		<section class="bubble-section feature-card">
+		  <div class="card-header">
+			<span class="card-icon">🛠️</span>
+			<h2>Technical Skills</h2>
+		  </div>
+		  <p class="section-intro">Technologies and domains I work with:</p>
+		  <div class="skills-grid">
+			<span class="skill-tag">Python</span>
+			<span class="skill-tag">C++</span>
+			<span class="skill-tag">Astro</span>
+			<span class="skill-tag">Cybersecurity</span>
+			<span class="skill-tag">Risk Management</span>
+			<span class="skill-tag">Cloud Computing</span>
+			<span class="skill-tag">Networking</span>
+			<span class="skill-tag">IoT</span>
+			<span class="skill-tag">Embedded Systems</span>
+			<span class="skill-tag">Data Analysis</span>
+			<span class="skill-tag">Machine Learning</span>
+		  </div>
+		</section>
+	  </div>
+	
+	  <section class="bubble-section">
+		<div class="card-header">
+		  <span class="card-icon">🚀</span>
+		  <h2>Highlighted Projects</h2>
+		</div>
+		<p class="section-intro">
+		  I love turning ideas into real projects. Here are some highlights from my work:
+		</p>
+		<div class="projects-list">
+		  <a href="/projects/machine_learning_using_gps_data" class="project-item-link">
+			<div class="project-item">
+			  <h3>IoT GPS Tracker</h3>
+			  <p>Built a device to collect transport data and analyze routes using machine learning algorithms for optimizing efficiency.</p>
+			</div>
+		  </a>
+		  <a href="/projects/rfid_nfc_research_project" class="project-item-link">
+			<div class="project-item">
+			  <h3>Cybersecurity Assessment</h3>
+			  <p>Conducted vulnerability scanning and threat mitigation strategies for simulated corporate environments using industry-standard tools.</p>
+			</div>
+		  </a>
+		  <a href="/projects/personal-website" class="project-item-link">
+			<div class="project-item">
+			  <h3>Personal Website</h3>
+			  <p>Designed a modern, responsive site using Astro and custom CSS for optimal performance and user experience. This site :]</p>
+			</div>
+		  </a>
+		</div>
+		<a href="/projects" class="card-link">
+		  View All Projects →
+		</a>
+	  </section>
+	
+	  <section class="bubble-section">
+		<div class="card-header">
+		  <span class="card-icon">🏠</span>
+		  <h2>Homelab</h2>
+		</div>
+		<p>
+		  Alongside my projects, I also maintain a personal <strong>homelab</strong> where I experiment
+		  with virtualization, networking, and self-hosted services. My homelab allows me to explore
+		  real-world deployments of tools like <em>Proxmox</em>, <em>Docker</em>, and various
+		  cybersecurity monitoring systems.
+		</p>
+		<p>
+		  I document and share the services I run on a dedicated page:
+		</p>
+		<a href="/homelab" class="card-link">
+		  Explore My Homelab →
+		</a>
+	  </section>
+	
+	  <section class="bubble-section">
+		<div class="card-header">
+		  <span class="card-icon">📸</span>
+		  <h2>Interests</h2>
+		</div>
+		<p>
+		  Outside of coding, I enjoy photography, exploring tech gadgets, cycling, and learning
+		  about emerging technologies like AI and IoT.
+		</p>
+		<div class="image-container">
+		  <Image src={photography1} alt="Sunset of waves crashing up and through rocks" />
+		</div>
+		<p>
+		  To find out more feel free to have a look at my photography Instagram account:
+		</p>
+		<a href="https://instagram.com/callumb.photography" target="_blank" rel="noopener noreferrer" class="card-link">
+		  @callumb.photography →
+		</a>
+	  </section>
+	</main>
+	<Footer />
+	<SvgIcons />
+    <script>
+      (function(){
+        var d="MjAwMy0xMS0xNQ==";
+        try{
+          var b=new Date(atob?atob(d):window.Buffer?Buffer.from(d,"base64").toString("utf8"):d),
+              t=new Date(),
+              a=t.getFullYear()-b.getFullYear(),
+              m=t.getMonth()-b.getMonth();
+          if(m<0||(m===0&&t.getDate()<b.getDate()))a--;
+          var e=document.getElementById("myAgeResult");
+          if(e)e.textContent=String(a);
+          var e2=document.getElementById("myAgeResult2");
+          if(e2)e2.textContent=String(a);
+        }catch(_){
+          var e=document.getElementById("myAgeResult");
+          if(e)e.textContent="21";
+          var e2=document.getElementById("myAgeResult2");
+          if(e2)e2.textContent="21";
+        }
+      })();
+    </script>
+  </body>
 </html>
