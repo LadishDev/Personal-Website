@@ -1,0 +1,89 @@
+/* Retro Terminal Color Palette */
+:root {
+  --vt-c-terminal-black: #0a0a0a;
+  --vt-c-terminal-black-soft: #1a1a1a;
+  --vt-c-terminal-black-mute: #252525;
+
+  --vt-c-amber: #ff9900;
+  --vt-c-amber-bright: #ffaa00;
+  --vt-c-amber-dim: rgba(255, 170, 0, 0.6);
+  
+  --vt-c-white: #ffffff;
+  --vt-c-white-soft: #f8f8f8;
+  --vt-c-white-mute: #f2f2f2;
+
+  --vt-c-divider-amber: rgba(255, 153, 0, 0.3);
+  --vt-c-divider-amber-bright: rgba(255, 153, 0, 0.5);
+}
+
+/* semantic color variables for this project */
+:root {
+  --color-background: var(--vt-c-terminal-black);
+  --color-background-soft: var(--vt-c-terminal-black-soft);
+  --color-background-mute: var(--vt-c-terminal-black-mute);
+
+  --color-border: var(--vt-c-divider-amber);
+  --color-border-hover: var(--vt-c-divider-amber-bright);
+
+  --color-heading: var(--vt-c-amber-bright);
+  --color-text: var(--vt-c-amber-dim);
+  --color-text-bright: var(--vt-c-amber);
+
+  --section-gap: 160px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #000000;
+    --color-background-soft: var(--vt-c-terminal-black);
+    --color-background-mute: var(--vt-c-terminal-black-soft);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  font-family:
+    'Courier New',
+    'Consolas',
+    'Monaco',
+    'Lucida Console',
+    monospace;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Scanline effect on entire page */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}

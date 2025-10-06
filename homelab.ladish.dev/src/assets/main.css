@@ -1,0 +1,26 @@
+@import './base.css';
+
+#app {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  width: 100%;
+  min-height: 100vh;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: #ff9900;
+  transition: 0.4s;
+  padding: 3px;
+  text-shadow: 0 0 5px rgba(255, 153, 0, 0.5);
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: rgba(255, 153, 0, 0.15);
+    color: #ffaa00;
+    text-shadow: 0 0 10px rgba(255, 170, 0, 0.8);
+  }
+}
