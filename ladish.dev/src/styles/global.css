@@ -50,11 +50,18 @@ body {
 	/* Prevent layout shift from scrollbar appearing/disappearing */
 	overflow-y: scroll;
 }
-main {
-	width: 720px;
-	max-width: calc(100% - 2em);
+main:not(.resume-container) {
+	width: 100%;
+	max-width: 100%;
 	margin: auto;
-	padding: 3em 1em;
+	padding: 3em 1rem;
+	box-sizing: border-box;
+}
+
+@media (min-width: 769px) {
+	main:not(.resume-container) {
+		padding: 3em 2rem;
+	}
 }
 h1,
 h2,
