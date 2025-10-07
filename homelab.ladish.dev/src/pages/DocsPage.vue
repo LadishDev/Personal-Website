@@ -4,6 +4,7 @@ import SearchBar from '../components/SearchBar.vue'
 import { useDocs } from '../composables/useDocumentation.js'
 
 const searchQuery = ref('')
+const activeFilter = ref('all') // 'all', 'services', 'guides'
 
 // Load documentation and guides dynamically from MDX files
 const { docs: allDocs, guides: allGuides, loading, error } = useDocs()
@@ -35,6 +36,10 @@ const filteredGuides = computed(() => {
   })
 })
 
+// Show/hide sections based on active filter
+const showServices = computed(() => activeFilter.value === 'all' || activeFilter.value === 'services')
+const showGuides = computed(() => activeFilter.value === 'all' || activeFilter.value === 'guides')
+
 const hasResults = computed(() => 
   filteredDocs.value.length > 0 || filteredGuides.value.length > 0
 )
@@ -57,6 +62,31 @@ const isSearching = computed(() => searchQuery.value.length > 0)
       placeholder="search documentation..."
     />
 
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button 
+        class="filter-tab" 
+        :class="{ active: activeFilter === 'all' }"
+        @click="activeFilter = 'all'"
+      >
+        All ({{ allDocs.length + allGuides.length }})
+      </button>
+      <button 
+        class="filter-tab" 
+        :class="{ active: activeFilter === 'services' }"
+        @click="activeFilter = 'services'"
+      >
+        Services ({{ allDocs.length }})
+      </button>
+      <button 
+        class="filter-tab" 
+        :class="{ active: activeFilter === 'guides' }"
+        @click="activeFilter = 'guides'"
+      >
+        Guides ({{ allGuides.length }})
+      </button>
+    </div>
+
     <!-- Loading State -->
     <div v-if="loading" class="loading-state">
       <span class="loading-spinner">⟳</span> Loading documentation...
@@ -73,7 +103,7 @@ const isSearching = computed(() => searchQuery.value.length > 0)
         No results found for: <span class="search-query-display">{{ searchQuery }}</span>
       </div>
 
-    <section class="section-group" v-if="filteredDocs.length > 0">
+    <section class="section-group" v-if="showServices && filteredDocs.length > 0">
       <h2 class="section-title">Services</h2>
       <div class="doc-grid">
         <a 
@@ -96,7 +126,7 @@ const isSearching = computed(() => searchQuery.value.length > 0)
       </div>
     </section>
 
-    <section class="section-group" v-if="filteredGuides.length > 0">
+    <section class="section-group" v-if="showGuides && filteredGuides.length > 0">
       <h2 class="section-title">Guides & Tutorials</h2>
       <div class="guide-list">
         <div 
@@ -149,6 +179,45 @@ const isSearching = computed(() => searchQuery.value.length > 0)
   padding: 15px 20px;
   background: rgba(255, 153, 0, 0.05);
   box-shadow: 0 0 10px rgba(255, 153, 0, 0.2);
+}
+
+/* Filter Tabs */
+.filter-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 30px 0;
+  border-bottom: 2px solid rgba(255, 153, 0, 0.2);
+  padding-bottom: 0;
+}
+
+.filter-tab {
+  padding: 12px 24px;
+  background: transparent;
+  border: 2px solid rgba(255, 153, 0, 0.3);
+  border-bottom: none;
+  color: rgba(255, 170, 0, 0.7);
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  bottom: -2px;
+}
+
+.filter-tab:hover {
+  background: rgba(255, 153, 0, 0.1);
+  color: #ff9900;
+  text-shadow: 0 0 8px rgba(255, 153, 0, 0.6);
+}
+
+.filter-tab.active {
+  background: rgba(255, 153, 0, 0.15);
+  border-color: #ff9900;
+  color: #ff9900;
+  text-shadow: 0 0 10px rgba(255, 153, 0, 0.8);
+  box-shadow: 0 0 15px rgba(255, 153, 0, 0.3);
 }
 
 /* No Results Message */
