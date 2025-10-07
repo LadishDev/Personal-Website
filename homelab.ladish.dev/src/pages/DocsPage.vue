@@ -106,8 +106,16 @@ const isSearching = computed(() => searchQuery.value.length > 0)
         >
           <span class="guide-icon">{{ guide.icon }}</span>
           <div class="guide-content">
-            <h3>{{ guide.title }}</h3>
+            <div class="guide-header">
+              <h3>{{ guide.title }}</h3>
+              <span class="doc-status" :class="{ pending: guide.status === 'pending' }">
+                {{ guide.status === 'documented' ? '● DOCUMENTED' : '○ IN PROGRESS' }}
+              </span>
+            </div>
             <p>{{ guide.description }}</p>
+            <div class="guide-meta">
+              <span>Last updated: {{ guide.updated }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -337,9 +345,20 @@ const isSearching = computed(() => searchQuery.value.length > 0)
   min-width: 40px;
 }
 
+.guide-content {
+  flex: 1;
+}
+
+.guide-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
 .guide-content h3 {
   font-size: 1.1rem;
-  margin: 0 0 5px 0;
+  margin: 0;
   color: var(--color-heading);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -349,7 +368,16 @@ const isSearching = computed(() => searchQuery.value.length > 0)
 .guide-content p {
   font-size: 0.9rem;
   color: var(--color-text);
-  margin: 0;
+  margin: 0 0 10px 0;
   line-height: 1.5;
+}
+
+.guide-meta {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 153, 0, 0.3);
+  font-size: 0.85rem;
+  color: rgba(255, 170, 0, 0.6);
+  font-style: italic;
 }
 </style>

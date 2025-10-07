@@ -28,8 +28,6 @@ sudo apt-get install docker-compose-plugin
 All services are defined in docker-compose.yml files for easy management:
 
 ```yaml
-version: '3.8'
-
 services:
   nginx-proxy:
     image: 'jc21/nginx-proxy-manager:latest'
@@ -51,10 +49,10 @@ services:
 - `docker exec -it [container] bash` - Access container shell
 
 ### Docker Compose
-- `docker-compose up -d` - Start services in detached mode
-- `docker-compose down` - Stop and remove containers
-- `docker-compose pull` - Pull latest images
-- `docker-compose restart` - Restart all services
+- `docker compose up -d` - Start services in detached mode
+- `docker compose down` - Stop and remove containers
+- `docker compose pull` - Pull latest images
+- `docker compose restart` - Restart all services
 
 ## Best Practices
 
