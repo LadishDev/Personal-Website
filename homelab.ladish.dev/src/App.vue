@@ -121,6 +121,7 @@ provide('currentPage', currentPage)
   min-height: 100vh;
   gap: 0;
   background: var(--color-background);
+  align-items: stretch;
 }
 
 /* Hide sidebar on screens smaller than 1024px */

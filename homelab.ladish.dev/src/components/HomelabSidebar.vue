@@ -130,8 +130,11 @@ onMounted(() => {
   color: #ffaa00;
   flex-shrink: 0;
   min-height: 100vh;
+  height: auto;
   font-family: 'Courier New', 'Consolas', monospace;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Scanline effect overlay */
@@ -161,6 +164,10 @@ onMounted(() => {
   box-shadow: 0 0 10px rgba(255, 153, 0, 0.3), inset 0 0 10px rgba(255, 153, 0, 0.1);
   position: relative;
   z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 .sidebar-header {
