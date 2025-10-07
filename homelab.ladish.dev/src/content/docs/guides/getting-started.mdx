@@ -1,0 +1,159 @@
+---
+title: Getting Started with Homelab
+description: A beginner's guide to setting up your first homelab server
+icon: 📝
+tags: [beginner, setup, guide, getting started]
+---
+
+## Introduction
+
+Welcome to the world of homelabbing! This guide will help you get started with building your own homelab from scratch.
+
+## What is a Homelab?
+
+A homelab is a personal lab environment where you can experiment with servers, networking, virtualization, and various services in a safe, controlled environment. It's perfect for:
+
+- Learning new technologies
+- Testing software before production deployment
+- Running personal services (media servers, file storage, etc.)
+- Building professional skills
+- Having fun with technology!
+
+## Choosing Your Hardware
+
+### Budget Options ($200-500)
+- **Raspberry Pi cluster**: Great for learning Kubernetes and containerization
+- **Used office PC**: Dell OptiPlex or HP EliteDesk machines are excellent starting points
+- **Synology/QNAP NAS**: All-in-one solution for storage and apps
+
+### Mid-Range ($500-1500)
+- **Custom-built server**: AMD Ryzen or Intel Core i5/i7 with 32GB+ RAM
+- **Used enterprise server**: Dell PowerEdge R720 or HP ProLiant DL380
+- **Mini PC**: Intel NUC or similar compact options
+
+### High-End ($1500+)
+- **Workstation**: Threadripper or Xeon processors with 64GB+ RAM
+- **Modern enterprise servers**: Dell PowerEdge R740 or newer
+- **Custom builds**: Multiple servers for different purposes
+
+## Essential Software
+
+### Virtualization Platform
+- **Proxmox VE**: Free, open-source, enterprise-grade virtualization
+- **VMware ESXi**: Industry standard (free tier available)
+- **Hyper-V**: Built into Windows Server
+
+### Operating Systems
+- **Ubuntu Server**: Beginner-friendly Linux distribution
+- **Debian**: Stable and reliable for servers
+- **CentOS/Rocky Linux**: Enterprise-focused options
+
+### Container Platform
+- **Docker**: Industry standard for containerization
+- **Podman**: Docker alternative with rootless containers
+- **Kubernetes**: Production-grade container orchestration
+
+## First Steps
+
+### 1. Install Your Hypervisor
+Start with Proxmox VE if you're new:
+```bash
+# Download Proxmox VE ISO
+# Create bootable USB with Rufus or Etcher
+# Boot from USB and follow installer
+```
+
+### 2. Create Your First VM
+- Download Ubuntu Server ISO
+- Create a new VM in Proxmox
+- Allocate 2GB RAM and 2 CPU cores
+- Install Ubuntu Server
+
+### 3. Install Docker
+```bash
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+# Add user to docker group
+sudo usermod -aG docker $USER
+```
+
+### 4. Deploy Your First Service
+```bash
+# Run Pi-hole for network-wide ad blocking
+docker run -d \
+  --name pihole \
+  -p 53:53/tcp -p 53:53/udp \
+  -p 80:80 \
+  -e TZ="America/New_York" \
+  pihole/pihole:latest
+```
+
+## Network Setup
+
+### Basic Network Configuration
+1. **Static IP**: Assign a static IP to your server
+2. **Port Forwarding**: Configure router for external access
+3. **DNS**: Set up local DNS resolution
+4. **Firewall**: Configure basic firewall rules
+
+### VLAN Segmentation (Advanced)
+- Management VLAN: For server management interfaces
+- Services VLAN: For running services
+- DMZ VLAN: For public-facing services
+- Guest VLAN: For untrusted devices
+
+## Best Practices
+
+### Security
+1. **Keep systems updated**: Regular updates are critical
+2. **Use strong passwords**: Or better yet, SSH keys
+3. **Enable firewalls**: Block unnecessary ports
+4. **Regular backups**: Test your backups regularly
+5. **Monitor logs**: Watch for suspicious activity
+
+### Organization
+1. **Document everything**: Keep notes on configurations
+2. **Use version control**: Git for configs and scripts
+3. **Label everything**: Physical and virtual resources
+4. **Create diagrams**: Network topology and service maps
+
+### Maintenance
+1. **Schedule updates**: Regular maintenance windows
+2. **Monitor resources**: CPU, RAM, disk usage
+3. **Test backups**: Verify backup integrity monthly
+4. **Plan upgrades**: Stay current with hardware and software
+
+## Common Mistakes to Avoid
+
+1. **Over-complicating**: Start simple, expand gradually
+2. **No backups**: Always have a backup strategy
+3. **Poor documentation**: Document as you go
+4. **Ignoring security**: Security should be priority one
+5. **No redundancy**: Plan for failures
+
+## Next Steps
+
+Once you have the basics running:
+1. Set up automated backups
+2. Implement monitoring (Grafana + Prometheus)
+3. Configure reverse proxy (Nginx Proxy Manager)
+4. Set up VPN for remote access
+5. Explore container orchestration (Docker Compose, then Kubernetes)
+
+## Resources
+
+- **r/homelab**: Reddit community for homelabbers
+- **ServeTheHome**: Hardware reviews and guides
+- **HomelabOS**: Pre-configured homelab software stack
+- **Awesome-Selfhosted**: List of self-hosted services
+
+## Conclusion
+
+Building a homelab is a journey, not a destination. Start small, learn as you go, and most importantly—have fun! The skills you develop will be valuable both professionally and personally.
+
+Welcome to the homelab community! 🎉

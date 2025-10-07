@@ -1,96 +1,19 @@
 <script setup>
 import { ref, computed } from 'vue'
 import SearchBar from '../components/SearchBar.vue'
+import { useDocs } from '../composables/useDocumentation.js'
 
 const searchQuery = ref('')
 
-// All documentation items
-const allDocs = [
-  // Infrastructure
-  {
-    category: 'infrastructure',
-    title: 'Proxmox VE',
-    description: 'Virtualization platform setup, VM management, and container orchestration',
-    status: 'documented',
-    updated: 'Oct 2025',
-    link: '#proxmox',
-    tags: ['virtualization', 'vm', 'containers', 'proxmox']
-  },
-  {
-    category: 'infrastructure',
-    title: 'Network Configuration',
-    description: 'VLANs, firewall rules, and network topology',
-    status: 'documented',
-    updated: 'Oct 2025',
-    link: '#networking',
-    tags: ['network', 'vlan', 'firewall', 'topology']
-  },
-  // Services
-  {
-    category: 'services',
-    title: 'Pi-hole',
-    description: 'Network-wide ad blocking, DNS configuration, and custom blocklists',
-    status: 'documented',
-    updated: 'Oct 2025',
-    link: '#pihole',
-    tags: ['dns', 'ad blocking', 'pihole', 'network']
-  },
-  {
-    category: 'services',
-    title: 'Docker & Compose',
-    description: 'Container management, docker-compose stacks, and deployment strategies',
-    status: 'documented',
-    updated: 'Oct 2025',
-    link: '#docker',
-    tags: ['docker', 'containers', 'compose', 'deployment']
-  },
-  {
-    category: 'services',
-    title: 'Nginx Proxy Manager',
-    description: 'Reverse proxy setup, SSL certificates, and domain management',
-    status: 'documented',
-    updated: 'Oct 2025',
-    link: '#nginx',
-    tags: ['proxy', 'nginx', 'ssl', 'certificates', 'reverse proxy']
-  },
-  {
-    category: 'services',
-    title: 'Monitoring Stack',
-    description: 'Grafana, Prometheus, and system monitoring setup',
-    status: 'pending',
-    updated: 'Coming soon',
-    link: '#monitoring',
-    tags: ['monitoring', 'grafana', 'prometheus', 'metrics']
-  }
-]
-
-const guides = [
-  {
-    icon: '[📝]',
-    title: 'Getting Started with Homelab',
-    description: 'A beginner\'s guide to setting up your first homelab server',
-    tags: ['beginner', 'setup', 'guide', 'getting started']
-  },
-  {
-    icon: '[🔧]',
-    title: 'Backup & Recovery Strategies',
-    description: 'How I backup my homelab and disaster recovery procedures',
-    tags: ['backup', 'recovery', 'disaster recovery', 'restore']
-  },
-  {
-    icon: '[🔒]',
-    title: 'Security Best Practices',
-    description: 'Securing your homelab: firewalls, VPNs, and access control',
-    tags: ['security', 'firewall', 'vpn', 'access control']
-  }
-]
+// Load documentation and guides dynamically from MDX files
+const { docs: allDocs, guides: allGuides, loading, error } = useDocs()
 
 // Computed filtered results
 const filteredDocs = computed(() => {
-  if (!searchQuery.value) return allDocs
+  if (!searchQuery.value) return allDocs.value
   
   const query = searchQuery.value.toLowerCase()
-  return allDocs.filter(doc => {
+  return allDocs.value.filter(doc => {
     return (
       doc.title.toLowerCase().includes(query) ||
       doc.description.toLowerCase().includes(query) ||
@@ -100,10 +23,10 @@ const filteredDocs = computed(() => {
 })
 
 const filteredGuides = computed(() => {
-  if (!searchQuery.value) return guides
+  if (!searchQuery.value) return allGuides.value
   
   const query = searchQuery.value.toLowerCase()
-  return guides.filter(guide => {
+  return allGuides.value.filter(guide => {
     return (
       guide.title.toLowerCase().includes(query) ||
       guide.description.toLowerCase().includes(query) ||
@@ -111,14 +34,6 @@ const filteredGuides = computed(() => {
     )
   })
 })
-
-const infrastructureDocs = computed(() => 
-  filteredDocs.value.filter(doc => doc.category === 'infrastructure')
-)
-
-const servicesDocs = computed(() => 
-  filteredDocs.value.filter(doc => doc.category === 'services')
-)
 
 const hasResults = computed(() => 
   filteredDocs.value.length > 0 || filteredGuides.value.length > 0
@@ -135,45 +50,34 @@ const isSearching = computed(() => searchQuery.value.length > 0)
       Click on any service below to view detailed setup guides, configurations, and troubleshooting tips.
     </p>
 
-    <!-- Search Field -->
+    <!-- Search Field --> 
     <SearchBar 
       v-model="searchQuery"
       :result-count="filteredDocs.length + filteredGuides.length"
       placeholder="search documentation..."
     />
 
-    <div v-if="isSearching && !hasResults" class="no-results">
-      No results found for: <span class="search-query-display">{{ searchQuery }}</span>
+    <!-- Loading State -->
+    <div v-if="loading" class="loading-state">
+      <span class="loading-spinner">⟳</span> Loading documentation...
     </div>
 
-    <section class="section-group" v-if="infrastructureDocs.length > 0">
-      <h2 class="section-title">Infrastructure</h2>
-      <div class="doc-grid">
-        <a 
-          v-for="doc in infrastructureDocs" 
-          :key="doc.link"
-          :href="doc.link" 
-          class="doc-card"
-        >
-          <div class="doc-header">
-            <h3>{{ doc.title }}</h3>
-            <span class="doc-status" :class="{ pending: doc.status === 'pending' }">
-              {{ doc.status === 'documented' ? '● DOCUMENTED' : '○ IN PROGRESS' }}
-            </span>
-          </div>
-          <p>{{ doc.description }}</p>
-          <div class="doc-meta">
-            <span>Last updated: {{ doc.updated }}</span>
-          </div>
-        </a>
-      </div>
-    </section>
+    <!-- Error State -->
+    <div v-else-if="error" class="error-state">
+      ⚠ Error loading documentation: {{ error }}
+    </div>
 
-    <section class="section-group" v-if="servicesDocs.length > 0">
+    <!-- Content -->
+    <template v-else>
+      <div v-if="isSearching && !hasResults" class="no-results">
+        No results found for: <span class="search-query-display">{{ searchQuery }}</span>
+      </div>
+
+    <section class="section-group" v-if="filteredDocs.length > 0">
       <h2 class="section-title">Services</h2>
       <div class="doc-grid">
         <a 
-          v-for="doc in servicesDocs" 
+          v-for="doc in filteredDocs" 
           :key="doc.link"
           :href="doc.link" 
           class="doc-card"
@@ -208,6 +112,7 @@ const isSearching = computed(() => searchQuery.value.length > 0)
         </div>
       </div>
     </section>
+    </template>
   </div>
 </template>
 
@@ -248,6 +153,46 @@ const isSearching = computed(() => searchQuery.value.length > 0)
   text-shadow: 0 0 10px rgba(255, 153, 0, 0.6);
   border: 2px dashed rgba(255, 153, 0, 0.3);
   background: rgba(255, 153, 0, 0.03);
+  border-radius: 4px;
+  margin: 40px 0;
+}
+
+/* Loading State */
+.loading-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #ff9900;
+  font-size: 18px;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 153, 0, 0.6);
+  border: 2px solid rgba(255, 153, 0, 0.3);
+  background: rgba(255, 153, 0, 0.05);
+  border-radius: 4px;
+  margin: 40px 0;
+}
+
+.loading-spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Error State */
+.error-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #ff4444;
+  font-size: 18px;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.6);
+  border: 2px solid rgba(255, 68, 68, 0.3);
+  background: rgba(255, 68, 68, 0.05);
   border-radius: 4px;
   margin: 40px 0;
 }

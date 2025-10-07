@@ -1,0 +1,297 @@
+---
+title: Backup & Recovery Strategies
+description: How I backup my homelab and disaster recovery procedures
+icon: 🔧
+tags: [backup, recovery, disaster recovery, restore]
+---
+
+## Introduction
+
+A comprehensive backup strategy is critical for any homelab. This guide covers my backup approach and disaster recovery procedures.
+
+## The 3-2-1 Backup Rule
+
+Always follow the 3-2-1 rule:
+- **3** copies of your data
+- **2** different storage media types
+- **1** offsite backup
+
+## What to Backup
+
+### Critical Data
+- VM configurations and disks
+- Docker volumes and compose files
+- Database dumps
+- Configuration files
+- SSL certificates
+- Documentation
+
+### Nice to Have
+- Media libraries (if not easily re-downloadable)
+- Log files
+- Cached data
+
+## Backup Tools
+
+### For Virtual Machines
+
+#### Proxmox Backup Server
+```bash
+# Install PBS
+apt update
+apt install proxmox-backup-server
+
+# Configure backup schedule in Proxmox UI
+# Datacenter → Backup → Add
+```
+
+#### Veeam (Free)
+- Supports VMware and Hyper-V
+- Free tier for up to 10 VMs
+- Excellent restoration options
+
+### For Docker Volumes
+
+#### Manual Backup Script
+```bash
+#!/bin/bash
+# backup-docker.sh
+
+BACKUP_DIR="/mnt/backups/docker"
+DATE=$(date +%Y%m%d_%H%M%S)
+
+# Stop containers
+docker-compose down
+
+# Backup volumes
+for volume in $(docker volume ls -q); do
+    docker run --rm \
+        -v $volume:/data \
+        -v $BACKUP_DIR:/backup \
+        alpine tar czf /backup/${volume}_${DATE}.tar.gz -C /data .
+done
+
+# Restart containers
+docker-compose up -d
+```
+
+#### Duplicati
+- Web-based backup solution
+- Supports encryption
+- Multiple backend targets (S3, B2, FTP, etc.)
+
+### For Configuration Files
+
+#### Git Repository
+```bash
+# Initialize repo for configs
+cd /etc
+git init
+git add .
+git commit -m "Initial config backup"
+
+# Add remote (private repo!)
+git remote add origin https://github.com/yourusername/configs.git
+git push -u origin main
+```
+
+## Backup Schedule
+
+### Daily
+- Docker volumes (incremental)
+- Database dumps
+- Critical configuration files
+
+### Weekly
+- Full VM backups
+- Docker image exports
+- System state backups
+
+### Monthly
+- Offsite backup sync
+- Backup integrity verification
+- Documentation updates
+
+## Automated Backup Script
+
+```bash
+#!/bin/bash
+# /usr/local/bin/homelab-backup.sh
+
+set -e
+
+BACKUP_ROOT="/mnt/backups"
+DATE=$(date +%Y%m%d)
+LOG_FILE="/var/log/homelab-backup.log"
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a $LOG_FILE
+}
+
+# Backup Proxmox VMs
+log "Starting Proxmox VM backups..."
+vzdump --all --mode snapshot --compress zstd --storage backup
+
+# Backup Docker volumes
+log "Starting Docker volume backups..."
+cd /opt/docker
+for dir in */; do
+    if [ -f "${dir}docker-compose.yml" ]; then
+        cd $dir
+        docker-compose down
+        tar czf ${BACKUP_ROOT}/docker/${dir%/}_${DATE}.tar.gz .
+        docker-compose up -d
+        cd ..
+    fi
+done
+
+# Backup databases
+log "Starting database backups..."
+docker exec mysql mysqldump -u root -p${MYSQL_ROOT_PASSWORD} --all-databases | \
+    gzip > ${BACKUP_ROOT}/mysql/all-databases_${DATE}.sql.gz
+
+docker exec postgres pg_dumpall -U postgres | \
+    gzip > ${BACKUP_ROOT}/postgres/all-databases_${DATE}.sql.gz
+
+# Sync to offsite
+log "Syncing to offsite location..."
+rclone sync ${BACKUP_ROOT} remote:homelab-backups \
+    --exclude "*.tmp" \
+    --progress
+
+log "Backup completed successfully!"
+
+# Cleanup old backups (keep 30 days)
+find ${BACKUP_ROOT} -type f -mtime +30 -delete
+
+# Send notification
+curl -X POST https://your-notification-service.com/notify \
+    -d "Homelab backup completed successfully"
+```
+
+Make it executable and add to cron:
+```bash
+chmod +x /usr/local/bin/homelab-backup.sh
+
+# Add to cron (daily at 2 AM)
+crontab -e
+0 2 * * * /usr/local/bin/homelab-backup.sh
+```
+
+## Offsite Backup Options
+
+### Cloud Storage
+- **Backblaze B2**: $0.005/GB/month
+- **AWS S3 Glacier**: Very cheap for long-term storage
+- **Google Drive**: 15GB free, unlimited with Workspace
+- **Microsoft OneDrive**: Similar to Google Drive
+
+### Physical Offsite
+- External drive at a friend's/family's house
+- Safety deposit box
+- Second location (if you have one)
+
+## Disaster Recovery Plan
+
+### Scenario 1: Single VM Failure
+```bash
+# Restore from Proxmox backup
+qmrestore /path/to/backup.vma.zst 100 --storage local-lvm
+```
+
+### Scenario 2: Docker Container/Volume Loss
+```bash
+# Restore volume from backup
+docker volume create volume_name
+docker run --rm \
+    -v volume_name:/data \
+    -v /path/to/backups:/backup \
+    alpine tar xzf /backup/volume_backup.tar.gz -C /data
+```
+
+### Scenario 3: Complete Server Failure
+1. Reinstall Proxmox/hypervisor
+2. Restore network configuration
+3. Restore VMs from backup server
+4. Verify services are running
+5. Update DNS/firewall rules if needed
+
+### Scenario 4: Site Disaster (Fire, Flood, etc.)
+1. Order replacement hardware
+2. Restore from offsite backup
+3. Rebuild from scratch if necessary
+4. Update external IP addresses
+
+## Testing Your Backups
+
+### Monthly Verification
+```bash
+#!/bin/bash
+# test-backup.sh
+
+# Create test restore directory
+TEST_DIR="/tmp/backup-test-$(date +%s)"
+mkdir -p $TEST_DIR
+
+# Extract latest backup
+LATEST_BACKUP=$(ls -t /mnt/backups/docker/*.tar.gz | head -1)
+tar xzf $LATEST_BACKUP -C $TEST_DIR
+
+# Verify critical files exist
+CRITICAL_FILES=(
+    "docker-compose.yml"
+    ".env"
+    "data/config.json"
+)
+
+for file in "${CRITICAL_FILES[@]}"; do
+    if [ ! -f "$TEST_DIR/$file" ]; then
+        echo "ERROR: Missing critical file: $file"
+        exit 1
+    fi
+done
+
+echo "Backup verification successful!"
+rm -rf $TEST_DIR
+```
+
+### Quarterly Full Restore Test
+- Spin up a test VM
+- Restore a complete service from backup
+- Verify functionality
+- Document any issues
+- Clean up test environment
+
+## Monitoring Backup Health
+
+### Healthchecks.io
+```bash
+# Add to backup script
+HEALTHCHECK_URL="https://hc-ping.com/your-unique-id"
+
+# At end of successful backup
+curl -fsS --retry 3 $HEALTHCHECK_URL > /dev/null
+```
+
+### Grafana Dashboard
+- Track backup size over time
+- Monitor backup duration
+- Alert on failed backups
+- Display backup age
+
+## Best Practices
+
+1. **Automate everything**: Manual backups will be forgotten
+2. **Test regularly**: Untested backups are useless
+3. **Encrypt offsite**: Always encrypt cloud backups
+4. **Monitor backup jobs**: Get alerts when backups fail
+5. **Document procedures**: Write down your recovery steps
+6. **Keep backups secure**: Restrict access appropriately
+7. **Version your backups**: Keep multiple versions
+8. **Separate backup systems**: Don't backup to the same hardware
+
+## Conclusion
+
+A solid backup strategy is insurance for your homelab. Invest the time upfront to automate and test your backups—you'll thank yourself later when you need them!
+
+Remember: It's not a question of *if* you'll need backups, but *when*.

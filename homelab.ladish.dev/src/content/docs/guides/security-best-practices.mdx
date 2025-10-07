@@ -1,0 +1,412 @@
+---
+title: Security Best Practices
+description: Securing your homelab - firewalls, VPNs, and access control
+icon: 🔒
+tags: [security, firewall, vpn, access control]
+---
+
+## Introduction
+
+Security should be a top priority in any homelab. This guide covers essential security practices to protect your infrastructure.
+
+## Network Security
+
+### Firewall Configuration
+
+#### UFW (Uncomplicated Firewall)
+```bash
+# Enable UFW
+sudo ufw enable
+
+# Default policies
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow SSH (change port if using non-standard)
+sudo ufw allow 22/tcp
+
+# Allow specific services
+sudo ufw allow 80/tcp   # HTTP
+sudo ufw allow 443/tcp  # HTTPS
+sudo ufw allow 53/udp   # DNS
+
+# Allow from specific IP
+sudo ufw allow from 192.168.1.0/24 to any port 8006  # Proxmox
+
+# Check status
+sudo ufw status verbose
+```
+
+#### iptables (Advanced)
+```bash
+# Flush existing rules
+iptables -F
+
+# Default policies
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+# Allow loopback
+iptables -A INPUT -i lo -j ACCEPT
+
+# Allow established connections
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Allow SSH from local network only
+iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 22 -j ACCEPT
+
+# Rate limit SSH to prevent brute force
+iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set
+iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 4 -j DROP
+
+# Save rules
+iptables-save > /etc/iptables/rules.v4
+```
+
+### VLAN Segmentation
+
+Separate your network into VLANs:
+- **VLAN 10**: Management (Proxmox, switches, routers)
+- **VLAN 20**: Services (Docker, databases)
+- **VLAN 30**: DMZ (Public-facing services)
+- **VLAN 99**: Guest/IoT (Isolated from internal network)
+
+## Access Control
+
+### SSH Hardening
+
+Edit `/etc/ssh/sshd_config`:
+```bash
+# Disable root login
+PermitRootLogin no
+
+# Use key-based authentication only
+PubkeyAuthentication yes
+PasswordAuthentication no
+
+# Change default port
+Port 2222
+
+# Limit users
+AllowUsers yourusername
+
+# Disable empty passwords
+PermitEmptyPasswords no
+
+# Set idle timeout
+ClientAliveInterval 300
+ClientAliveCountMax 2
+
+# Disable X11 forwarding if not needed
+X11Forwarding no
+```
+
+Restart SSH:
+```bash
+sudo systemctl restart sshd
+```
+
+### SSH Key Setup
+```bash
+# Generate key pair (on your local machine)
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+# Copy public key to server
+ssh-copy-id -i ~/.ssh/id_ed25519.pub user@server
+
+# Test connection
+ssh -i ~/.ssh/id_ed25519 user@server
+```
+
+### Fail2Ban
+
+Protect against brute force attacks:
+```bash
+# Install
+sudo apt install fail2ban
+
+# Create local config
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+
+# Edit /etc/fail2ban/jail.local
+[DEFAULT]
+bantime = 3600
+findtime = 600
+maxretry = 3
+
+[sshd]
+enabled = true
+port = 2222
+logpath = /var/log/auth.log
+
+# Start service
+sudo systemctl enable fail2ban
+sudo systemctl start fail2ban
+
+# Check status
+sudo fail2ban-client status sshd
+```
+
+## VPN Setup
+
+### WireGuard (Recommended)
+
+Server setup:
+```bash
+# Install WireGuard
+sudo apt install wireguard
+
+# Generate keys
+wg genkey | tee privatekey | wg pubkey > publickey
+
+# Create config /etc/wireguard/wg0.conf
+[Interface]
+Address = 10.0.0.1/24
+ListenPort = 51820
+PrivateKey = <server_private_key>
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+
+[Peer]
+# Client 1
+PublicKey = <client_public_key>
+AllowedIPs = 10.0.0.2/32
+
+# Enable and start
+sudo systemctl enable wg-quick@wg0
+sudo systemctl start wg-quick@wg0
+```
+
+Client config:
+```ini
+[Interface]
+PrivateKey = <client_private_key>
+Address = 10.0.0.2/24
+DNS = 10.0.0.1
+
+[Peer]
+PublicKey = <server_public_key>
+Endpoint = your-public-ip:51820
+AllowedIPs = 192.168.1.0/24, 10.0.0.0/24
+PersistentKeepalive = 25
+```
+
+## SSL/TLS Certificates
+
+### Let's Encrypt with Nginx Proxy Manager
+
+1. Install Nginx Proxy Manager
+2. Add proxy host
+3. Request SSL certificate
+4. Enable Force SSL and HTTP/2
+
+### Manual Let's Encrypt
+```bash
+# Install certbot
+sudo apt install certbot
+
+# Get certificate
+sudo certbot certonly --standalone -d yourdomain.com
+
+# Auto-renewal (cron)
+0 0 * * * certbot renew --quiet
+```
+
+## Container Security
+
+### Docker Best Practices
+
+```yaml
+version: '3.8'
+
+services:
+  app:
+    image: myapp:latest
+    
+    # Run as non-root user
+    user: "1000:1000"
+    
+    # Read-only root filesystem
+    read_only: true
+    
+    # Drop unnecessary capabilities
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    
+    # Limit resources
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    
+    # Use secrets for sensitive data
+    secrets:
+      - db_password
+    
+    # No privileged mode
+    privileged: false
+    
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+    
+    # Tmpfs for temporary files
+    tmpfs:
+      - /tmp
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+```
+
+### Image Security Scanning
+```bash
+# Install Trivy
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+sudo apt update && sudo apt install trivy
+
+# Scan image
+trivy image myapp:latest
+
+# Scan with severity threshold
+trivy image --severity HIGH,CRITICAL myapp:latest
+```
+
+## Secrets Management
+
+### Using Docker Secrets
+```bash
+# Create secret
+echo "my_secret_password" | docker secret create db_password -
+
+# Use in compose
+services:
+  db:
+    secrets:
+      - db_password
+```
+
+### Using .env Files (Less Secure)
+```bash
+# .env file (never commit to git!)
+DB_PASSWORD=supersecret
+API_KEY=your_api_key
+
+# Add to .gitignore
+echo ".env" >> .gitignore
+
+# Use in compose
+services:
+  app:
+    env_file:
+      - .env
+```
+
+## Monitoring & Logging
+
+### Centralized Logging
+```yaml
+# ELK Stack with docker-compose
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.0
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.5.0
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.5.0
+    ports:
+      - "5601:5601"
+```
+
+### Security Auditing
+```bash
+# Install and run Lynis
+sudo apt install lynis
+sudo lynis audit system
+
+# Check for rootkits
+sudo apt install rkhunter
+sudo rkhunter --check
+
+# Check for malware
+sudo apt install clamav
+sudo freshclam
+sudo clamscan -r /home
+```
+
+## Incident Response Plan
+
+### 1. Detection
+- Monitor logs for suspicious activity
+- Set up alerts for failed login attempts
+- Watch for unusual network traffic
+
+### 2. Containment
+```bash
+# Immediately isolate compromised system
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+```
+
+### 3. Investigation
+- Preserve logs
+- Check running processes
+- Review recent file modifications
+- Analyze network connections
+
+### 4. Recovery
+- Restore from clean backup
+- Apply security patches
+- Update passwords/keys
+- Verify system integrity
+
+### 5. Post-Incident
+- Document what happened
+- Update security measures
+- Train on prevention
+- Improve monitoring
+
+## Security Checklist
+
+- [ ] Firewall configured and enabled
+- [ ] SSH hardened (keys only, non-standard port)
+- [ ] Fail2Ban installed and configured
+- [ ] VPN set up for remote access
+- [ ] SSL certificates for all services
+- [ ] Regular security updates scheduled
+- [ ] Backups encrypted and tested
+- [ ] Monitoring and alerting configured
+- [ ] Secrets properly managed
+- [ ] Network segmented with VLANs
+- [ ] Container security best practices followed
+- [ ] Incident response plan documented
+- [ ] Regular security audits scheduled
+
+## Resources
+
+- **CIS Benchmarks**: Industry-standard security configurations
+- **OWASP**: Web application security guidelines
+- **NIST Cybersecurity Framework**: Comprehensive security framework
+- **r/netsec**: Security news and discussions
+
+## Conclusion
+
+Security is not a one-time setup—it's an ongoing process. Regularly review and update your security posture, stay informed about new threats, and always follow the principle of least privilege.
+
+Remember: The best time to secure your homelab was yesterday. The second-best time is now!
