@@ -1,44 +1,86 @@
 <script setup>
-import { ref, provide, onMounted } from 'vue'
+import { ref, provide, onMounted, computed } from 'vue'
 import HomelabSidebar from './components/HomelabSidebar.vue'
 import HomelabNavbar from './components/HomelabNavbar.vue'
 import OverviewPage from './pages/OverviewPage.vue'
 import DocsPage from './pages/DocsPage.vue'
+import DocDetailPage from './pages/DocDetailPage.vue'
+
+// Route state
+const currentPage = ref('overview')
+const currentDocSlug = ref(null)
+const currentDocType = ref(null) // 'service' or 'guide'
 
 // Get initial page from URL
 const getPageFromURL = () => {
   const path = window.location.pathname
+  
+  // Check for doc detail routes like /docs/service/docker or /docs/guide/backup
+  const docMatch = path.match(/\/docs\/(service|guide)\/([^/]+)/)
+  if (docMatch) {
+    currentDocType.value = docMatch[1]
+    currentDocSlug.value = docMatch[2]
+    return 'doc-detail'
+  }
+  
   if (path.includes('/docs') || path.includes('/documentation')) return 'docs'
   if (path.includes('/services')) return 'services'
   if (path.includes('/network')) return 'network'
   return 'overview'
 }
 
-const currentPage = ref(getPageFromURL())
-
 const setPage = (page) => {
   currentPage.value = page
+  currentDocSlug.value = null
+  currentDocType.value = null
   
   // Update URL without page reload
   const path = page === 'overview' ? '/' : `/${page}`
   window.history.pushState({ page }, '', path)
 }
 
+const viewDoc = (slug, type) => {
+  currentPage.value = 'doc-detail'
+  currentDocSlug.value = slug
+  currentDocType.value = type
+  
+  // Update URL
+  const path = `/docs/${type}/${slug}`
+  window.history.pushState({ page: 'doc-detail', slug, type }, '', path)
+}
+
 // Handle browser back/forward buttons
 const handlePopState = (event) => {
-  currentPage.value = event.state?.page || getPageFromURL()
+  if (event.state?.page === 'doc-detail') {
+    currentPage.value = 'doc-detail'
+    currentDocSlug.value = event.state.slug
+    currentDocType.value = event.state.type
+  } else {
+    currentPage.value = event.state?.page || getPageFromURL()
+    currentDocSlug.value = null
+    currentDocType.value = null
+  }
 }
 
 onMounted(() => {
+  // Set initial page
+  currentPage.value = getPageFromURL()
+  
   // Set initial state
-  window.history.replaceState({ page: currentPage.value }, '', window.location.pathname)
+  const state = { page: currentPage.value }
+  if (currentDocSlug.value) {
+    state.slug = currentDocSlug.value
+    state.type = currentDocType.value
+  }
+  window.history.replaceState(state, '', window.location.pathname)
   
   // Listen for back/forward navigation
   window.addEventListener('popstate', handlePopState)
 })
 
-// Provide the navigation function to child components
+// Provide the navigation functions to child components
 provide('setPage', setPage)
+provide('viewDoc', viewDoc)
 provide('currentPage', currentPage)
 </script>
 
@@ -55,6 +97,11 @@ provide('currentPage', currentPage)
         <!-- Page Components -->
         <OverviewPage v-if="currentPage === 'overview'" />
         <DocsPage v-else-if="currentPage === 'docs'" />
+        <DocDetailPage 
+          v-else-if="currentPage === 'doc-detail'" 
+          :slug="currentDocSlug"
+          :type="currentDocType"
+        />
         <div v-else-if="currentPage === 'services'" class="page-content">
           <h1>Services</h1>
           <p class="intro-text">Services page coming soon...</p>

@@ -1,10 +1,13 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 import SearchBar from '../components/SearchBar.vue'
 import { useDocs } from '../composables/useDocumentation.js'
 
 const searchQuery = ref('')
 const activeFilter = ref('all') // 'all', 'services', 'guides'
+
+// Inject navigation function
+const viewDoc = inject('viewDoc')
 
 // Load documentation and guides dynamically from MDX files
 const { docs: allDocs, guides: allGuides, loading, error } = useDocs()
@@ -106,11 +109,11 @@ const isSearching = computed(() => searchQuery.value.length > 0)
     <section class="section-group" v-if="showServices && filteredDocs.length > 0">
       <h2 class="section-title">Services</h2>
       <div class="doc-grid">
-        <a 
+        <div 
           v-for="doc in filteredDocs" 
-          :key="doc.link"
-          :href="doc.link" 
+          :key="doc.slug"
           class="doc-card"
+          @click="viewDoc(doc.slug, 'service')"
         >
           <div class="doc-header">
             <h3>{{ doc.title }}</h3>
@@ -122,7 +125,7 @@ const isSearching = computed(() => searchQuery.value.length > 0)
           <div class="doc-meta">
             <span>Last updated: {{ doc.updated }}</span>
           </div>
-        </a>
+        </div>
       </div>
     </section>
 
@@ -131,8 +134,9 @@ const isSearching = computed(() => searchQuery.value.length > 0)
       <div class="guide-list">
         <div 
           v-for="guide in filteredGuides" 
-          :key="guide.title"
+          :key="guide.slug"
           class="guide-item"
+          @click="viewDoc(guide.slug, 'guide')"
         >
           <span class="guide-icon">{{ guide.icon }}</span>
           <div class="guide-content">
