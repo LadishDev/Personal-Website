@@ -72,21 +72,21 @@ const isSearching = computed(() => searchQuery.value.length > 0)
         :class="{ active: activeFilter === 'all' }"
         @click="activeFilter = 'all'"
       >
-        All ({{ allDocs.length + allGuides.length }})
+        All ({{ filteredDocs.length + filteredGuides.length }})
       </button>
       <button 
         class="filter-tab" 
         :class="{ active: activeFilter === 'services' }"
         @click="activeFilter = 'services'"
       >
-        Services ({{ allDocs.length }})
+        Services ({{ filteredDocs.length }})
       </button>
       <button 
         class="filter-tab" 
         :class="{ active: activeFilter === 'guides' }"
         @click="activeFilter = 'guides'"
       >
-        Guides ({{ allGuides.length }})
+        Guides ({{ filteredGuides.length }})
       </button>
     </div>
 
