@@ -1,0 +1,61 @@
+---
+title: 'Network Segmentation Strategy'
+category: 'Infrastructure'
+date: '2025-10-03'
+preview: 'Implementing VLAN-based network segmentation to improve security posture and isolate IoT devices, services, and guest networks.'
+tags: ['networking', 'security', 'vlans', 'firewall']
+---
+
+## Overview
+Planning to implement proper network segmentation using VLANs to improve security and isolate different service categories.
+
+## Proposed VLAN Structure
+
+### VLAN 10 - Management
+- UniFi Controller
+- Server management interfaces (iDRAC, iLO)
+- Network equipment management
+- **Access**: Restricted to admin devices only
+
+### VLAN 20 - Services
+- Docker containers
+- Web services (Nginx, Traefik)
+- Database servers
+- **Access**: Limited inter-VLAN routing
+
+### VLAN 30 - IoT/Automation
+- Home Assistant
+- Smart home devices
+- IP cameras
+- **Access**: No direct internet access, proxied through gateway
+
+### VLAN 40 - Guest
+- Guest WiFi
+- Isolated from all other networks
+- **Access**: Internet only, no local resources
+
+### VLAN 50 - DMZ
+- Public-facing services
+- Reverse proxy endpoints
+- **Access**: Restricted inbound rules
+
+## Firewall Rules
+- Default deny all
+- Explicit allow rules for required communication
+- Logging enabled for denied traffic
+- Regular review of logs
+
+## Implementation Steps
+1. Document current network topology
+2. Configure VLANs on UniFi switch
+3. Update DHCP scopes
+4. Implement firewall rules incrementally
+5. Test service connectivity
+6. Update documentation
+
+## Testing Checklist
+- [ ] Service-to-service communication
+- [ ] Internet access from each VLAN
+- [ ] Firewall rule validation
+- [ ] DNS resolution
+- [ ] VPN access to management VLAN

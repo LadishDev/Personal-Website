@@ -25,7 +25,7 @@ const navigate = (page) => {
     <div class="tabs desktop-tabs">
       <a @click="navigate('overview')" class="tab" :class="{ active: currentPage === 'overview' }">Overview</a>
       <a @click="navigate('docs')" class="tab" :class="{ active: currentPage === 'docs' }">Docs</a>
-      <a @click="navigate('services')" class="tab" :class="{ active: currentPage === 'services' }">Services</a>
+      <a @click="navigate('lab-notes')" class="tab" :class="{ active: currentPage === 'lab-notes' }">Lab Notes</a>
       <a @click="navigate('infrastructure')" class="tab" :class="{ active: currentPage === 'infrastructure' }">Infrastructure</a>
     </div>
 
@@ -46,7 +46,7 @@ const navigate = (page) => {
       <div class="mobile-menu" :class="{ open: isMenuOpen }">
         <a @click="navigate('overview')" class="mobile-tab" :class="{ active: currentPage === 'overview' }">Overview</a>
         <a @click="navigate('docs')" class="mobile-tab" :class="{ active: currentPage === 'docs' }">Docs</a>
-        <a @click="navigate('services')" class="mobile-tab" :class="{ active: currentPage === 'services' }">Services</a>
+        <a @click="navigate('lab-notes')" class="mobile-tab" :class="{ active: currentPage === 'lab-notes' }">Lab Notes</a>
         <a @click="navigate('infrastructure')" class="mobile-tab" :class="{ active: currentPage === 'infrastructure' }">Infrastructure</a>
       </div>
     </div>

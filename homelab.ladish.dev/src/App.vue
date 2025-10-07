@@ -4,12 +4,14 @@ import HomelabSidebar from './components/HomelabSidebar.vue'
 import HomelabNavbar from './components/HomelabNavbar.vue'
 import OverviewPage from './pages/OverviewPage.vue'
 import DocsPage from './pages/DocsPage.vue'
-import DocDetailPage from './pages/DocDetailPage.vue'
+import DetailPage from './pages/DetailPage.vue'
+import LabNotesPage from './pages/LabNotesPage.vue'
 
 // Route state
 const currentPage = ref('overview')
 const currentDocSlug = ref(null)
 const currentDocType = ref(null) // 'service' or 'guide'
+const currentNoteId = ref(null)
 
 // Get initial page from URL
 const getPageFromURL = () => {
@@ -23,9 +25,16 @@ const getPageFromURL = () => {
     return 'doc-detail'
   }
   
+  // Check for note detail routes like /lab-notes/home-automation-migration
+  const noteMatch = path.match(/\/lab-notes\/([^/]+)/)
+  if (noteMatch) {
+    currentNoteId.value = noteMatch[1]
+    return 'note-detail'
+  }
+  
   if (path.includes('/docs') || path.includes('/documentation')) return 'docs'
-  if (path.includes('/services')) return 'services'
-  if (path.includes('/network')) return 'network'
+  if (path.includes('/lab-notes') || path.includes('/notes')) return 'lab-notes'
+  if (path.includes('/infrastructure')) return 'infrastructure'
   return 'overview'
 }
 
@@ -39,6 +48,7 @@ const setPage = (page) => {
   currentPage.value = page
   currentDocSlug.value = null
   currentDocType.value = null
+  currentNoteId.value = null
   
   // Update URL without page reload
   const path = page === 'overview' ? '/' : `/${page}`
@@ -52,10 +62,25 @@ const viewDoc = (slug, type) => {
   currentPage.value = 'doc-detail'
   currentDocSlug.value = slug
   currentDocType.value = type
+  currentNoteId.value = null
   
   // Update URL
   const path = `/docs/${type}/${slug}`
   window.history.pushState({ page: 'doc-detail', slug, type }, '', path)
+  
+  // Scroll to top after DOM updates
+  scrollToTop()
+}
+
+const viewNote = (noteId) => {
+  currentPage.value = 'note-detail'
+  currentNoteId.value = noteId
+  currentDocSlug.value = null
+  currentDocType.value = null
+  
+  // Update URL
+  const path = `/lab-notes/${noteId}`
+  window.history.pushState({ page: 'note-detail', noteId }, '', path)
   
   // Scroll to top after DOM updates
   scrollToTop()
@@ -67,10 +92,17 @@ const handlePopState = (event) => {
     currentPage.value = 'doc-detail'
     currentDocSlug.value = event.state.slug
     currentDocType.value = event.state.type
+    currentNoteId.value = null
+  } else if (event.state?.page === 'note-detail') {
+    currentPage.value = 'note-detail'
+    currentNoteId.value = event.state.noteId
+    currentDocSlug.value = null
+    currentDocType.value = null
   } else {
     currentPage.value = event.state?.page || getPageFromURL()
     currentDocSlug.value = null
     currentDocType.value = null
+    currentNoteId.value = null
   }
   
   // Scroll to top on browser back/forward
@@ -78,7 +110,7 @@ const handlePopState = (event) => {
 }
 
 // Watch for any page or route changes and scroll to top
-watch([currentPage, currentDocSlug, currentDocType], () => {
+watch([currentPage, currentDocSlug, currentDocType, currentNoteId], () => {
   nextTick(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   })
@@ -106,6 +138,7 @@ onMounted(() => {
 // Provide the navigation functions to child components
 provide('setPage', setPage)
 provide('viewDoc', viewDoc)
+provide('viewNote', viewNote)
 provide('currentPage', currentPage)
 </script>
 
@@ -122,15 +155,17 @@ provide('currentPage', currentPage)
         <!-- Page Components -->
         <OverviewPage v-if="currentPage === 'overview'" />
         <DocsPage v-else-if="currentPage === 'docs'" />
-        <DocDetailPage 
+        <DetailPage 
           v-else-if="currentPage === 'doc-detail'" 
           :slug="currentDocSlug"
           :type="currentDocType"
         />
-        <div v-else-if="currentPage === 'services'" class="page-content">
-          <h1>Services</h1>
-          <p class="intro-text">Services page coming soon...</p>
-        </div>
+        <LabNotesPage v-else-if="currentPage === 'lab-notes'" />
+        <DetailPage 
+          v-else-if="currentPage === 'note-detail'" 
+          :slug="currentNoteId"
+          type="note"
+        />
         <div v-else-if="currentPage === 'infrastructure'" class="page-content">
           <h1>Infrastructure</h1>
           <p class="intro-text">Infrastructure page coming soon...</p>

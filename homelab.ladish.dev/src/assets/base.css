@@ -46,6 +46,10 @@
   box-sizing: border-box;
   margin: 0;
   font-weight: normal;
+  /* Prevent words from breaking across lines */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 body {
