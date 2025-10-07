@@ -67,8 +67,9 @@ const navigate = (page) => {
 /* Desktop Tabs */
 .tabs {
   display: flex;
-  padding: 0 40px;
-  gap: 15px;
+  padding: 0 20px;
+  gap: 8px;
+  flex-wrap: nowrap;
 }
 
 .desktop-tabs {
@@ -81,8 +82,15 @@ const navigate = (page) => {
   }
 }
 
+@media (min-width: 900px) {
+  .tabs {
+    padding: 0 40px;
+    gap: 15px;
+  }
+}
+
 .tab {
-  padding: 15px 20px;
+  padding: 15px 15px;
   text-decoration: none;
   color: var(--color-text);
   border: 2px solid transparent;
@@ -90,9 +98,18 @@ const navigate = (page) => {
   font-weight: 700;
   cursor: pointer;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   position: relative;
   background: transparent;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (min-width: 900px) {
+  .tab {
+    padding: 15px 20px;
+    letter-spacing: 2px;
+  }
 }
 
 .tab::before {
