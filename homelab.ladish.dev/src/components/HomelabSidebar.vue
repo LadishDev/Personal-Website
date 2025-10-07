@@ -105,7 +105,7 @@ onMounted(() => {
         <h3>Server Specs</h3>
         <div class="specs">
           <div class="spec-row">AMD Ryzen 5 2600 CPU @ 3.40GHz, 12 threads</div>
-          <div class="spec-row">2x 16GB + 2x 32GB @ 3200mhz</div>
+          <div class="spec-row">2x 32GB + 2x 16GB @ 3200mhz</div>
           <div class="spec-row">NVIDIA Corporation GT215 [GeForce GT 340] GPU</div>
         </div>
       </div>
