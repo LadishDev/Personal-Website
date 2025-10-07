@@ -1,41 +1,114 @@
 <script setup>
-import { ref, computed, onMounted, watch, inject } from 'vue'
+import { computed, inject } from 'vue'
 import { useDocs } from '../composables/useDocumentation.js'
+import { useLabNotes } from '../composables/useLabNotes.js'
 import { marked } from 'marked'
 
 const props = defineProps({
   slug: String,
-  type: String // 'service' or 'guide'
+  type: String // 'service', 'guide', or 'note'
 })
 
-const { docs, guides, loading } = useDocs()
+const { docs, guides, loading: docsLoading } = useDocs()
+const { notes, loading: notesLoading } = useLabNotes()
 
 // Inject navigation function
 const setPage = inject('setPage')
 
-const currentDoc = computed(() => {
+const loading = computed(() => {
+  return props.type === 'note' ? notesLoading.value : docsLoading.value
+})
+
+const currentItem = computed(() => {
   if (props.type === 'guide') {
     return guides.value.find(g => g.slug === props.slug)
+  } else if (props.type === 'note') {
+    return notes.value.find(n => n.slug === props.slug)
   } else {
+    // service
     return docs.value.find(d => d.slug === props.slug)
   }
 })
 
 const htmlContent = computed(() => {
-  if (!currentDoc.value?.content) return ''
-  return marked(currentDoc.value.content)
+  if (!currentItem.value?.content) return ''
+  return marked(currentItem.value.content)
 })
 
 const goBack = () => {
-  setPage('docs')
+  if (props.type === 'note') {
+    setPage('lab-notes')
+  } else {
+    setPage('docs')
+  }
 }
+
+const backButtonText = computed(() => {
+  return props.type === 'note' ? '← Back to Lab Notes' : '← Back to Documentation'
+})
+
+const notFoundText = computed(() => {
+  if (props.type === 'note') return 'lab note'
+  if (props.type === 'guide') return 'guide'
+  return 'service'
+})
+
+// Helper function to format date
+const formatDate = (dateStr) => {
+  if (!dateStr) return ''
+  const options = { year: 'numeric', month: 'long', day: 'numeric' }
+  return new Date(dateStr).toLocaleDateString('en-US', options)
+}
+
+// Determine status badge display
+const statusDisplay = computed(() => {
+  if (!currentItem.value) return ''
+  
+  // For notes, show category
+  if (props.type === 'note') {
+    return currentItem.value.category?.toUpperCase() || 'NOTE'
+  }
+  
+  // For docs/guides, show status
+  return currentItem.value.status === 'documented' ? '● DOCUMENTED' : '○ IN PROGRESS'
+})
+
+const statusClass = computed(() => {
+  if (!currentItem.value) return ''
+  
+  // For notes, use category for styling
+  if (props.type === 'note') {
+    return currentItem.value.category?.toLowerCase() || ''
+  }
+  
+  // For docs/guides, use pending class if not documented
+  return currentItem.value.status === 'pending' ? 'pending' : ''
+})
+
+const description = computed(() => {
+  if (!currentItem.value) return ''
+  
+  // Notes use 'preview', docs use 'description'
+  return currentItem.value.preview || currentItem.value.description || ''
+})
+
+const displayDate = computed(() => {
+  if (!currentItem.value) return ''
+  
+  // Notes use 'date', docs use 'updated'
+  const dateStr = currentItem.value.date || currentItem.value.updated
+  if (!dateStr) return ''
+  
+  const prefix = currentItem.value.date ? '' : 'Last updated: '
+  return prefix + formatDate(dateStr)
+})
 </script>
 
 <template>
   <div class="doc-detail-page">
     <!-- Back Button -->
     <button class="back-button" @click="goBack">
-      ← Back to Documentation
+      {{ backButtonText }}
     </button>
 
     <!-- Loading State -->
@@ -44,19 +117,19 @@ const goBack = () => {
     </div>
 
     <!-- Content -->
-    <template v-else-if="currentDoc">
+    <template v-else-if="currentItem">
       <div class="doc-detail-header">
         <div class="doc-title-row">
-          <h1>{{ currentDoc.title }}</h1>
-          <span class="doc-status" :class="{ pending: currentDoc.status === 'pending' }">
-            {{ currentDoc.status === 'documented' ? '● DOCUMENTED' : '○ IN PROGRESS' }}
+          <h1>{{ currentItem.title }}</h1>
+          <span class="doc-status" :class="statusClass">
+            {{ statusDisplay }}
           </span>
         </div>
-        <p class="doc-description">{{ currentDoc.description }}</p>
+        <p v-if="description" class="doc-description">{{ description }}</p>
         <div class="doc-meta-info">
-          <span v-if="currentDoc.updated">Last updated: {{ currentDoc.updated }}</span>
-          <span v-if="currentDoc.tags && currentDoc.tags.length > 0" class="tags">
-            Tags: {{ currentDoc.tags.join(', ') }}
+          <span v-if="displayDate">{{ displayDate }}</span>
+          <span v-if="currentItem.tags && currentItem.tags.length > 0" class="tags">
+            Tags: {{ currentItem.tags.join(', ') }}
           </span>
         </div>
       </div>
@@ -67,10 +140,10 @@ const goBack = () => {
 
     <!-- Not Found -->
     <div v-else class="not-found">
-      <h2>Document Not Found</h2>
-      <p>The requested {{ type }} could not be found.</p>
+      <h2>{{ type === 'note' ? 'Note' : 'Document' }} Not Found</h2>
+      <p>The requested {{ notFoundText }} could not be found.</p>
       <button class="back-button" @click="goBack">
-        ← Back to Documentation
+        {{ backButtonText }}
       </button>
     </div>
   </div>
@@ -108,15 +181,14 @@ const goBack = () => {
 .doc-detail-header {
   margin-bottom: 40px;
   padding-bottom: 20px;
-  border-bottom: 2px solid rgba(255, 153, 0, 0.3);
+  border-bottom: 2px solid #ff9900;
 }
 
 .doc-title-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 15px;
-  flex-wrap: wrap;
   gap: 15px;
 }
 
@@ -127,18 +199,49 @@ const goBack = () => {
   text-transform: uppercase;
   letter-spacing: 2px;
   text-shadow: 0 0 10px rgba(255, 170, 0, 0.6);
+  flex: 1;
+  min-width: 0;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .doc-status {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #00ff00;
   text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
   white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 2px solid;
+  flex-shrink: 0;
+  align-self: flex-start;
 }
 
+/* Default status (documented) */
+.doc-status {
+  color: #00ff00;
+  border-color: #00ff00;
+  background: rgba(0, 255, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+/* Pending status */
 .doc-status.pending {
   color: #ffaa00;
+  border-color: #ffaa00;
+  background: rgba(255, 170, 0, 0.1);
+  box-shadow: 0 0 10px rgba(255, 170, 0, 0.3);
+  text-shadow: 0 0 5px rgba(255, 170, 0, 0.8);
+}
+
+/* Note category badges - all use same orange/yellow theme */
+.doc-status.project,
+.doc-status.infrastructure,
+.doc-status.idea {
+  color: #ffaa00;
+  border-color: #ffaa00;
+  background: rgba(255, 170, 0, 0.1);
+  box-shadow: 0 0 10px rgba(255, 170, 0, 0.3);
   text-shadow: 0 0 5px rgba(255, 170, 0, 0.8);
 }
 
@@ -162,10 +265,40 @@ const goBack = () => {
   color: rgba(255, 170, 0, 0.8);
 }
 
+/* Loading State */
+.loading-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #ff9900;
+  font-size: 18px;
+}
+
+.loading-spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* Markdown Content Styling */
 .doc-content {
   line-height: 1.8;
   color: var(--color-text);
+}
+
+.markdown-body :deep(h1) {
+  font-size: 2rem;
+  color: #ff9900;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(255, 153, 0, 0.6);
+  border-bottom: 2px solid rgba(255, 153, 0, 0.3);
+  padding-bottom: 10px;
 }
 
 .markdown-body :deep(h2) {
@@ -230,6 +363,11 @@ const goBack = () => {
   line-height: 1.6;
 }
 
+.markdown-body :deep(strong) {
+  color: #ffaa00;
+  font-weight: 700;
+}
+
 .markdown-body :deep(a) {
   color: #ff9900;
   text-decoration: none;
@@ -270,23 +408,6 @@ const goBack = () => {
   text-transform: uppercase;
 }
 
-.loading-state {
-  text-align: center;
-  padding: 60px 20px;
-  color: #ff9900;
-  font-size: 18px;
-}
-
-.loading-spinner {
-  display: inline-block;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 .not-found {
   text-align: center;
   padding: 60px 20px;
@@ -302,5 +423,22 @@ const goBack = () => {
 .not-found p {
   color: var(--color-text);
   margin-bottom: 30px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .doc-detail-header h1 {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+  }
+
+  .doc-status {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
+
+  .doc-detail-page {
+    padding: 15px;
+  }
 }
 </style>
