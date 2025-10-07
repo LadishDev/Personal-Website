@@ -34,9 +34,8 @@ const fetchServerStats = async () => {
 }
 
 onMounted(() => {
+  // Fetch server stats once on page load
   fetchServerStats()
-  // Update stats every 30 seconds
-  setInterval(fetchServerStats, 30000)
 })
 </script>
 
