@@ -70,8 +70,22 @@ export function useDocs() {
         }
       }
 
-      // Sort by title
-      docs.value = docsData.sort((a, b) => a.title.localeCompare(b.title))
+      // Sort by status (pending first) and then by newest updated date
+      docs.value = docsData.sort((a, b) => {
+        // Pending items always at the top
+        if (a.status === 'pending' && b.status !== 'pending') return -1
+        if (a.status !== 'pending' && b.status === 'pending') return 1
+        
+        // For other items, sort by updated date (newest first)
+        if (a.updated === 'N/A' && b.updated !== 'N/A') return 1
+        if (a.updated !== 'N/A' && b.updated === 'N/A') return -1
+        if (a.updated === 'N/A' && b.updated === 'N/A') return 0
+        
+        // Parse dates and sort newest first
+        const dateA = new Date(a.updated)
+        const dateB = new Date(b.updated)
+        return dateB - dateA
+      })
       
       console.log('Loaded docs:', docs.value.length, docs.value)
     } catch (err) {
