@@ -124,6 +124,7 @@ const isSearching = computed(() => searchQuery.value.length > 0)
           <p>{{ doc.description }}</p>
           <div class="doc-meta">
             <span>Last updated: {{ doc.updated }}</span>
+            <span class="read-more">Read More →</span>
           </div>
         </div>
       </div>
@@ -149,6 +150,7 @@ const isSearching = computed(() => searchQuery.value.length > 0)
             <p>{{ guide.description }}</p>
             <div class="guide-meta">
               <span>Last updated: {{ guide.updated }}</span>
+              <span class="read-more">Read More →</span>
             </div>
           </div>
         </div>
@@ -346,8 +348,10 @@ const isSearching = computed(() => searchQuery.value.length > 0)
 .doc-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 10px;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 
 .doc-card h3 {
@@ -357,6 +361,9 @@ const isSearching = computed(() => searchQuery.value.length > 0)
   text-transform: uppercase;
   letter-spacing: 1px;
   text-shadow: 0 0 8px rgba(255, 170, 0, 0.6);
+  flex: 1;
+  min-width: 0;
+  word-wrap: break-word;
 }
 
 .doc-status {
@@ -364,6 +371,8 @@ const isSearching = computed(() => searchQuery.value.length > 0)
   font-weight: 700;
   color: #00ff00;
   text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .doc-status.pending {
@@ -385,6 +394,21 @@ const isSearching = computed(() => searchQuery.value.length > 0)
   font-size: 0.85rem;
   color: rgba(255, 170, 0, 0.6);
   font-style: italic;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.read-more {
+  font-size: 0.9rem;
+  color: #ff9900;
+  font-weight: 700;
+  text-shadow: 0 0 5px rgba(255, 153, 0, 0.6);
+  font-style: normal;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .guide-list {
@@ -425,8 +449,10 @@ const isSearching = computed(() => searchQuery.value.length > 0)
 .guide-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 8px;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 
 .guide-content h3 {
@@ -436,6 +462,9 @@ const isSearching = computed(() => searchQuery.value.length > 0)
   text-transform: uppercase;
   letter-spacing: 1px;
   text-shadow: 0 0 8px rgba(255, 170, 0, 0.6);
+  flex: 1;
+  min-width: 0;
+  word-wrap: break-word;
 }
 
 .guide-content p {
@@ -452,5 +481,10 @@ const isSearching = computed(() => searchQuery.value.length > 0)
   font-size: 0.85rem;
   color: rgba(255, 170, 0, 0.6);
   font-style: italic;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 </style>

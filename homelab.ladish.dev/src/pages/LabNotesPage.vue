@@ -215,6 +215,8 @@ const openNote = (noteSlug) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 
 .read-more {
@@ -223,5 +225,7 @@ const openNote = (noteSlug) => {
   font-weight: 700;
   text-shadow: 0 0 5px rgba(255, 153, 0, 0.6);
   font-style: normal;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 </style>
