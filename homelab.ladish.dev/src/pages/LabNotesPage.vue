@@ -63,13 +63,11 @@ const openNote = (noteSlug) => {
         class="note-card"
         @click="openNote(note.slug)"
       >
-        <div class="note-header">
-          <span class="note-category">{{ note.category }}</span>
-          <span class="note-date">{{ note.date }}</span>
-        </div>
+        <span class="note-category">{{ note.category }}</span>
         <h3 class="note-title">{{ note.title }}</h3>
         <p class="note-preview">{{ note.preview }}</p>
-        <div class="note-footer">
+        <div class="note-meta">
+          <span>Last updated: {{ note.date }}</span>
           <span class="read-more">Read More →</span>
         </div>
       </div>
@@ -177,14 +175,9 @@ const openNote = (noteSlug) => {
   background: rgba(255, 153, 0, 0.08);
 }
 
-.note-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 .note-category {
+  display: inline-block;
+  align-self: flex-start;
   padding: 4px 12px;
   background: rgba(255, 153, 0, 0.2);
   border: 1px solid #ff9900;
@@ -193,18 +186,13 @@ const openNote = (noteSlug) => {
   text-transform: uppercase;
   color: #ff9900;
   text-shadow: 0 0 5px rgba(255, 153, 0, 0.6);
-}
-
-.note-date {
-  font-size: 0.85rem;
-  color: rgba(255, 170, 0, 0.6);
-  font-style: italic;
+  margin-bottom: 10px;
 }
 
 .note-title {
-  font-size: 1.3rem;
-  color: #ff9900;
-  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+  color: var(--color-heading);
+  margin: 0 0 10px 0;
   text-transform: uppercase;
   letter-spacing: 1px;
   text-shadow: 0 0 8px rgba(255, 153, 0, 0.6);
@@ -214,15 +202,19 @@ const openNote = (noteSlug) => {
   font-size: 0.95rem;
   color: var(--color-text);
   line-height: 1.6;
-  margin: 0 0 15px 0;
-  flex: 1;
+  margin: 10px 0;
 }
 
-.note-footer {
-  display: flex;
-  justify-content: flex-end;
+.note-meta {
+  margin-top: 15px;
   padding-top: 10px;
   border-top: 1px solid rgba(255, 153, 0, 0.3);
+  font-size: 0.85rem;
+  color: rgba(255, 170, 0, 0.6);
+  font-style: italic;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .read-more {
@@ -230,5 +222,6 @@ const openNote = (noteSlug) => {
   color: #ff9900;
   font-weight: 700;
   text-shadow: 0 0 5px rgba(255, 153, 0, 0.6);
+  font-style: normal;
 }
 </style>
