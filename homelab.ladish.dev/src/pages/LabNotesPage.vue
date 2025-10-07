@@ -95,6 +95,10 @@ const openNote = (noteSlug) => {
   color: var(--color-text);
   margin-bottom: 30px;
   line-height: 1.6;
+  border-left: 4px solid #ff9900;
+  padding-left: 20px;
+  background: rgba(255, 153, 0, 0.05);
+  padding: 15px 20px;
 }
 
 /* Loading State */
