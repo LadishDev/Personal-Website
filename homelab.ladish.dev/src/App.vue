@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide, onMounted, computed } from 'vue'
+import { ref, provide, onMounted, computed, watch, nextTick } from 'vue'
 import HomelabSidebar from './components/HomelabSidebar.vue'
 import HomelabNavbar from './components/HomelabNavbar.vue'
 import OverviewPage from './pages/OverviewPage.vue'
@@ -29,6 +29,12 @@ const getPageFromURL = () => {
   return 'overview'
 }
 
+const scrollToTop = () => {
+  nextTick(() => {
+    window.scrollTo(0, 0)
+  })
+}
+
 const setPage = (page) => {
   currentPage.value = page
   currentDocSlug.value = null
@@ -37,6 +43,9 @@ const setPage = (page) => {
   // Update URL without page reload
   const path = page === 'overview' ? '/' : `/${page}`
   window.history.pushState({ page }, '', path)
+  
+  // Scroll to top after DOM updates
+  scrollToTop()
 }
 
 const viewDoc = (slug, type) => {
@@ -47,6 +56,9 @@ const viewDoc = (slug, type) => {
   // Update URL
   const path = `/docs/${type}/${slug}`
   window.history.pushState({ page: 'doc-detail', slug, type }, '', path)
+  
+  // Scroll to top after DOM updates
+  scrollToTop()
 }
 
 // Handle browser back/forward buttons
@@ -60,7 +72,17 @@ const handlePopState = (event) => {
     currentDocSlug.value = null
     currentDocType.value = null
   }
+  
+  // Scroll to top on browser back/forward
+  scrollToTop()
 }
+
+// Watch for any page or route changes and scroll to top
+watch([currentPage, currentDocSlug, currentDocType], () => {
+  nextTick(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  })
+})
 
 onMounted(() => {
   // Set initial page
@@ -76,6 +98,9 @@ onMounted(() => {
   
   // Listen for back/forward navigation
   window.addEventListener('popstate', handlePopState)
+  
+  // Scroll to top on initial load
+  scrollToTop()
 })
 
 // Provide the navigation functions to child components
@@ -106,9 +131,9 @@ provide('currentPage', currentPage)
           <h1>Services</h1>
           <p class="intro-text">Services page coming soon...</p>
         </div>
-        <div v-else-if="currentPage === 'network'" class="page-content">
-          <h1>Network</h1>
-          <p class="intro-text">Network page coming soon...</p>
+        <div v-else-if="currentPage === 'infrastructure'" class="page-content">
+          <h1>Infrastructure</h1>
+          <p class="intro-text">Infrastructure page coming soon...</p>
         </div>
       </div>
     </main>

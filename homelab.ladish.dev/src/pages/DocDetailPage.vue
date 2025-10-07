@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, inject } from 'vue'
 import { useDocs } from '../composables/useDocumentation.js'
 import { marked } from 'marked'
 
@@ -9,6 +9,9 @@ const props = defineProps({
 })
 
 const { docs, guides, loading } = useDocs()
+
+// Inject navigation function
+const setPage = inject('setPage')
 
 const currentDoc = computed(() => {
   if (props.type === 'guide') {
@@ -24,7 +27,7 @@ const htmlContent = computed(() => {
 })
 
 const goBack = () => {
-  window.history.back()
+  setPage('docs')
 }
 </script>
 
