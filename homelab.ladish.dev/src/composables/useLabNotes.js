@@ -37,7 +37,7 @@ export function useLabNotes() {
             slug,
             title: frontmatter.title || 'Untitled',
             category: frontmatter.category || 'Idea',
-            date: frontmatter.date || new Date().toISOString().split('T')[0],
+            date: frontmatter.date || 'N/A',
             preview: frontmatter.preview || '',
             tags: frontmatter.tags || [],
             content: markdownContent
@@ -49,6 +49,10 @@ export function useLabNotes() {
 
       // Sort notes: newest first by date
       loadedNotes.sort((a, b) => {
+        if (a.date === 'N/A' && b.date !== 'N/A') return 1
+        if (a.date !== 'N/A' && b.date === 'N/A') return -1
+        if (a.date === 'N/A' && b.date === 'N/A') return 0
+        
         const dateA = new Date(a.date)
         const dateB = new Date(b.date)
         return dateB - dateA
