@@ -12,24 +12,36 @@ const stats = ref({
   lastUpdate: 'Never'
 })
 
+const loading = ref(true)
+const error = ref(false)
+
 const fetchServerStats = async () => {
   try {
-    const response = await fetch('https://ladish.dev/api/server-stats')
+    loading.value = true
+    error.value = false
+    const response = await fetch('https://ladish.dev/api/homelab/get-stats')
     if (response.ok) {
       const data = await response.json()
       stats.value = {
-        cpu: data.cpu || '--',
-        mem: data.memory || '--',
-        swap: data.swap || '--',
-        load: data.load || '--',
-        containers: data.containers || '--',
-        vms: data.vms || '--',
-        storage: data.storage || '--',
-        lastUpdate: new Date().toLocaleString()
+        cpu: data.cpu_percent ? `${data.cpu_percent}%` : '--',
+        mem: data.memory ? `${data.memory.used}Gi / ${data.memory.total}Gi` : '--',
+        swap: data.swap ? `${data.swap.used}Gi / ${data.swap.total}Gi` : '--',
+        load: data.load_avg_5min ? data.load_avg_5min.toFixed(2) : '--',
+        containers: data.lxcs ? `${data.lxcs.running} / ${data.lxcs.total}` : '--',
+        vms: data.vms ? `${data.vms.running} / ${data.vms.total}` : '--',
+        storage: data.storage ? `${data.storage.used} / ${data.storage.total}` : '--',
+        lastUpdate: data.last_update || 'Never'
       }
+      loading.value = false
+    } else {
+      throw new Error('Failed to fetch stats')
     }
-  } catch (error) {
-    console.error('Failed to fetch server stats:', error)
+  } catch (err) {
+    console.error('Failed to fetch server stats:', err)
+    error.value = true
+    loading.value = false
+    // Retry after 10 seconds on error
+    setTimeout(fetchServerStats, 10000)
   }
 }
 
@@ -68,34 +80,46 @@ onMounted(() => {
 
       <div class="sidebar-section">
         <h3>Server Stats</h3>
-        <div class="stats">
+        
+        <!-- Loading State -->
+        <div v-if="loading" class="stats-loading">
+          <span class="loading-spinner">⟳</span> Loading stats...
+        </div>
+        
+        <!-- Error State -->
+        <div v-else-if="error" class="stats-error">
+          ⚠ Failed to load stats. Retrying...
+        </div>
+        
+        <!-- Stats Display -->
+        <div v-else class="stats">
           <div class="stat-row">
             <span>CPU % today</span>
             <span>{{ stats.cpu }}</span>
           </div>
           <div class="stat-row">
-            <span>Used Mem</span>
+            <span>Memory</span>
             <span>{{ stats.mem }}</span>
           </div>
           <div class="stat-row">
-            <span>Used Swap</span>
+            <span>Swap</span>
             <span>{{ stats.swap }}</span>
           </div>
           <div class="stat-row">
-            <span>5 min Load Avg</span>
+            <span>Load Avg (5m)</span>
             <span>{{ stats.load }}</span>
           </div>
           <div class="stat-row">
-            <span>Running Containers</span>
+            <span>LXCs</span>
             <span>{{ stats.containers }}</span>
           </div>
           <div class="stat-row">
-            <span>Running VMs</span>
+            <span>VMs</span>
             <span>{{ stats.vms }}</span>
           </div>
           <div class="stat-row">
             <span>Storage</span>
-            <span>{{ stats.storage }}</span>
+            <span class="stat-storage">{{ stats.storage }}</span>
           </div>
         </div>
         <div class="stats-update">Last updated: <span>{{ stats.lastUpdate }}</span></div>
@@ -248,6 +272,30 @@ onMounted(() => {
   text-shadow: 0 0 8px rgba(255, 170, 0, 0.6);
 }
 
+/* Loading & Error States */
+.stats-loading, .stats-error {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.95rem;
+  color: rgba(255, 170, 0, 0.8);
+}
+
+.stats-error {
+  color: #ff6666;
+  text-shadow: 0 0 5px rgba(255, 100, 100, 0.5);
+}
+
+.loading-spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+  font-size: 1.2rem;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .stats {
   display: flex;
   flex-direction: column;
@@ -259,10 +307,13 @@ onMounted(() => {
   justify-content: space-between;
   font-size: 0.95rem;
   padding: 4px 0;
+  gap: 10px;
 }
 
 .stat-row span:first-child {
   color: rgba(255, 170, 0, 0.6);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .stat-row span:last-child {
@@ -270,6 +321,13 @@ onMounted(() => {
   font-weight: 700;
   font-family: 'Courier New', 'Consolas', monospace;
   text-shadow: 0 0 5px rgba(255, 170, 0, 0.5);
+  text-align: right;
+  word-break: break-all;
+}
+
+.stat-storage {
+  font-size: 0.85rem;
+  line-height: 1.3;
 }
 
 .stats-update {
