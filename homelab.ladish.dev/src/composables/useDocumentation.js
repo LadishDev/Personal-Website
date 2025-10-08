@@ -68,8 +68,6 @@ const loadDocs = async () => {
       const dateB = new Date(b.updated)
       return dateB - dateA
     })
-    
-    console.log('Loaded docs:', docs.value.length, docs.value)
   } catch (err) {
     console.error('Error loading docs:', err)
     throw err
@@ -129,8 +127,6 @@ const loadGuides = async () => {
       const dateB = new Date(b.updated)
       return dateB - dateA
     })
-    
-    console.log('Loaded guides:', guides.value.length, guides.value)
   } catch (err) {
     console.error('Error loading guides:', err)
     throw err
