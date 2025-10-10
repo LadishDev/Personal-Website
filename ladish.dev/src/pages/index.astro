@@ -17,11 +17,32 @@ import "../styles/index.css";
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body>
+    <!-- Animated Background -->
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-particle"></div>
+    <div class="bg-gradient-orb orb-1"></div>
+    <div class="bg-gradient-orb orb-2"></div>
+    <div class="bg-gradient-orb orb-3"></div>
+    <div class="bg-gradient-orb orb-4"></div>
+    <div class="bg-gradient-orb orb-5"></div>
+    <div class="bg-gradient-orb orb-6"></div>
+    <div class="bg-gradient-orb orb-7"></div>
+    
     <Header />
     <div class="home-container">
       <section class="hero-section">
+        <!-- Subtle Hero Background -->
+        <div class="hero-ambient">
+          <div class="ambient-orb ambient-1"></div>
+          <div class="ambient-orb ambient-2"></div>
+        </div>
+
         <div class="hero-image">
           <div class="image-frame">
+            <div class="image-glow-ring"></div>
             <Image 
               src={ladishImg} 
               alt="Callum Ladish" 
@@ -29,29 +50,49 @@ import "../styles/index.css";
             />
           </div>
         </div>
+        
         <div class="hero-content">
-          <h1 class="hero-title">
-            I am <span class="hero-highlight">Callum</span>
-          </h1>
-          <div class="hero-subtitle">Cyber Security Graduate & Full-Stack Developer</div>
-          <p class="hero-description">
-            <strong>Age: <span id="myAgeResult">21</span> | UK</strong><br>
-           	Passionate about development and currently working on several projects. Outside of tech, I enjoy photography, especially capturing nature and landscapes.
-          </p>
-          <div class="action-buttons">
-            <a href="/resume" class="action-button primary">View Resume</a>
-            <a href="/projects" class="action-button secondary">View Projects</a>
+          <div class="hero-glass-backdrop">
+            <div class="glass-glow"></div>
           </div>
-          <div class="hero-links">
-            <a href="https://bsky.app/profile/ladishdev.bsky.social" aria-label="BlueSky" target="_blank" rel="noopener">
-              <svg width="20" height="20" fill="currentColor"><use href="#icon-bluesky"/></svg>
-            </a>
-            <a href="https://github.com/LadishDev" aria-label="GitHub" target="_blank" rel="noopener">
-              <svg width="20" height="20" fill="currentColor"><use href="#icon-github"/></svg>
-            </a>
-            <a href="https://www.linkedin.com/in/callumbdev" aria-label="LinkedIn" target="_blank" rel="noopener">
-              <svg width="20" height="20" fill="currentColor"><use href="#icon-linkedin"/></svg>
-            </a>
+          
+          <div class="hero-content-inner">
+            <h1 class="hero-title">
+              I am <span class="hero-highlight">Callum</span>
+            </h1>
+            
+            <div class="hero-subtitle">Cyber Security Graduate & Full-Stack Developer</div>
+            
+            <p class="hero-description">
+              <strong>Age: <span id="myAgeResult">21</span> | London, UK</strong><br>
+              Passionate about development and currently working on several projects. Outside of tech, I enjoy photography, especially capturing nature and landscapes.
+            </p>
+            
+            <div class="action-buttons">
+              <a href="/resume" class="action-button primary">
+                <span>View Resume</span>
+                <div class="button-shine"></div>
+              </a>
+              <a href="/projects" class="action-button secondary">
+                <span>View Projects</span>
+                <div class="button-glow"></div>
+              </a>
+            </div>
+            
+            <div class="hero-links">
+              <a href="https://bsky.app/profile/ladishdev.bsky.social" aria-label="BlueSky" target="_blank" rel="noopener" class="social-link">
+                <svg width="20" height="20" fill="currentColor"><use href="#icon-bluesky"/></svg>
+                <div class="link-ripple"></div>
+              </a>
+              <a href="https://github.com/LadishDev" aria-label="GitHub" target="_blank" rel="noopener" class="social-link">
+                <svg width="20" height="20" fill="currentColor"><use href="#icon-github"/></svg>
+                <div class="link-ripple"></div>
+              </a>
+              <a href="https://www.linkedin.com/in/callumbdev" aria-label="LinkedIn" target="_blank" rel="noopener" class="social-link">
+                <svg width="20" height="20" fill="currentColor"><use href="#icon-linkedin"/></svg>
+                <div class="link-ripple"></div>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -62,121 +103,319 @@ import "../styles/index.css";
         </svg>
       </div>
     </div>
-    <main>
-	  <p class="content-subtitle">
-		Passionate about cybersecurity, development, and emerging tech that makes an impact.
-	  </p>
-	
-	  <div class="content-grid">
-		<section class="bubble-section feature-card">
-		  <div class="card-header">
-			<span class="card-icon">👨‍💻</span>
-			<h2>About Me</h2>
-		  </div>
-		  <p>
-			I’m a passionate tech enthusiast and software developer with a strong interest in cybersecurity, IoT, and innovative software solutions. 
-			I thrive on solving complex challenges, designing secure systems, and continuously exploring new technologies. 
-			Alongside development, I enjoy sharing knowledge through my projects and contributions, aiming to create impactful and reliable solutions.
-		  </p>
-		</section>
-	
-		<section class="bubble-section feature-card">
-		  <div class="card-header">
-			<span class="card-icon">🛠️</span>
-			<h2>Technical Skills</h2>
-		  </div>
-		  <p class="section-intro">Technologies and domains I work with:</p>
-		  <div class="skills-grid">
-			<span class="skill-tag">Python</span>
-			<span class="skill-tag">C++</span>
-			<span class="skill-tag">Astro</span>
-			<span class="skill-tag">Cybersecurity</span>
-			<span class="skill-tag">Risk Management</span>
-			<span class="skill-tag">Cloud Computing</span>
-			<span class="skill-tag">Networking</span>
-			<span class="skill-tag">IoT</span>
-			<span class="skill-tag">Embedded Systems</span>
-			<span class="skill-tag">Data Analysis</span>
-			<span class="skill-tag">Machine Learning</span>
-		  </div>
-		</section>
-	  </div>
-	
-	  <section class="bubble-section">
-		<div class="card-header">
-		  <span class="card-icon">🚀</span>
-		  <h2>Highlighted Projects</h2>
-		</div>
-		<p class="section-intro">
-		  I love turning ideas into real projects. Here are some highlights from my work:
-		</p>
-		<div class="projects-list">
-		  <a href="/projects/machine_learning_using_gps_data" class="project-item-link">
-			<div class="project-item">
-			  <h3>IoT GPS Tracker</h3>
-			  <p>Built a device to collect transport data and analyze routes using machine learning algorithms for optimizing efficiency.</p>
-			</div>
-		  </a>
-		  <a href="/projects/rfid_nfc_research_project" class="project-item-link">
-			<div class="project-item">
-			  <h3>Cybersecurity Assessment</h3>
-			  <p>Conducted vulnerability scanning and threat mitigation strategies for simulated corporate environments using industry-standard tools.</p>
-			</div>
-		  </a>
-		  <a href="/projects/personal-website" class="project-item-link">
-			<div class="project-item">
-			  <h3>Personal Website</h3>
-			  <p>Designed a modern, responsive site using Astro and custom CSS for optimal performance and user experience. This site :]</p>
-			</div>
-		  </a>
-		</div>
-		<a href="/projects" class="card-link">
-		  View All Projects →
-		</a>
-	  </section>
-	
-	  <section class="bubble-section">
-		<div class="card-header">
-		  <span class="card-icon">🏠</span>
-		  <h2>Homelab</h2>
-		</div>
-		<p>
-		  Alongside my projects, I also maintain a personal <strong>homelab</strong> where I experiment
-		  with virtualization, networking, and self-hosted services. My homelab allows me to explore
-		  real-world deployments of tools like <em>Proxmox</em>, <em>Docker</em>, and various
-		  cybersecurity monitoring systems.
-		</p>
-		<p>
-		  I document and share the services I run on a dedicated page:
-		</p>
-		<a href="https://homelab.ladish.dev" class="card-link">
-		  Explore My Homelab →
-		</a>
-	  </section>
-	
-	  <section class="bubble-section">
-		<div class="card-header">
-		  <span class="card-icon">📸</span>
-		  <h2>Interests</h2>
-		</div>
-		<p>
-		  Outside of coding, I enjoy photography, exploring tech gadgets, cycling, and learning
-		  about emerging technologies like AI and IoT.
-		</p>
-		<div class="image-container">
-		  <Image src={photography1} alt="Sunset of waves crashing up and through rocks" />
-		</div>
-		<p>
-		  To find out more feel free to have a look at my photography Instagram account:
-		</p>
-		<a href="https://instagram.com/callumb.photography" target="_blank" rel="noopener noreferrer" class="card-link">
-		  @callumb.photography →
-		</a>
-	  </section>
-	</main>
-	<Footer />
-	<SvgIcons />
+
+    <!-- Transition Bridge -->
+    <div class="hero-transition">
+      <div class="transition-line"></div>
+      <div class="transition-glow"></div>
+    </div>
+
+    <main class="main-content">
+      <!-- Content Introduction -->
+      <section class="intro-section">
+        <div class="intro-container">
+          <div class="intro-badge">
+            <span class="badge-icon">✨</span>
+            <span>Crafting Digital Excellence</span>
+          </div>
+          <h2 class="intro-title">
+            Building the <span class="gradient-text">Future</span>,<br>
+            One Project at a <span class="gradient-text-alt">Time</span>
+          </h2>
+          <p class="intro-description">
+            Passionate about cybersecurity, development, and emerging tech that makes an impact.<br>
+            <span class="intro-emphasis">Every line of code tells a story of innovation and dedication.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section class="about-section">
+        <div class="container">
+          <div class="about-content">
+            <div class="about-header">
+              <div class="section-badge">
+                <span class="badge-pulse">💡</span>
+                <span>About Me</span>
+              </div>
+              <h2 class="section-title">
+                Where <span class="gradient-text">Passion</span> Meets <span class="gradient-text-alt">Precision</span>
+              </h2>
+            </div>
+            
+            <div class="about-description">
+              <p class="lead-text">
+                I'm a passionate cybersecurity graduate and full-stack developer who thrives on solving complex challenges. 
+                My journey spans from securing enterprise systems to building innovative IoT solutions.
+              </p>
+              <p class="about-details">
+                <strong>What drives me:</strong> The intersection of security, innovation, and real-world impact. 
+                Every project is an opportunity to push boundaries and create something meaningful.
+              </p>
+              <p class="about-focus">
+                🎯 <strong>Focus:</strong> Cybersecurity & Full-Stack Development<br>
+                🌍 <strong>Based:</strong> London, United Kingdom<br>  
+                🚀 <strong>Mission:</strong> Building secure, innovative solutions
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Section -->
+      <section class="stats-section">
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-number">4+</div>
+              <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">15+</div>
+              <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Passion Driven</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Projects -->
+      <section class="projects-showcase-section">
+        <div class="container">
+          <div class="showcase-header">
+            <div class="header-glow"></div>
+            <div class="header-content">
+              <h2 class="showcase-title">
+                Featured <span class="gradient-text">Projects</span>
+              </h2>
+              <p class="showcase-subtitle">
+                Innovative solutions crafted with precision and creativity
+              </p>
+            </div>
+          </div>
+          
+          <div class="projects-constellation">
+            <!-- Primary Project Spotlight -->
+            <div class="main-project-spotlight">
+              <a href="/projects/finetrack_app" class="main-project-card">
+                <div class="project-backdrop">
+                  <div class="backdrop-glow primary"></div>
+                  <div class="backdrop-pattern"></div>
+                </div>
+                
+                <div class="project-content">
+                  <div class="project-header">
+                    <div class="project-badge featured">
+                      <span class="badge-icon">⭐</span>
+                      <span class="badge-text">Featured Project</span>
+                    </div>
+                  </div>
+                  
+                  <h3 class="project-title">FineTrack Mobile App</h3>
+                  <p class="project-description">
+                    Comprehensive cross-platform application for vehicle owners to track fines, MOT renewals, insurance, and expenses. 
+                    Features secure data management, intelligent reminders, and detailed analytics for multiple vehicles.
+                  </p>
+                  
+                  <div class="project-technologies">
+                    <div class="tech-cluster">
+                      <span class="tech-badge primary">Cross-Platform</span>
+                      <span class="tech-badge secondary">Mobile Dev</span>
+                      <span class="tech-badge accent">Data Security</span>
+                      <span class="tech-badge">Analytics</span>
+                    </div>
+                  </div>
+                  
+                  <div class="project-metrics">
+                    <div class="metric">
+                      <span class="metric-value">Multi-Vehicle</span>
+                      <span class="metric-label">Support</span>
+                    </div>
+                    <div class="metric">
+                      <span class="metric-value">Privacy-First</span>
+                      <span class="metric-label">Design</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="project-visual">
+                  <div class="visual-orb"></div>
+                  <div class="visual-circuit"></div>
+                  <div class="interaction-hint">
+                    <span class="hint-text">Explore Project</span>
+                    <span class="hint-arrow">→</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Secondary Projects Grid -->
+            <div class="secondary-projects-grid">
+              <a href="/projects/rfid_nfc_research_project" class="secondary-project-card">
+                <div class="card-backdrop">
+                  <div class="backdrop-glow secondary"></div>
+                </div>
+                
+                <div class="card-content">
+                  <div class="project-icon-wrapper">
+                    <div class="project-icon">🔐</div>
+                    <div class="icon-pulse"></div>
+                  </div>
+                  
+                  <div class="project-info">
+                    <h4 class="card-title">Cybersecurity Research</h4>
+                    <p class="card-description">
+                      Comprehensive RFID/NFC vulnerability assessment with advanced threat modeling and mitigation strategies.
+                    </p>
+                    
+                    <div class="card-tags">
+                      <span class="tag">Security</span>
+                      <span class="tag">Research</span>
+                      <span class="tag">RFID</span>
+                    </div>
+                  </div>
+                  
+                  <div class="card-interaction">
+                    <div class="interaction-orb"></div>
+                  </div>
+                </div>
+              </a>
+
+              <a href="/projects/personal-website" class="secondary-project-card">
+                <div class="card-backdrop">
+                  <div class="backdrop-glow tertiary"></div>
+                </div>
+                
+                <div class="card-content">
+                  <div class="project-icon-wrapper">
+                    <div class="project-icon">🌐</div>
+                    <div class="icon-pulse"></div>
+                  </div>
+                  
+                  <div class="project-info">
+                    <h4 class="card-title">Portfolio Platform</h4>
+                    <p class="card-description">
+                      Modern, high-performance web platform built with Astro, featuring advanced animations and responsive design.
+                    </p>
+                    
+                    <div class="card-tags">
+                      <span class="tag">Astro</span>
+                      <span class="tag">Web Dev</span>
+                      <span class="tag">Design</span>
+                    </div>
+                  </div>
+                  
+                  <div class="card-interaction">
+                    <div class="interaction-orb"></div>
+                  </div>
+                </div>
+              </a>
+
+              <a href="/projects/discojam_api_app" class="secondary-project-card">
+                <div class="card-backdrop">
+                  <div class="backdrop-glow quaternary"></div>
+                </div>
+                
+                <div class="card-content">
+                  <div class="project-icon-wrapper">
+                    <div class="project-icon">🎵</div>
+                    <div class="icon-pulse"></div>
+                  </div>
+                  
+                  <div class="project-info">
+                    <h4 class="card-title">DiscoJam API</h4>
+                    <p class="card-description">
+                      Social music platform enabling collaborative playlist creation with real-time synchronization and discovery features.
+                    </p>
+                    
+                    <div class="card-tags">
+                      <span class="tag">API</span>
+                      <span class="tag">Music</span>
+                      <span class="tag">Social</span>
+                    </div>
+                  </div>
+                  
+                  <div class="card-interaction">
+                    <div class="interaction-orb"></div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Projects Navigation -->
+            <div class="projects-navigation">
+              <a href="/projects" class="nav-showcase-button">
+                <span class="button-content">
+                  <span class="button-text">Explore Full Portfolio</span>
+                  <span class="button-icon">🚀</span>
+                </span>
+                <div class="button-glow"></div>
+                <div class="cta-icon">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experience Grid -->
+      <section class="experience-section">
+        <div class="container">
+          <div class="experience-grid">
+            <!-- Homelab Card -->
+            <div class="experience-card homelab-card">
+              <div class="experience-bg"></div>
+              <div class="experience-content">
+                <div class="experience-icon">🏠</div>
+                <h3 class="experience-title">Homelab</h3>
+                <p class="experience-text">
+                  A personal playground for experimenting with virtualization, networking, and self-hosted services. 
+                  Exploring real-world deployments of Proxmox, Docker, and various cybersecurity monitoring systems.
+                </p>
+                <a href="https://homelab.ladish.dev" class="experience-link">
+                  <span>Explore Homelab</span>
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17l10-10M17 7H7"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Photography Card -->
+            <div class="experience-card photography-card">
+              <div class="photo-container">
+                <Image src={photography1} alt="Sunset of waves crashing up and through rocks" class="photo-image" />
+                <div class="photo-overlay"></div>
+              </div>
+              <div class="experience-content">
+                <div class="experience-icon">📸</div>
+                <h3 class="experience-title">Beyond Code</h3>
+                <p class="experience-text">
+                  Capturing moments through photography, exploring tech innovations, and cycling through scenic landscapes. 
+                  Always learning about emerging technologies like AI and IoT.
+                </p>
+                <a href="https://instagram.com/callumb.photography" target="_blank" rel="noopener noreferrer" class="experience-link">
+                  <span>@callumb.photography</span>
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17l10-10M17 7H7"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+    <SvgIcons />
     <script>
+      // Age calculation
       (function(){
         var d="MjAwMy0xMS0xNQ==";
         try{
@@ -196,6 +435,138 @@ import "../styles/index.css";
           if(e2)e2.textContent="21";
         }
       })();
+
+      // Enhanced animations and interactions
+      document.addEventListener('DOMContentLoaded', function() {
+        // Animated counter for stats
+        function animateCounter(element, target, duration = 2000) {
+          let start = 0;
+          const increment = target / (duration / 16);
+          
+          function update() {
+            start += increment;
+            if (start < target) {
+              element.textContent = Math.floor(start) + '+';
+              requestAnimationFrame(update);
+            } else {
+              element.textContent = target + '+';
+            }
+          }
+          update();
+        }
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+              
+              // Animate stat numbers
+              const statNumbers = entry.target.querySelectorAll('.stat-number');
+              statNumbers.forEach(stat => {
+                if (stat.textContent.includes('50')) {
+                  animateCounter(stat, 50);
+                } else if (stat.textContent.includes('3')) {
+                  animateCounter(stat, 3);
+                }
+              });
+            }
+          });
+        }, { threshold: 0.1 });
+
+        // Observe elements for animation
+        document.querySelectorAll('.glass-card, .experience-card, .project-glass-card, .spotlight-card').forEach(el => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(50px)';
+          observer.observe(el);
+        });
+
+        // Skill orb click effects
+        document.querySelectorAll('.skill-orb').forEach(orb => {
+          orb.addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              this.style.transform = '';
+            }, 150);
+          });
+        });
+
+        // Parallax effect for background orbs
+        window.addEventListener('scroll', () => {
+          const scrolled = window.pageYOffset;
+          const rate = scrolled * -0.5;
+          
+          document.querySelectorAll('.bg-gradient-orb').forEach((orb, index) => {
+            const speed = (index + 1) * 0.1;
+            orb.style.transform = `translateY(${rate * speed}px)`;
+          });
+        });
+
+        // Mouse follow effect for glass cards
+        document.querySelectorAll('.glass-card, .experience-card').forEach(card => {
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+          });
+          
+          card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+          });
+        });
+
+        // Typewriter effect for intro title
+        const titleElement = document.querySelector('.intro-title');
+        if (titleElement) {
+          const text = titleElement.innerHTML;
+          titleElement.innerHTML = '';
+          titleElement.style.opacity = '1';
+          
+          let index = 0;
+          function typeWriter() {
+            if (index < text.length) {
+              if (text.charAt(index) === '<') {
+                // Skip HTML tags
+                const tagEnd = text.indexOf('>', index);
+                titleElement.innerHTML += text.substring(index, tagEnd + 1);
+                index = tagEnd + 1;
+              } else {
+                titleElement.innerHTML += text.charAt(index);
+                index++;
+              }
+              setTimeout(typeWriter, 50);
+            }
+          }
+          
+          setTimeout(typeWriter, 1000);
+        }
+      });
     </script>
+
+    <style>
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .intro-title {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+    </style>
   </body>
 </html>
