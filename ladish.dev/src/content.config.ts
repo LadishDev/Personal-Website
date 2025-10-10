@@ -15,6 +15,9 @@ const projects = defineCollection({
 			heroImage: image().optional(),
 			heroImageAlt: z.string().optional(),
 			heroImageCaption: z.string().optional(),
+			// Project details for the overview page
+			highlights: z.array(z.string()).optional(),
+			tech: z.array(z.string()).optional(),
 		}),
 });
 
