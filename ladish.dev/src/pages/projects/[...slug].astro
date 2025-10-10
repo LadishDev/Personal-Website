@@ -2,6 +2,9 @@
 import ProjectsPost from '../../layouts/ProjectsPost.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 
+// Enable prerendering
+export const prerender = true;
+
 // build static paths (keeps prerendering)
 export async function getStaticPaths() {
     const posts = await getCollection('projects');
