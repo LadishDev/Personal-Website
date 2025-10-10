@@ -1,25 +1,262 @@
 ---
-import Hamburger from './Hamburger.astro';
-import Navigation from './Navigation.astro';
+import HeaderLink from './HeaderLink.astro';
+import SvgIcons from './SvgIcons.astro';
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.svg';
 ---
 
 <header>
   <nav>
+    <!-- Mobile Navigation (Hamburger) -->
     <div class="mobile-nav">
-      <Hamburger />
+      <div class="left">
+        <div class="hamburger" id="hamburger">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </div>
+        <a href="/" class="logo">
+          <Image 
+            src={logo} 
+            alt="Logo" 
+            loading="eager"
+            width="132"
+            height="24"
+            style="vertical-align: middle; margin-right: 0.5em;"
+          />
+        </a>
+      </div>
     </div>
-    <div class="desktop-nav">
-      <Navigation />
+
+    <!-- Desktop Navigation -->
+    <div class="desktop-nav nav-style">
+      <h2><a href="/">
+        <Image 
+          src={logo} 
+          alt="Logo" 
+          loading="eager"
+          width="132"
+          height="24"
+          style="vertical-align: middle; margin-right: 0.5em;"
+        />
+      </a></h2>
+      <div class="internal-links">
+        <HeaderLink href="/">Home</HeaderLink>
+        <HeaderLink href="/projects">Projects</HeaderLink>
+        <HeaderLink href="/resume">Resume</HeaderLink>
+      </div>
+      <div class="social-links">
+        <a href="https://bsky.app/profile/ladishdev.bsky.social" target="_blank">
+          <span class="sr-only">Callums BlueSky</span>
+          <svg viewBox="0 0 256 256" aria-hidden="true" width="32" height="32">
+            <use href="#icon-bluesky"/>
+          </svg>
+        </a>
+        <a href="https://github.com/LadishDev" target="_blank">
+          <span class="sr-only">Callums GitHub</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32">
+            <use href="#icon-github-small"/>
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/callumbdev" target="_blank">
+          <span class="sr-only">Callums LinkedIn</span>
+          <svg viewBox="0 0 512 512" aria-hidden="true" width="32" height="32">
+            <use href="#icon-linkedin-large"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </nav>
+  <SvgIcons />
 </header>
 
-<style>
-  .mobile-nav { display: block; }
-  .desktop-nav { display: none; }
+<!-- Mobile Fullscreen overlay menu -->
+<div class="overlay" id="overlay">
+  <div class="overlay-content">
+    <HeaderLink href="/">Home</HeaderLink>
+    <HeaderLink href="/projects">Projects</HeaderLink>
+    <HeaderLink href="/resume">Resume</HeaderLink>
+  </div>
+</div>
 
+<style>
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: #131516;
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Ensure body has padding to account for fixed header */
+  :global(body) {
+    padding-top: 70px;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    width: 100%;
+  }
+
+  /* Mobile Navigation Styles */
+  .mobile-nav { 
+    display: block !important;
+    width: 100%;
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hamburger {
+    display: block;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1100;
+  }
+
+  .hamburger .line {
+    display: block;
+    width: 28px;
+    height: 3px;
+    margin: 5px 0;
+    background-color: var(--accent);
+    transition: 0.3s;
+  }
+
+  .logo img {
+    display: block;
+  }
+
+  /* Mobile Overlay */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(20, 20, 20, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .overlay.show {
+    display: flex;
+  }
+
+  .overlay-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .overlay-content a {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .overlay-content a:hover {
+    color: var(--accent);
+  }
+
+  /* Desktop Navigation Styles - Hidden on Mobile */
+  .desktop-nav { 
+    display: none !important;
+  }
+
+  .nav-style {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1em;
+  }
+
+  h2 a,
+  h2 a.active {
+    text-decoration: none;
+  }
+
+  .desktop-nav a {
+    padding: 1em 0.5em;
+    color: var(--black);
+    border-bottom: 4px solid transparent;
+    text-decoration: none;
+  }
+
+  .desktop-nav a.active {
+    text-decoration: none;
+    border-bottom-color: var(--accent);
+  }
+
+  .social-links,
+  .social-links a {
+    display: flex;
+  }
+
+  .internal-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  /* Responsive Breakpoint */
   @media screen and (min-width: 721px) {
-    .mobile-nav { display: none; }
-    .desktop-nav { display: flex; }
+    .mobile-nav { 
+      display: none !important;
+    }
+    .desktop-nav { 
+      display: flex !important;
+      width: 100%;
+    }
+    .overlay {
+      display: none !important;
+    }
   }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const hamburger = document.getElementById("hamburger");
+    const overlay = document.getElementById("overlay");
+
+    hamburger?.addEventListener("click", () => {
+      overlay?.classList.toggle("show");
+    });
+
+    // Close overlay when clicking on overlay background
+    overlay?.addEventListener("click", (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove("show");
+      }
+    });
+
+    // Close overlay on escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && overlay?.classList.contains("show")) {
+        overlay.classList.remove("show");
+      }
+    });
+  });
+</script>
