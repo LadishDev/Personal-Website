@@ -4,50 +4,497 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SvgIcons from '../components/SvgIcons.astro';
 import '../styles/global.css';
-import '../styles/resume.css';
 ---
 
 <html lang="en">
     <head>
         <BaseHead title="Resume" description="Professional resume and CV of Callum Baldwin - Cyber Security Graduate & Full-Stack Developer" />
+        <style>
+            body {
+                background: linear-gradient(135deg, #0f0517 0%, #1a0b2e 50%, #131320 100%);
+                background-attachment: fixed;
+                color: #ffffff;
+                margin: 0;
+                padding-top: 70px;
+                font-family: "Atkinson", sans-serif;
+                position: relative;
+                overflow-x: hidden;
+            }
+
+            /* Background Orbs (matching homepage) */
+            .bg-gradient-orb {
+                position: fixed;
+                border-radius: 50%;
+                filter: blur(120px);
+                opacity: 0.15;
+                animation: mystical-float 20s ease-in-out infinite;
+                z-index: -1;
+                pointer-events: none;
+            }
+
+            .orb-1 {
+                width: 400px;
+                height: 400px;
+                background: radial-gradient(circle, rgba(147, 51, 234, 0.8) 0%, transparent 70%);
+                top: 15%;
+                left: 10%;
+                animation-delay: 0s;
+            }
+
+            .orb-2 {
+                width: 350px;
+                height: 350px;
+                background: radial-gradient(circle, rgba(168, 85, 247, 0.6) 0%, transparent 70%);
+                top: 50%;
+                right: 15%;
+                animation-delay: -8s;
+            }
+
+            .orb-3 {
+                width: 300px;
+                height: 300px;
+                background: radial-gradient(circle, rgba(139, 92, 246, 0.7) 0%, transparent 70%);
+                bottom: 20%;
+                left: 20%;
+                animation-delay: -15s;
+            }
+
+            @keyframes mystical-float {
+                0%, 100% { 
+                    transform: translateY(0px) translateX(0px) scale(1) rotate(0deg);
+                    opacity: 0.15;
+                }
+                25% { 
+                    transform: translateY(-30px) translateX(25px) scale(1.1) rotate(90deg);
+                    opacity: 0.25;
+                }
+                50% { 
+                    transform: translateY(-50px) translateX(-15px) scale(0.9) rotate(180deg);
+                    opacity: 0.2;
+                }
+                75% { 
+                    transform: translateY(-35px) translateX(-30px) scale(1.05) rotate(270deg);
+                    opacity: 0.3;
+                }
+            }
+
+
+
+            /* Resume Container - Mobile First */
+            .resume-container {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 1rem 1rem 2rem;
+            }
+
+            /* Resume Header Card - Mobile First */
+            .resume-header {
+                background: rgba(15, 15, 35, 0.6);
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(162, 89, 247, 0.2);
+                border-radius: 20px;
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+                text-align: center;
+                position: relative;
+                transition: all 0.3s ease;
+                overflow: hidden;
+            }
+
+            .resume-header::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(135deg, rgba(162, 89, 247, 0.05) 0%, rgba(106, 130, 251, 0.02) 100%);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .resume-header:hover {
+                border-color: rgba(162, 89, 247, 0.4);
+                box-shadow: 0 15px 35px rgba(162, 89, 247, 0.15);
+                transform: translateY(-2px);
+            }
+
+            .resume-header:hover::before {
+                opacity: 1;
+            }
+
+
+
+            .resume-name {
+                font-size: 1.8rem;
+                font-weight: 900;
+                margin: 0 0 0.5rem;
+                background: linear-gradient(135deg, #a259f7 0%, #6a82fb 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .resume-title {
+                font-size: 1rem;
+                color: #d0d0d0;
+                margin: 0 0 1.5rem;
+                font-weight: 500;
+            }
+
+            .resume-contact {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .resume-contact span {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: #c0c0c0;
+            }
+
+            .resume-contact svg {
+                color: #a259f7;
+                flex-shrink: 0;
+            }
+
+            .resume-contact a {
+                color: #a259f7;
+                text-decoration: none;
+                transition: color 0.2s ease;
+            }
+
+            .resume-contact a:hover {
+                color: #ffffff;
+            }
+
+
+
+            /* Resume Section - Mobile First */
+            .resume-section {
+                background: rgba(15, 15, 35, 0.6);
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(162, 89, 247, 0.2);
+                border-radius: 20px;
+                margin-bottom: 1rem;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .resume-section:hover {
+                border-color: rgba(162, 89, 247, 0.4);
+                box-shadow: 0 8px 25px rgba(162, 89, 247, 0.1);
+            }
+
+            .section-toggle {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 1rem 1.5rem;
+                margin: 0;
+                background: none;
+                border: none;
+                color: #ffffff;
+                font-size: 1.1rem;
+                font-weight: 700;
+                cursor: pointer;
+                width: 100%;
+                text-align: left;
+                transition: all 0.2s ease;
+            }
+
+            .section-toggle:hover {
+                color: #a259f7;
+                background: rgba(162, 89, 247, 0.05);
+            }
+
+
+
+            .toggle-icon {
+                color: #a259f7;
+                transition: transform 0.3s ease;
+                flex-shrink: 0;
+            }
+
+            .section-content {
+                overflow: hidden;
+                transition: max-height 0.4s ease;
+                background: rgba(0, 0, 0, 0.1);
+            }
+
+            .collapsible.collapsed .section-content {
+                max-height: 0 !important;
+            }
+
+            /* Resume Items - Mobile First */
+            .resume-item {
+                padding: 1.5rem;
+                border-top: 1px solid rgba(162, 89, 247, 0.1);
+            }
+
+            .resume-item:first-child {
+                border-top: none;
+            }
+
+            .resume-item-header {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                align-items: start;
+                margin-bottom: 1rem;
+            }
+
+            .resume-item-header h3 {
+                font-size: 1.2rem;
+                font-weight: 700;
+                margin: 0 0 0.25rem;
+                color: #ffffff;
+            }
+
+            .resume-company {
+                color: #a259f7;
+                font-weight: 600;
+                font-size: 1rem;
+            }
+
+            .resume-date {
+                color: #8b8b8b;
+                font-size: 0.85rem;
+                font-weight: 500;
+                justify-self: start;
+            }
+
+            .resume-location {
+                color: #8b8b8b;
+                font-size: 0.8rem;
+                justify-self: start;
+                margin-top: 0;
+            }
+
+            .resume-item ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .resume-item li {
+                position: relative;
+                padding-left: 1.5rem;
+                margin-bottom: 0.75rem;
+                color: #d0d0d0;
+                line-height: 1.6;
+            }
+
+            .resume-item li::before {
+                content: "•";
+                position: absolute;
+                left: 0;
+                color: #a259f7;
+                font-weight: bold;
+            }
+
+            .resume-skills {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                margin-top: 1rem;
+            }
+
+            .resume-skills li {
+                background: rgba(162, 89, 247, 0.1);
+                border: 1px solid rgba(162, 89, 247, 0.2);
+                color: #a259f7;
+                padding: 0.5rem 1rem;
+                border-radius: 20px;
+                font-size: 0.85rem;
+                font-weight: 500;
+                margin: 0;
+                transition: all 0.2s ease;
+            }
+
+            .resume-skills li::before {
+                display: none;
+            }
+
+            .resume-skills li:hover {
+                background: rgba(162, 89, 247, 0.2);
+                border-color: rgba(162, 89, 247, 0.4);
+                color: #ffffff;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(162, 89, 247, 0.2);
+            }
+
+            /* Skill level indicators */
+            .skill-advanced {
+                border-color: rgba(34, 197, 94, 0.3) !important;
+                color: #22c55e !important;
+                background: rgba(34, 197, 94, 0.1) !important;
+            }
+
+            .skill-intermediate {
+                border-color: rgba(251, 191, 36, 0.3) !important;
+                color: #fbbf24 !important;
+                background: rgba(251, 191, 36, 0.1) !important;
+            }
+
+
+
+            /* Staggered animation for sections */
+            .resume-section {
+                animation: slideInUp 0.6s ease forwards;
+            }
+
+            .resume-section:nth-child(2) { animation-delay: 0.1s; } /* Summary */
+            .resume-section:nth-child(3) { animation-delay: 0.2s; } /* Experience */
+            .resume-section:nth-child(4) { animation-delay: 0.3s; } /* Education */
+            .resume-section:nth-child(5) { animation-delay: 0.4s; } /* Certifications */
+            .resume-section:nth-child(6) { animation-delay: 0.5s; } /* Skills */
+
+            @keyframes slideInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Skills Section Grid - Mobile First */
+            .skills-grid {
+                display: grid;
+                gap: 1rem;
+                grid-template-columns: 1fr;
+            }
+
+            /* Small Mobile - Force vertical stacking on very small screens */
+            @media (max-width: 480px) {
+                .resume-contact {
+                    flex-direction: column;
+                    gap: 0.75rem;
+                }
+            }
+
+            /* Progressive Enhancement - Tablet and up */
+            @media (min-width: 768px) {
+                .resume-container {
+                    padding: 2rem 2rem 4rem;
+                }
+
+                .resume-header {
+                    padding: 2rem;
+                    margin-bottom: 2rem;
+                }
+
+                .resume-name {
+                    font-size: 2.5rem;
+                }
+
+                .resume-title {
+                    font-size: 1.2rem;
+                    margin-bottom: 2rem;
+                }
+
+                .resume-contact {
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 2rem;
+                    font-size: 0.95rem;
+                }
+
+                .resume-section {
+                    margin-bottom: 1.5rem;
+                }
+
+                .section-toggle {
+                    padding: 1.5rem 2rem;
+                    font-size: 1.2rem;
+                    gap: 1rem;
+                }
+
+                .resume-item {
+                    padding: 2rem;
+                }
+
+                .resume-item-header {
+                    grid-template-columns: 1fr auto auto;
+                    gap: 1rem;
+                }
+
+                .resume-date,
+                .resume-location {
+                    justify-self: end;
+                }
+
+                .resume-location {
+                    margin-top: 0.25rem;
+                }
+
+                .skills-grid {
+                    grid-template-columns: 1fr 1fr;
+                    gap: 2rem;
+                }
+            }
+
+            /* Desktop */
+            @media (min-width: 1024px) {
+                .resume-header {
+                    padding: 2.5rem;
+                }
+
+                .resume-name {
+                    font-size: 3rem;
+                }
+
+                .section-toggle {
+                    font-size: 1.3rem;
+                }
+
+                .resume-contact {
+                    gap: 3rem;
+                }
+            }
+        </style>
     </head>
     <body>
+        <!-- Animated Background Orbs (matching homepage) -->
+        <div class="bg-gradient-orb orb-1"></div>
+        <div class="bg-gradient-orb orb-2"></div>
+        <div class="bg-gradient-orb orb-3"></div>
         <Header />
+        
         <main>
             <div class="resume-container">
-            <section class="resume-header">
-                <!-- Disable download button temporarily
-                <div class="resume-download">
-                    <a href="/Callum-Baldwin-Resume.pdf" class="download-button" download>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        Download PDF
-                    </a>
-                </div> -->
-                <h1>Callum Baldwin</h1>
-                <p class="resume-title">Cyber Security Graduate & Full-Stack Developer</p>
-                <div class="resume-contact">
-                    <span>
-                        <svg width="20" height="20" fill="currentColor"><use href="#icon-map-pin"/></svg>
-                        UK
-                    </span>
-                    <span>
-                        <svg width="20" height="20" fill="currentColor"><use href="#icon-linkedin"/></svg>
-                        <a href="https://www.linkedin.com/in/callum-ladish/" target="_blank">LinkedIn</a>
-                    </span>
-                    <span>
-                        <svg width="20" height="20" fill="currentColor"><use href="#icon-www"/></svg>
-                        <a href="https://ladish.dev">ladish.dev</a>
-                    </span>
-                    <span>
-                        <svg width="20" height="20" fill="currentColor"><use href="#icon-github"/></svg>
-                        <a href="https://github.com/LadishDev" target="_blank">GitHub</a>
-                    </span>
-                </div>
-            </section>
+                <section class="resume-header">
+                    <h1 class="resume-name">Callum Baldwin</h1>
+                    <p class="resume-title">Cyber Security Graduate & Full-Stack Developer</p>
+                    <div class="resume-contact">
+                        <span>
+                            <svg width="20" height="20" fill="currentColor"><use href="#icon-map-pin"/></svg>
+                            London, UK
+                        </span>
+                        <span>
+                            <svg width="20" height="20" fill="currentColor"><use href="#icon-linkedin"/></svg>
+                            <a href="https://www.linkedin.com/in/callum-ladish/" target="_blank">LinkedIn</a>
+                        </span>
+                        <span>
+                            <svg width="20" height="20" fill="currentColor"><use href="#icon-www"/></svg>
+                            <a href="https://ladish.dev">ladish.dev</a>
+                        </span>
+                        <span>
+                            <svg width="20" height="20" fill="currentColor"><use href="#icon-github"/></svg>
+                            <a href="https://github.com/LadishDev" target="_blank">GitHub</a>
+                        </span>
+                    </div>
+
+                </section>
 
             <section class="resume-section collapsible">
                 <h2 class="section-toggle">
@@ -184,61 +631,63 @@ import '../styles/resume.css';
                     Skills
                 </h2>
                 <div class="section-content" style="max-height: 0;">
-                <section class="resume-item">
-                    <h3>Programming Languages</h3>
-                    <ul class="resume-skills">
-                        <li>Python</li>
-                        <li>Java</li>
-                        <li>C++</li>
-                        <li>SQL</li>
-                        <li>JavaScript</li>
-                        <li>Astro</li>
-                        <li>HTML & CSS</li>
-                    </ul>
-                </section>
+                    <div class="skills-grid">
+                        <div class="resume-item">
+                            <h3>Programming Languages</h3>
+                            <ul class="resume-skills">
+                                <li class="skill-advanced">Python</li>
+                                <li class="skill-advanced">JavaScript</li>
+                                <li class="skill-advanced">HTML & CSS</li>
+                                <li class="skill-intermediate">Java</li>
+                                <li class="skill-intermediate">C++</li>
+                                <li class="skill-advanced">SQL</li>
+                                <li>Astro</li>
+                            </ul>
+                        </div>
 
-                <section class="resume-item">
-                    <h3>Cyber Security</h3>
-                    <ul class="resume-skills">
-                        <li>Threat Analysis</li>
-                        <li>Digital Forensics</li>
-                        <li>Network Hardening</li>
-                        <li>Intrusion Detection/Prevention</li>
-                        <li>Vulnerability Assessment</li>
-                        <li>Encryption</li>
-                        <li>Risk Management</li>
-                    </ul>
-                </section>
+                        <div class="resume-item">
+                            <h3>Cyber Security</h3>
+                            <ul class="resume-skills">
+                                <li>Threat Analysis</li>
+                                <li>Digital Forensics</li>
+                                <li>Network Hardening</li>
+                                <li>Intrusion Detection/Prevention</li>
+                                <li>Vulnerability Assessment</li>
+                                <li>Encryption</li>
+                                <li>Risk Management</li>
+                            </ul>
+                        </div>
 
-                <section class="resume-item">
-                    <h3>Tools & Platforms</h3>
-                    <ul class="resume-skills">
-                        <li>Wireshark</li>
-                        <li>Metasploit</li>
-                        <li>Nmap</li>
-                        <li>Kali Linux</li>
-                        <li>VMware</li>
-                        <li>QEMU</li>
-                        <li>MySQL</li>
-                        <li>Burp Suite</li>
-                        <li>Cisco Packet Tracer</li>
-                        <li>Proxmox</li>
-                    </ul>
-                </section>
+                        <div class="resume-item">
+                            <h3>Tools & Platforms</h3>
+                            <ul class="resume-skills">
+                                <li>Wireshark</li>
+                                <li>Metasploit</li>
+                                <li>Nmap</li>
+                                <li>Kali Linux</li>
+                                <li>VMware</li>
+                                <li>QEMU</li>
+                                <li>MySQL</li>
+                                <li>Burp Suite</li>
+                                <li>Cisco Packet Tracer</li>
+                                <li>Proxmox</li>
+                            </ul>
+                        </div>
 
-                <section class="resume-item">
-                    <h3>Methodologies</h3>
-                    <ul class="resume-skills">
-                        <li>Agile Methodology</li>
-                        <li>Web Security</li>
-                        <li>OSINT</li>
-                        <li>Technical Documentation</li>
-                        <li>Project Management</li>
-                        <li>Incident Response</li>
-                        <li>Nist Framework</li>
-                        <li>NCSC Framework</li>
-                    </ul>
-                </section>
+                        <div class="resume-item">
+                            <h3>Methodologies</h3>
+                            <ul class="resume-skills">
+                                <li>Agile Methodology</li>
+                                <li>Web Security</li>
+                                <li>OSINT</li>
+                                <li>Technical Documentation</li>
+                                <li>Project Management</li>
+                                <li>Incident Response</li>
+                                <li>Nist Framework</li>
+                                <li>NCSC Framework</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </section>
             </div>
