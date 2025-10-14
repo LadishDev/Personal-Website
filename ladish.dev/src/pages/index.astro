@@ -17,29 +17,9 @@ import "../styles/index.css";
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body>
-    <!-- Animated Background -->
-    <div class="bg-particle"></div>
-    <div class="bg-particle"></div>
-    <div class="bg-particle"></div>
-    <div class="bg-particle"></div>
-    <div class="bg-particle"></div>
-    <div class="bg-gradient-orb orb-1"></div>
-    <div class="bg-gradient-orb orb-2"></div>
-    <div class="bg-gradient-orb orb-3"></div>
-    <div class="bg-gradient-orb orb-4"></div>
-    <div class="bg-gradient-orb orb-5"></div>
-    <div class="bg-gradient-orb orb-6"></div>
-    <div class="bg-gradient-orb orb-7"></div>
-    
     <Header />
     <div class="home-container">
       <section class="hero-section">
-        <!-- Subtle Hero Background -->
-        <div class="hero-ambient">
-          <div class="ambient-orb ambient-1"></div>
-          <div class="ambient-orb ambient-2"></div>
-        </div>
-
         <div class="hero-image">
           <div class="image-frame">
             <div class="image-glow-ring"></div>
@@ -488,17 +468,6 @@ import "../styles/index.css";
             setTimeout(() => {
               this.style.transform = '';
             }, 150);
-          });
-        });
-
-        // Parallax effect for background orbs
-        window.addEventListener('scroll', () => {
-          const scrolled = window.pageYOffset;
-          const rate = scrolled * -0.5;
-          
-          document.querySelectorAll('.bg-gradient-orb').forEach((orb, index) => {
-            const speed = (index + 1) * 0.1;
-            orb.style.transform = `translateY(${rate * speed}px)`;
           });
         });
 
