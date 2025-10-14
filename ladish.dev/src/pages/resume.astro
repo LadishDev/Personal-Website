@@ -341,7 +341,11 @@ import '../styles/global.css';
                 color: #fbbf24 !important;
                 background: rgba(251, 191, 36, 0.1) !important;
             }
-
+            
+            /* Ensure pointer events do not interfere with hover effects */
+            .resume-header::before {
+                pointer-events: none;
+            }
 
 
             /* Staggered animation for sections */
