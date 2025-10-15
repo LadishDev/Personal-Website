@@ -17,6 +17,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, description, image = FallbackImage } = Astro.props;
 ---
 
+<!-- Umami Analytics -->
+<script defer src="https://umami.ladish.dev/script.js" data-website-id="7dc21aed-f508-4d83-900e-fde07106ad4e"></script>
+
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
