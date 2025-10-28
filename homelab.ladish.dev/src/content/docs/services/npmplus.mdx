@@ -1,0 +1,51 @@
+---
+title: NPMplus
+description: Reverse proxy setup, SSL certificates, and domain management
+status: documented
+updated: 28 Oct 2025
+link: #nginx
+category: services
+tags: [proxy, nginx, ssl, certificates, reverse proxy]
+---
+
+## Overview
+
+Nginx Proxy Manager Plus provides an easy-to-use interface for managing reverse proxies and SSL certificates.
+
+I opted for this fork over the original repo due to it being lighter and having a few more options and features that I prefered to have.
+
+## Installation
+
+https://github.com/ZoeyVid/NPMplus
+
+## Docker Compose 
+
+Due to the complex docker compose file and the total amount of options this requires a decent amount of reading and editing to get it setup and working for you.
+
+However if u want to quickly set it up u just need to focus on the NPMplus service section and the other services can be ignored unless required for your instance. The up to date compose.yaml can be found at the following address that u can copy [HERE](https://raw.githubusercontent.com/ZoeyVid/NPMplus/refs/heads/develop/compose.yaml)
+
+
+## Easier Install - NPM 
+
+https://github.com/NginxProxyManager/nginx-proxy-manager
+
+If you dont want to touch the long docker compose file u can install the base version of NPM without the features of the plus version. The docker compose to get setup is the following.
+
+```yaml
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
+      # Add any other Stream port you want to expose
+      # - '21:21' # FTP
+    #environment:
+      # DB_SQLITE_FILE: "/data/database.sqlite" # Uncomment this if you want to change the location of the SQLite DB file within the container
+      # DISABLE_IPV6: 'true' # Uncomment this if IPv6 is not enabled on your host
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+```

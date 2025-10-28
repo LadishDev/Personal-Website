@@ -26,7 +26,7 @@ const featuredServices = [
     url: null
   },
   {
-    slug: 'zoraxy',
+    slug: 'npmplus',
     icon: IconCommunity,
     color: '#ff9900',
     url: null
