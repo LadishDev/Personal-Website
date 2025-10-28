@@ -28,3 +28,6 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Generated commit history file (auto-updated; do not track)
+src/data/homelab-commits.json
