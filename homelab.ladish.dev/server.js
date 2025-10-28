@@ -12,6 +12,14 @@ const distPath = path.join(__dirname, 'dist')
 // Serve static files
 app.use(express.static(distPath))
 
+// Ensure favicon is served with correct headers (some browsers request it directly)
+app.get('/favicon.ico', (req, res) => {
+  const icoPath = path.join(distPath, 'favicon.ico')
+  res.setHeader('Content-Type', 'image/x-icon')
+  res.setHeader('Cache-Control', 'public, max-age=86400')
+  res.sendFile(icoPath)
+})
+
 // Fallback to index.html for SPA routing
 app.get('*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'))
