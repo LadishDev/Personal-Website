@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script defer src="https://umami.ladish.dev/script.js" data-website-id="6db912a2-c64f-4c69-9423-17cee3f892fa"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Under Construction</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+    :root {
+      --bg1: #1a1a1a;
+      --bg2: #000000;
+      --accent: #ff9900;
+      --text: #fff7ed;
+      --muted: #fbbf24;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(255,153,0,0.08);
+      border-radius: 1rem;
+      box-shadow: 0 4px 25px rgba(255,153,0,0.3);
+      backdrop-filter: blur(6px);
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 0.5rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-top: 0;
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(255,255,255,0.1);
+      border-top: 4px solid var(--accent);
+      border-radius: 50%;
+      margin: 1.5rem auto;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="loader"></div>
+    <h1>Coming Soon</h1>
+    <p>🚧 This site is under construction 🚧</p>
+    <footer>© <span id="year"></span> Homelab</footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
