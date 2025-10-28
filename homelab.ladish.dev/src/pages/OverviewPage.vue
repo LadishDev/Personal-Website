@@ -1,5 +1,6 @@
 <script setup>
 import { inject, defineExpose, computed } from 'vue'
+import commitsFile from '../data/homelab-commits.json'
 import IconSupport from '../components/icons/IconSupport.vue'
 import IconEcosystem from '../components/icons/IconEcosystem.vue'
 import IconCommunity from '../components/icons/IconCommunity.vue'
@@ -65,6 +66,18 @@ function handleServiceClick(service) {
   }
 }
 
+// Use build-time generated commit data. The script writes src/data/homelab-commits.json
+const rawCommits = (commitsFile && commitsFile.commits) || []
+
+const formattedCommits = computed(() => {
+  const dtf = new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+  return rawCommits.map(c => ({
+    message: c.message || '',
+    shortSha: c.shortSha || (c.sha ? c.sha.slice(0, 7) : ''),
+    url: c.url || '#',
+    date: c.date ? dtf.format(new Date(c.date)) : null
+  }))
+})
 
 defineExpose({ viewDoc, viewDocs, handleServiceClick })
 
@@ -79,6 +92,22 @@ defineExpose({ viewDoc, viewDocs, handleServiceClick })
       Below are some of the highlights, with links to documentation if you'd like to dive deeper.
     </p>
     
+
+    <section class="section-group recent-updates compact">
+      <h2 class="section-title">Recent Updates</h2>
+      <ul class="recent-list compact-list" aria-label="Recent commit updates">
+        <li v-for="(c, idx) in formattedCommits" :key="c.shortSha || idx" class="recent-item-compact">
+          <div class="commit-top-row">
+            <a class="commit-sha-compact" :href="c.url" target="_blank" rel="noopener noreferrer" title="View commit {{ c.shortSha }}">{{ c.shortSha }}</a>
+            <span class="commit-date-mobile">{{ c.date }}</span>
+          </div>
+          <div class="commit-body">
+            <span class="commit-message-compact" title="{{ c.message }}">{{ c.message }}</span>
+            <span class="commit-date-desktop">{{ c.date }}</span>
+          </div>
+        </li>
+      </ul>
+    </section>
 
     <section class="section-group">
       <h2 class="section-title">Featured Services</h2>
@@ -191,6 +220,127 @@ defineExpose({ viewDoc, viewDocs, handleServiceClick })
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
   margin-top: 20px;
+}
+
+.recent-updates {
+  margin-top: 24px;
+}
+.recent-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px 0;
+  font-family: 'Courier New', 'Consolas', monospace;
+}
+.compact .recent-list {
+  margin: 0;
+}
+/* Mobile-first styles: stacked items, fully visible messages and dates */
+.compact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+.recent-item-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #ff9900;
+  font-size: 0.95rem;
+  margin: 0;
+  align-items: flex-start;
+  /* faint terminal-style box to separate each commit */
+  background: rgba(17,17,17,0.45);
+  border: 1px solid rgba(255,153,0,0.08);
+  padding: 8px 10px;
+  border-radius: 6px;
+  box-shadow: inset 0 0 6px rgba(255,153,0,0.02);
+  width: 100%;
+  box-sizing: border-box;
+}
+.commit-sha-compact {
+  display: inline-block;
+  /* show SHA fully and prevent wrapping */
+  min-width: 64px;
+  white-space: nowrap;
+  text-align: left;
+  background: #111;
+  color: #ffcc80;
+  border: 1px solid #ff9900;
+  padding: 4px 8px;
+  text-decoration: none;
+  font-family: 'Courier New', monospace;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+.commit-line {
+  display: block;
+  width: 100%;
+}
+.commit-message-compact {
+  color: var(--color-heading);
+  font-weight: 600;
+  white-space: normal; /* allow wrapping on mobile */
+  overflow: visible;
+  text-overflow: unset;
+}
+.commit-date-compact {
+  color: var(--color-text);
+  font-size: 0.85rem;
+  margin-top: 6px;
+  white-space: nowrap;
+  opacity: 0.95;
+}
+
+/* mobile-specific date placement (shown next to SHA on mobile) */
+.commit-date-mobile {
+  color: var(--color-text);
+  font-size: 0.85rem;
+  margin-left: 10px;
+  white-space: nowrap;
+  opacity: 0.95;
+}
+
+/* desktop-only date placed at far right */
+.commit-date-desktop {
+  display: none;
+}
+
+/* ensure wrapping and containment */
+.commit-message-compact {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Desktop and wider screens: compact single-line items with ellipsis */
+@media (min-width: 641px) {
+  .recent-item-compact {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px; /* slightly more horizontal space on desktop */
+  }
+  /* Desktop: SHA + message on left, date aligned to right inside the box */
+  .commit-top-row { display: flex; align-items: center; gap: 10px; }
+  .commit-body { display: flex; align-items: flex-start; gap: 12px; width: 100%; }
+  .commit-message-compact {
+    white-space: normal; /* allow wrapping to the next line if needed */
+    overflow: visible;
+    text-overflow: unset;
+    min-width: 0; /* allow flex wrapping */
+    flex: 1 1 auto; /* take remaining space and wrap if needed */
+  }
+  .commit-date-mobile { display: none; }
+  .commit-date-desktop {
+    display: inline-block;
+    margin-left: 12px;
+    white-space: nowrap;
+    padding-left: 12px;
+    border-left: 1px solid rgba(255,153,0,0.06);
+    align-self: center;
+  }
+  .commit-sha-compact { min-width: 64px; }
 }
 
 
