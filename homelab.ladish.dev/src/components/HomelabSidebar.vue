@@ -26,7 +26,7 @@ const fetchServerStats = async () => {
         cpu: data.cpu_percent ? `${data.cpu_percent}%` : '--',
         mem: data.memory ? `${data.memory.used}GiB / ${data.memory.total}GiB` : '--',
         swap: data.swap ? `${data.swap.used}GiB / ${data.swap.total}GiB` : '--',
-        load: data.load_avg_5min ? data.load_avg_5min.toFixed(2) : '--',
+        load: data.load_avg_15min ? data.load_avg_15min.toFixed(2) : '--',
         containers: data.lxcs ? `${data.lxcs.running} / ${data.lxcs.total}` : '--',
         vms: data.vms ? `${data.vms.running} / ${data.vms.total}` : '--',
         storage: data.storage ? `${data.storage.used} / ${data.storage.total}` : '--',
@@ -106,7 +106,7 @@ onMounted(() => {
             <span>{{ stats.swap }}</span>
           </div>
           <div class="stat-row">
-            <span>Load Avg (5m)</span>
+            <span>Load Avg (15m)</span>
             <span>{{ stats.load }}</span>
           </div>
           <div class="stat-row">
