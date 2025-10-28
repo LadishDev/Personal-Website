@@ -9,13 +9,16 @@
   "scripts": {
     "dev": "vite",
     "build": "node ./scripts/fetch-commits.js && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve": "node ./server.js",
+    "build-and-serve": "npm run build && npm run serve"
   },
   "dependencies": {
   "buffer": "^6.0.3",
   "front-matter": "^4.0.2",
   "marked": "^16.3.0",
-  "vue": "^3.5.22"
+  "vue": "^3.5.22",
+  "express": "^4.18.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
