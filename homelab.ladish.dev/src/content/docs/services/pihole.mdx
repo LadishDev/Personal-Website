@@ -1,0 +1,63 @@
+---
+title: Pi-hole
+description: Network-wide ad blocking, DNS configuration, and custom blocklists
+status: documented
+updated: 28 Oct 2025
+link: #pihole
+category: services
+tags: [dns, ad blocking, pihole, network]
+---
+
+## Overview
+
+Pi-hole is a network-level advertisement and internet tracker blocking application running on my homelab.
+
+I use it to manage my internal proxies to allow me to access my other services internally using domains to make it easier
+
+## Installation
+
+https://docs.pi-hole.net/main/basic-install/
+
+## Bare Metal Install
+```bash
+# Install Via Automated Script 
+curl -sSL https://install.pi-hole.net | bash
+
+# Alternative 1: Clone repository and run
+git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
+cd "Pi-hole/automated install/"
+sudo bash basic-install.sh
+
+# Alternative 2: Manually download the installer and run
+wget -O basic-install.sh https://install.pi-hole.net
+sudo bash basic-install.sh
+```
+
+## Docker Compose Setup
+
+```yaml
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      # DNS Ports
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp" # Default HTTP Port
+      - "443:443/tcp" # Default HTTPs Port. FTL will generate a self-signed certificate
+      #- "67:67/udp" # Uncomment the line below if you are using Pi-hole as your DHCP server
+      #- "123:123/udp" # Uncomment the line below if you are using Pi-hole as your NTP server
+    environment:
+      TZ: 'Europe/London' # Set the appropriate timezone for your location (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+      #FTLCONF_webserver_api_password: 'correct horse battery staple' # Set a password to access the web interface. Not setting one will result in a random password being assigned
+      #FTLCONF_dns_listeningMode: 'all' # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'
+    volumes:
+      - './etc-pihole:/etc/pihole' # For persisting Pi-hole's databases and common configuration file
+    cap_add:
+      # See https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+      - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
+      - SYS_TIME # Required if you are using Pi-hole as your NTP client to be able to set the host's system time
+      - SYS_NICE # Optional, if Pi-hole should get some more processing time
+    restart: unless-stopped
+```
