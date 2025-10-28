@@ -1,5 +1,5 @@
 <script setup>
-import { inject, defineExpose, computed } from 'vue'
+import { inject, computed } from 'vue'
 import commitsFile from '../data/homelab-commits.json'
 import IconSupport from '../components/icons/IconSupport.vue'
 import IconEcosystem from '../components/icons/IconEcosystem.vue'
@@ -363,9 +363,13 @@ defineExpose({ viewDoc, viewDocs, handleServiceClick })
   top: 10px;
   color: #ff9900;
   font-size: 1.2rem;
-  opacity: 1;
-  transition: opacity 0.3s ease;
+  opacity: 0; /* hidden by default */
+  transition: opacity 0.18s ease;
   pointer-events: none;
+}
+
+.service-card.with-cursor:hover .service-cursor {
+  opacity: 1; /* show on hover */
 }
 
 .service-card.with-cursor {
