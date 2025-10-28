@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import matter from 'gray-matter'
+import fm from 'front-matter'
 
 // Module-level state (singleton pattern)
 const notes = ref([])
@@ -28,7 +28,9 @@ export function useLabNotes() {
       for (const path in mdxFiles) {
         try {
           const content = await mdxFiles[path]()
-          const { data: frontmatter, content: markdownContent } = matter(content)
+          const parsed = fm(content)
+          const frontmatter = parsed.attributes || {}
+          const markdownContent = parsed.body || ''
           
           // Extract slug from filename
           const slug = path.split('/').pop().replace('.mdx', '')

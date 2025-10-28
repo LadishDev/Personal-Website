@@ -1,11 +1,5 @@
 import { ref } from 'vue'
-import matter from 'gray-matter'
-import { Buffer } from 'buffer'
-
-// Make Buffer available globally for gray-matter
-if (typeof window !== 'undefined') {
-  window.Buffer = Buffer
-}
+import fm from 'front-matter'
 
 // Shared state (singleton pattern) - loaded once and shared across all components
 const docs = ref([])
@@ -30,8 +24,10 @@ const loadDocs = async () => {
         // Load the file content
         const content = await modules[path]()
         
-        // Parse frontmatter
-        const { data: frontmatter, content: body } = matter(content)
+  // Parse frontmatter using front-matter (no JS execution)
+  const parsed = fm(content)
+  const frontmatter = parsed.attributes || {}
+  const body = parsed.body || ''
         
         // Extract filename without extension for slug
         const fileName = path.split('/').pop().replace('.mdx', '')
