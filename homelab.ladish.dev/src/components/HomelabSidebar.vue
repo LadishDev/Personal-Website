@@ -24,8 +24,8 @@ const fetchServerStats = async () => {
       const data = await response.json()
       stats.value = {
         cpu: data.cpu_percent ? `${data.cpu_percent}%` : '--',
-        mem: data.memory ? `${data.memory.used}Gi / ${data.memory.total}Gi` : '--',
-        swap: data.swap ? `${data.swap.used}Gi / ${data.swap.total}Gi` : '--',
+        mem: data.memory ? `${data.memory.used}GiB / ${data.memory.total}GiB` : '--',
+        swap: data.swap ? `${data.swap.used}GiB / ${data.swap.total}GiB` : '--',
         load: data.load_avg_5min ? data.load_avg_5min.toFixed(2) : '--',
         containers: data.lxcs ? `${data.lxcs.running} / ${data.lxcs.total}` : '--',
         vms: data.vms ? `${data.vms.running} / ${data.vms.total}` : '--',
