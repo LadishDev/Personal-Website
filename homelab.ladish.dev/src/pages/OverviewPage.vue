@@ -94,7 +94,7 @@ defineExpose({ viewDoc, viewDocs, handleServiceClick })
     
 
     <section class="section-group recent-updates compact">
-      <h2 class="section-title">Recent Updates</h2>
+      <h2 class="section-title">ChangeLog...</h2>
       <ul class="recent-list compact-list" aria-label="Recent commit updates">
         <li v-for="(c, idx) in formattedCommits" :key="c.shortSha || idx" class="recent-item-compact">
           <div class="commit-top-row">
