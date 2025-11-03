@@ -86,8 +86,10 @@ const loadGuides = async () => {
         // Load the file content
         const content = await modules[path]()
         
-        // Parse frontmatter
-        const { data: frontmatter, content: body } = matter(content)
+  // Parse frontmatter using front-matter (no JS execution)
+  const parsed = fm(content)
+  const frontmatter = parsed.attributes || {}
+  const body = parsed.body || ''
         
         // Extract filename without extension for slug
         const fileName = path.split('/').pop().replace('.mdx', '')
