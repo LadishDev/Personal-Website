@@ -1,5 +1,14 @@
 const canvas = document.getElementById('matrix-canvas');
+if (!canvas) {
+  console.error('Canvas element with id "matrix-canvas" not found');
+  throw new Error('Canvas element not found');
+}
+
 const ctx = canvas.getContext('2d');
+if (!ctx) {
+  console.error('Unable to get 2D context from canvas');
+  throw new Error('Canvas context not available');
+}
 
 const letters = '01';
 const fontSize = 14;
@@ -10,7 +19,14 @@ function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   columns = Math.floor(canvas.width / fontSize);
-  drops = Array.from({ length: columns }).fill(1);
+  
+  // Preserve existing drops or create new ones
+  const newDrops = Array.from({ length: columns });
+  for (let i = 0; i < columns; i++) {
+    // Reuse existing drop positions if available, otherwise start fresh
+    newDrops[i] = drops && i < drops.length ? drops[i] : Math.floor(Math.random() * canvas.height / fontSize);
+  }
+  drops = newDrops;
 }
 resizeCanvas();
 
