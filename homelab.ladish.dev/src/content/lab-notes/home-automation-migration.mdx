@@ -1,0 +1,36 @@
+---
+title: 'Home Automation Migration'
+category: 'Project'
+date: Oct 2025
+preview: 'Planning migration of Home Assistant from Raspberry Pi to VM deployment on main server with improved reliability and backup strategies.'
+tags: ['home-assistant', 'docker', 'migration', 'automation']
+---
+
+## Current State
+Currently running Home Assistant on a Raspberry Pi 4 with limited resources and occasional stability issues.
+
+## Goals
+- Migrate to a more robust platform (Virtual Machine on main server)
+- Implement redundancy and backup strategies
+- Integrate with existing services (Nginx Proxy Manager, monitoring stack)
+
+## Tasks
+1. Set up VM for Home Assistant
+2. Export current configuration and automations
+3. Test migration in staging environment
+4. Plan downtime window (ideally < 30 minutes)
+5. Implement automated backups to NAS
+6. Configure reverse proxy for external access
+7. Set up monitoring alerts for service health
+
+## Considerations
+- **Database**: SQLite vs PostgreSQL for better performance
+- **Add-ons**: Need to verify compatibility in VM environment
+- **Zigbee/Z-Wave**: USB passthrough for coordinators
+- **Network**: Static IP and VLAN assignment
+
+## Resources Needed
+- VM Setup & Resources
+- Backup script automation
+- SSL certificates via Let's Encrypt
+- Documentation for rollback procedure
