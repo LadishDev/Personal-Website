@@ -1,0 +1,141 @@
+---
+title: Immich
+description: Self-hosted photo and video backup solution with mobile apps, facial recognition, and AI-powered search
+status: documented
+updated: Oct 2025
+link: #immich
+category: services
+tags: [Immich, Photos, backup, self-hosted, AI]
+---
+
+## Overview
+
+Immich is a high-performance self-hosted photo and video backup solution, designed as an alternative to Google Photos. It offers automatic photo backup from mobile devices, advanced search capabilities, and facial recognition.
+
+## Features
+
+- **Mobile Apps** - iOS and Android apps for automatic photo backup
+- **Facial Recognition** - Automatic face detection and grouping
+- **AI-Powered Search** - Search photos by objects, scenes, and locations
+- **Machine Learning** - CLIP-based image search and tagging
+- **Album Management** - Create and share albums with others
+- **RAW Support** - Support for RAW image formats
+- **Live Photos** - iOS Live Photo support
+- **Video Transcoding** - Automatic video transcoding for web playback
+- **Multi-User** - Support for multiple users with separate libraries
+- **Timeline View** - Chronological photo timeline with map integration
+
+## Docker Compose Setup
+
+First Create a Directory for the services configuration to live in such as 
+
+```bash 
+mkdir -p /home/docker/immich
+```
+
+Create a `docker-compose.yml` file:
+
+```yaml
+services:
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:release
+    command: ['start.sh', 'immich']
+    volumes:
+      - ${UPLOAD_LOCATION}:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    ports:
+      - 2283:3001
+    depends_on:
+      - redis
+      - database
+    restart: unless-stopped
+
+  immich-microservices:
+    container_name: immich_microservices
+    image: ghcr.io/immich-app/immich-server:release
+    command: ['start.sh', 'microservices']
+    volumes:
+      - ${UPLOAD_LOCATION}:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - database
+    restart: unless-stopped
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    image: ghcr.io/immich-app/immich-machine-learning:release
+    volumes:
+      - model-cache:/cache
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  redis:
+    container_name: immich_redis
+    image: redis:6.2-alpine
+    restart: unless-stopped
+
+  database:
+    container_name: immich_postgres
+    image: tensorchord/pgvecto-rs:pg14-v0.2.0
+    env_file:
+      - .env
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  model-cache:
+```
+
+## Environment Variables
+
+Create a `.env` file:
+
+```bash
+# Database
+DB_HOSTNAME=database
+DB_USERNAME=postgres
+DB_PASSWORD=your_secure_password
+DB_DATABASE_NAME=immich
+
+# Upload Location
+UPLOAD_LOCATION=/path/to/your/photos
+
+# Redis
+REDIS_HOSTNAME=redis
+
+# Optional: Reverse Proxy
+# PUBLIC_IMMICH_SERVER_URL=https://photos.yourdomain.com
+```
+
+## Initial Setup
+
+1. Start the containers:
+```bash
+docker-compose up -d
+```
+
+2. Access Immich at `http://localhost:2283`
+
+3. Create your admin account on first visit
+
+4. Download mobile apps from App Store or Google Play
+
+5. Configure mobile app with server URL and login
+
+## Resources
+
+- [Official Documentation](https://immich.app/docs)
+- [GitHub Repository](https://github.com/immich-app/immich)
