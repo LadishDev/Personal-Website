@@ -3,7 +3,11 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SvgIcons from '../components/SvgIcons.astro';
+import { getSocialLink } from '../socialLinks';
 import '../styles/global.css';
+
+const linkedIn = getSocialLink('LinkedIn');
+const github = getSocialLink('GitHub');
 ---
 
 <html lang="en">
@@ -11,74 +15,8 @@ import '../styles/global.css';
     <BaseHead title="Resume" description="Professional resume and CV of Callum Baldwin - Cyber Security Graduate & Full-Stack Developer" />
         <style>
             body {
-                background: linear-gradient(135deg, #0f0517 0%, #1a0b2e 50%, #131320 100%);
-                background-attachment: fixed;
-                color: #ffffff;
-                margin: 0;
                 padding-top: 70px;
-                font-family: "Atkinson", sans-serif;
-                position: relative;
-                overflow-x: hidden;
             }
-
-            /* Background Orbs (matching homepage) */
-            .bg-gradient-orb {
-                position: fixed;
-                border-radius: 50%;
-                filter: blur(120px);
-                opacity: 0.15;
-                animation: mystical-float 20s ease-in-out infinite;
-                z-index: -1;
-                pointer-events: none;
-            }
-
-            .orb-1 {
-                width: 400px;
-                height: 400px;
-                background: radial-gradient(circle, rgba(147, 51, 234, 0.8) 0%, transparent 70%);
-                top: 15%;
-                left: 10%;
-                animation-delay: 0s;
-            }
-
-            .orb-2 {
-                width: 350px;
-                height: 350px;
-                background: radial-gradient(circle, rgba(168, 85, 247, 0.6) 0%, transparent 70%);
-                top: 50%;
-                right: 15%;
-                animation-delay: -8s;
-            }
-
-            .orb-3 {
-                width: 300px;
-                height: 300px;
-                background: radial-gradient(circle, rgba(139, 92, 246, 0.7) 0%, transparent 70%);
-                bottom: 20%;
-                left: 20%;
-                animation-delay: -15s;
-            }
-
-            @keyframes mystical-float {
-                0%, 100% { 
-                    transform: translateY(0px) translateX(0px) scale(1) rotate(0deg);
-                    opacity: 0.15;
-                }
-                25% { 
-                    transform: translateY(-30px) translateX(25px) scale(1.1) rotate(90deg);
-                    opacity: 0.25;
-                }
-                50% { 
-                    transform: translateY(-50px) translateX(-15px) scale(0.9) rotate(180deg);
-                    opacity: 0.2;
-                }
-                75% { 
-                    transform: translateY(-35px) translateX(-30px) scale(1.05) rotate(270deg);
-                    opacity: 0.3;
-                }
-            }
-
-
 
             /* Resume Container - Mobile First */
             .resume-container {
@@ -89,16 +27,17 @@ import '../styles/global.css';
 
             /* Resume Header Card - Mobile First */
             .resume-header {
-                background: rgba(15, 15, 35, 0.6);
+                background: linear-gradient(135deg, rgba(26, 11, 46, 0.6) 0%, rgba(15, 5, 23, 0.8) 100%);
                 backdrop-filter: blur(20px);
-                border: 1px solid rgba(162, 89, 247, 0.2);
-                border-radius: 20px;
-                padding: 1.5rem;
-                margin-bottom: 1.5rem;
+                border: 2px solid rgba(167, 139, 250, 0.4);
+                border-radius: 24px;
+                padding: 2.5rem;
+                margin-bottom: 2rem;
                 text-align: center;
                 position: relative;
-                transition: all 0.3s ease;
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                 overflow: hidden;
+                box-shadow: 0 20px 60px rgba(167, 139, 250, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             }
 
             .resume-header::before {
@@ -108,15 +47,15 @@ import '../styles/global.css';
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: linear-gradient(135deg, rgba(162, 89, 247, 0.05) 0%, rgba(106, 130, 251, 0.02) 100%);
+                background: linear-gradient(135deg, rgba(232, 121, 249, 0.1) 0%, rgba(167, 139, 250, 0.05) 100%);
                 opacity: 0;
                 transition: opacity 0.3s ease;
             }
 
             .resume-header:hover {
-                border-color: rgba(162, 89, 247, 0.4);
-                box-shadow: 0 15px 35px rgba(162, 89, 247, 0.15);
-                transform: translateY(-2px);
+                border-color: #e879f9;
+                box-shadow: 0 25px 70px rgba(232, 121, 249, 0.4);
+                transform: translateY(-4px);
             }
 
             .resume-header:hover::before {
@@ -126,20 +65,21 @@ import '../styles/global.css';
 
 
             .resume-name {
-                font-size: 1.8rem;
+                font-size: 2.5rem;
                 font-weight: 900;
-                margin: 0 0 0.5rem;
-                background: linear-gradient(135deg, #a259f7 0%, #6a82fb 100%);
+                margin: 0 0 0.75rem;
+                background: linear-gradient(135deg, #e879f9 0%, #a78bfa 50%, #c084fc 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
+                letter-spacing: -0.02em;
             }
 
             .resume-title {
-                font-size: 1rem;
-                color: #d0d0d0;
-                margin: 0 0 1.5rem;
-                font-weight: 500;
+                font-size: 1.2rem;
+                color: var(--accent);
+                margin: 0 0 2rem;
+                font-weight: 600;
             }
 
             .resume-contact {
@@ -147,48 +87,53 @@ import '../styles/global.css';
                 flex-wrap: wrap;
                 justify-content: center;
                 align-items: center;
-                gap: 1rem;
-                font-size: 0.9rem;
+                gap: 1.25rem;
+                font-size: 0.95rem;
+                position: relative;
+                z-index: 1;
             }
 
             .resume-contact span {
                 display: flex;
                 align-items: center;
-                gap: 0.5rem;
-                color: #c0c0c0;
+                gap: 0.6rem;
+                color: rgba(255, 255, 255, 0.8);
             }
 
             .resume-contact svg {
-                color: #a259f7;
+                color: #e879f9;
                 flex-shrink: 0;
             }
 
             .resume-contact a {
-                color: #a259f7;
+                color: var(--accent);
                 text-decoration: none;
-                transition: color 0.2s ease;
+                transition: all 0.2s ease;
+                font-weight: 500;
             }
 
             .resume-contact a:hover {
-                color: #ffffff;
+                color: #e879f9;
+                text-shadow: 0 0 20px rgba(232, 121, 249, 0.5);
             }
 
 
 
             /* Resume Section - Mobile First */
             .resume-section {
-                background: rgba(15, 15, 35, 0.6);
+                background: linear-gradient(135deg, rgba(26, 11, 46, 0.5) 0%, rgba(15, 5, 23, 0.7) 100%);
                 backdrop-filter: blur(20px);
-                border: 1px solid rgba(162, 89, 247, 0.2);
+                border: 2px solid rgba(167, 139, 250, 0.25);
                 border-radius: 20px;
-                margin-bottom: 1rem;
+                margin-bottom: 1.5rem;
                 overflow: hidden;
-                transition: all 0.3s ease;
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             }
 
             .resume-section:hover {
-                border-color: rgba(162, 89, 247, 0.4);
-                box-shadow: 0 8px 25px rgba(162, 89, 247, 0.1);
+                border-color: var(--accent);
+                box-shadow: 0 12px 40px rgba(167, 139, 250, 0.3);
+                transform: translateY(-2px);
             }
 
             .section-toggle {
@@ -209,14 +154,12 @@ import '../styles/global.css';
             }
 
             .section-toggle:hover {
-                color: #a259f7;
-                background: rgba(162, 89, 247, 0.05);
+                color: var(--accent-bright);
+                background: rgba(232, 121, 249, 0.08);
             }
 
-
-
             .toggle-icon {
-                color: #a259f7;
+                color: var(--accent);
                 transition: transform 0.3s ease;
                 flex-shrink: 0;
             }
@@ -234,7 +177,7 @@ import '../styles/global.css';
             /* Resume Items - Mobile First */
             .resume-item {
                 padding: 1.5rem;
-                border-top: 1px solid rgba(162, 89, 247, 0.1);
+                border-top: 1px solid rgba(167, 139, 250, 0.15);
             }
 
             .resume-item:first-child {
@@ -257,7 +200,7 @@ import '../styles/global.css';
             }
 
             .resume-company {
-                color: #a259f7;
+                color: var(--accent-bright);
                 font-weight: 600;
                 font-size: 1rem;
             }
@@ -294,7 +237,7 @@ import '../styles/global.css';
                 content: "•";
                 position: absolute;
                 left: 0;
-                color: #a259f7;
+                color: var(--accent);
                 font-weight: bold;
             }
 
@@ -306,15 +249,15 @@ import '../styles/global.css';
             }
 
             .resume-skills li {
-                background: rgba(162, 89, 247, 0.1);
-                border: 1px solid rgba(162, 89, 247, 0.2);
-                color: #a259f7;
+                background: rgba(167, 139, 250, 0.15);
+                border: 1.5px solid rgba(232, 121, 249, 0.3);
+                color: var(--accent-bright);
                 padding: 0.5rem 1rem;
                 border-radius: 20px;
                 font-size: 0.85rem;
-                font-weight: 500;
+                font-weight: 600;
                 margin: 0;
-                transition: all 0.2s ease;
+                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             }
 
             .resume-skills li::before {
@@ -322,11 +265,10 @@ import '../styles/global.css';
             }
 
             .resume-skills li:hover {
-                background: rgba(162, 89, 247, 0.2);
-                border-color: rgba(162, 89, 247, 0.4);
-                color: #ffffff;
-                transform: translateY(-1px);
-                box-shadow: 0 4px 12px rgba(162, 89, 247, 0.2);
+                background: rgba(232, 121, 249, 0.2);
+                border-color: var(--accent-bright);
+                transform: scale(1.05);
+                box-shadow: 0 4px 12px rgba(232, 121, 249, 0.3);
             }
 
             /* Skill level indicators */
@@ -484,18 +426,22 @@ import '../styles/global.css';
                             <svg width="20" height="20" fill="currentColor"><use href="#icon-map-pin"/></svg>
                             London, UK
                         </span>
+                        {linkedIn && (
                         <span>
-                            <svg width="20" height="20" fill="currentColor"><use href="#icon-linkedin"/></svg>
-                            <a href="https://www.linkedin.com/in/callum-ladish/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                            <svg width="20" height="20" fill="currentColor"><use href={`#icon-${linkedIn.icon}`}/></svg>
+                            <a href={linkedIn.url} target="_blank" rel="noopener noreferrer">{linkedIn.name}</a>
                         </span>
+                        )}
                         <span>
                             <svg width="20" height="20" fill="currentColor"><use href="#icon-www"/></svg>
                             <a href="https://ladish.dev" target="_blank" rel="noopener noreferrer">ladish.dev</a>
                         </span>
+                        {github && (
                         <span>
-                            <svg width="20" height="20" fill="currentColor"><use href="#icon-github"/></svg>
-                            <a href="https://github.com/LadishDev" target="_blank" rel="noopener noreferrer">GitHub</a>
+                            <svg width="20" height="20" fill="currentColor"><use href={`#icon-${github.icon}`}/></svg>
+                            <a href={github.url} target="_blank" rel="noopener noreferrer">{github.name}</a>
                         </span>
+                        )}
                     </div>
 
                 </section>

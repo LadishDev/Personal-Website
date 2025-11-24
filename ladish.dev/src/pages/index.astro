@@ -6,394 +6,1073 @@ import Header from '../components/Header.astro';
 import SvgIcons from '../components/SvgIcons.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import ladishImg from '../assets/ladish.webp';
-import photography1 from "../assets/photography1.jpg";
+import { activeSocialLinks } from '../socialLinks';
 import "../styles/global.css";
-import "../styles/index.css";
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: var(--bg);
+        position: relative;
+      }
+
+      /* Decorative background elements */
+      body::before,
+      body::after {
+        content: '';
+        position: fixed;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      body::before {
+        width: 800px;
+        height: 800px;
+        background: radial-gradient(circle, rgba(232, 121, 249, 0.12) 0%, rgba(167, 139, 250, 0.08) 50%, transparent 70%);
+        top: -300px;
+        right: -300px;
+        animation: float-slow 25s ease-in-out infinite;
+        filter: blur(60px);
+      }
+
+      body::after {
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(circle, rgba(192, 132, 252, 0.1) 0%, rgba(167, 139, 250, 0.06) 50%, transparent 70%);
+        bottom: -250px;
+        left: -250px;
+        animation: float-slow 20s ease-in-out infinite reverse;
+        filter: blur(60px);
+      }
+
+      @keyframes float-slow {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(30px, -30px) scale(1.1); }
+      }
+
+      /* Subtle grid pattern overlay */
+      .container::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: 
+          linear-gradient(rgba(167, 139, 250, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(167, 139, 250, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.5;
+      }
+      
+      .container {
+        max-width: var(--pg-width);
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      @media (min-width: 640px) {
+        .container {
+          padding: 0 1.25rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .container {
+          padding: 0 1.5rem;
+        }
+      }
+
+      /* Hero Section - Mobile First */
+      .hero {
+        text-align: center;
+        padding: 4rem 1rem 2rem;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      @media (min-width: 768px) {
+        .hero {
+          padding: 6rem 1.5rem 3rem;
+          max-width: 55rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .hero {
+          padding: 8rem 1.5rem 4rem;
+        }
+      }
+
+      .profile-image-wrapper {
+        position: relative;
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 2rem;
+      }
+
+      @media (min-width: 768px) {
+        .profile-image-wrapper {
+          width: 180px;
+          height: 180px;
+          margin: 0 auto 2.5rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .profile-image-wrapper {
+          width: 200px;
+          height: 200px;
+          margin: 0 auto 3rem;
+        }
+      }
+
+      .profile-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 5px solid var(--accent);
+        box-shadow: 0 20px 60px rgba(167, 139, 250, 0.6), 0 0 80px rgba(167, 139, 250, 0.3);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        z-index: 1;
+      }
+
+      .profile-image-wrapper::before {
+        content: '';
+        position: absolute;
+        inset: -15px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent), #e879f9, var(--accent));
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        animation: rotate 8s linear infinite;
+        filter: blur(10px);
+      }
+
+      .profile-image-wrapper:hover::before {
+        opacity: 0.5;
+      }
+
+      .profile-image-wrapper:hover .profile-image {
+        transform: scale(1.05) rotate(5deg);
+        box-shadow: 0 16px 50px rgba(167, 139, 250, 0.6);
+      }
+
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      .hero h1 {
+        font-size: 4.5rem;
+        margin-bottom: 1rem;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+
+      .hero h1 .name {
+        background: linear-gradient(135deg, #e879f9 0%, #a78bfa 25%, #c084fc 50%, #a78bfa 75%, #e879f9 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: inline-block;
+        animation: gradient-shift 5s ease infinite;
+        background-size: 200% auto;
+        text-shadow: 0 0 80px rgba(167, 139, 250, 0.5);
+      }
+
+      @keyframes gradient-shift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      .hero .tagline {
+        font-size: 1.1rem;
+        color: var(--accent);
+        margin-bottom: 1.5rem;
+        opacity: 1;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        padding: 0 0.5rem;
+      }
+
+      @media (min-width: 640px) {
+        .hero .tagline {
+          font-size: 1.35rem;
+          padding: 0;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .hero .tagline {
+          font-size: 1.6rem;
+          margin-bottom: 2rem;
+        }
+      }
+
+      .hero .description {
+        font-size: 1.05rem;
+        color: rgba(255, 255, 255, 0.8);
+        opacity: 1;
+        line-height: 1.7;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 0.5rem;
+      }
+
+      @media (min-width: 640px) {
+        .hero .description {
+          max-width: 40rem;
+          padding: 0;
+        }
+      }
+
+      .hero .description strong {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      /* Social Links */
+      .social-links {
+        display: flex;
+        gap: 0.65rem;
+        justify-content: center;
+        margin: 2rem auto 1rem;
+        flex-wrap: wrap;
+        padding: 0 0.5rem;
+        max-width: 100%;
+      }
+
+      @media (min-width: 640px) {
+        .social-links {
+          gap: 0.75rem;
+          padding: 0;
+          margin: 2.5rem auto 1rem;
+        }
+      }
+
+      .social-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.7rem 1.25rem;
+        background: linear-gradient(135deg, rgba(26, 11, 46, 0.8) 0%, rgba(15, 5, 23, 0.9) 100%);
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 2px solid rgba(167, 139, 250, 0.3);
+        font-size: 0.9rem;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+      }
+
+      .social-link svg {
+        fill: #ffffff;
+        transition: fill 0.3s ease;
+      }
+
+      @media (min-width: 640px) {
+        .social-link {
+          gap: 0.6rem;
+          padding: 0.8rem 1.6rem;
+          border-radius: 12px;
+          font-size: 1rem;
+        }
+      }
+
+      .social-link:hover {
+        background: linear-gradient(135deg, var(--accent), #e879f9);
+        color: #ffffff;
+        border-color: #e879f9;
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 10px 30px rgba(232, 121, 249, 0.5);
+      }
+
+      .social-link:hover svg {
+        fill: #ffffff;
+      }
+
+      /* Section Styling - Mobile First */
+      section {
+        margin: 3rem 0;
+        position: relative;
+      }
+
+      @media (min-width: 768px) {
+        section {
+          margin: 4.5rem 0;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        section {
+          margin: 6rem 0;
+        }
+      }
+
+      section:first-of-type {
+        margin-top: 0;
+      }
+
+      section h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        font-weight: 900;
+        background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+        padding-bottom: 1rem;
+        letter-spacing: -0.02em;
+      }
+
+      @media (min-width: 640px) {
+        section h2 {
+          font-size: 2.5rem;
+          margin-bottom: 2.5rem;
+          padding-bottom: 1.25rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        section h2 {
+          font-size: 3.5rem;
+          margin-bottom: 3.5rem;
+          padding-bottom: 1.5rem;
+        }
+      }
+
+      section h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 5px;
+        background: linear-gradient(90deg, transparent, var(--accent), #e879f9, var(--accent), transparent);
+        border-radius: 3px;
+        box-shadow: 0 2px 20px rgba(167, 139, 250, 0.6);
+      }
+
+      /* Project Cards - Mobile First */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin: 1.5rem 0;
+        position: relative;
+      }
+
+      @media (min-width: 640px) {
+        .projects-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .projects-grid {
+          gap: 2rem;
+          margin: 2rem 0;
+        }
+      }
+
+      .projects-grid::before {
+        content: '';
+        position: absolute;
+        inset: -2rem;
+        background: radial-gradient(circle at 20% 50%, rgba(232, 121, 249, 0.03) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.03) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .project-card {
+        background: linear-gradient(135deg, rgba(26, 11, 46, 0.8) 0%, rgba(15, 5, 23, 0.9) 100%);
+        padding: 1.5rem;
+        border-radius: 16px;
+        border: 2px solid rgba(167, 139, 250, 0.2);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        text-decoration: none;
+        color: var(--fg);
+        display: block;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+      }
+
+      @media (min-width: 640px) {
+        .project-card {
+          padding: 2rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .project-card {
+          padding: 2.5rem;
+        }
+      }
+
+      .project-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(232, 121, 249, 0.15), transparent);
+        transition: left 0.6s ease;
+      }
+
+      .project-card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 16px;
+        padding: 2px;
+        background: linear-gradient(135deg, transparent, var(--accent), transparent);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .project-card:hover::before {
+        left: 100%;
+      }
+
+      .project-card:hover::after {
+        opacity: 1;
+      }
+
+      .project-card:hover {
+        transform: translateY(-12px) scale(1.03);
+        border-color: var(--accent);
+        box-shadow: 0 20px 60px rgba(167, 139, 250, 0.5), 0 0 80px rgba(232, 121, 249, 0.3);
+        background: linear-gradient(135deg, rgba(26, 11, 46, 1) 0%, rgba(15, 5, 23, 1) 100%);
+      }
+
+      .project-card h3 {
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+        font-size: 1.35rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        letter-spacing: -0.01em;
+        flex-wrap: wrap;
+      }
+
+      @media (min-width: 640px) {
+        .project-card h3 {
+          font-size: 1.5rem;
+          gap: 0.65rem;
+          margin-bottom: 1rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .project-card h3 {
+          font-size: 1.75rem;
+          gap: 0.75rem;
+          margin-bottom: 1.25rem;
+        }
+      }
+
+      .project-card p {
+        opacity: 0.9;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      @media (min-width: 640px) {
+        .project-card p {
+          font-size: 1rem;
+          margin-bottom: 1.25rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .project-card p {
+          font-size: 1.05rem;
+          line-height: 1.8;
+          margin-bottom: 1.5rem;
+        }
+      }
+
+      .project-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+
+      .tag {
+        background: rgba(167, 139, 250, 0.15);
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        color: #e879f9;
+        border: 2px solid rgba(232, 121, 249, 0.4);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .tag:hover {
+        background: linear-gradient(135deg, var(--accent), #e879f9);
+        color: var(--bg);
+        border-color: #e879f9;
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(232, 121, 249, 0.4);
+      }
+
+      /* About Section - Mobile First */
+      .about-content {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, rgba(26, 11, 46, 0.6) 0%, rgba(15, 5, 23, 0.8) 100%);
+        border-radius: 16px;
+        border: 2px solid rgba(167, 139, 250, 0.4);
+        box-shadow: 0 20px 60px rgba(167, 139, 250, 0.25), 
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                    0 0 100px rgba(232, 121, 249, 0.1);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      @media (min-width: 640px) {
+        .about-content {
+          padding: 2.5rem;
+          border-radius: 20px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .about-content {
+          max-width: 55rem;
+          padding: 3.5rem;
+          border-radius: 24px;
+        }
+      }
+
+      .about-content::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(232, 121, 249, 0.05) 0%, transparent 70%);
+        animation: float-slow 30s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      .about-content p {
+        font-size: 1rem;
+        line-height: 1.75;
+        margin-bottom: 1.25rem;
+        color: rgba(255, 255, 255, 0.9);
+        position: relative;
+        z-index: 1;
+      }
+
+      @media (min-width: 640px) {
+        .about-content p {
+          font-size: 1.075rem;
+          line-height: 1.8;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .about-content p {
+          font-size: 1.15rem;
+          line-height: 1.9;
+          margin-bottom: 1.5rem;
+        }
+      }
+
+
+
+      /* Additional mobile tweaks */
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 0.75rem;
+        }
+
+        .btn {
+          padding: 0.875rem 2rem;
+          font-size: 0.95rem;
+        }
+      }
+
+      /* Button Links */
+      .button-links {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 2.5rem auto 1.5rem;
+        padding: 0 0.5rem;
+        max-width: 100%;
+      }
+
+      @media (min-width: 640px) {
+        .button-links {
+          gap: 1.25rem;
+          padding: 0;
+          margin: 3rem auto 1.5rem;
+        }
+      }
+
+      .btn {
+        padding: 1rem 2.5rem;
+        background: linear-gradient(135deg, var(--accent), #e879f9);
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1.05rem;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: inline-block;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(167, 139, 250, 0.4);
+      }
+
+      .btn::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+      }
+
+      .btn:hover::before {
+        width: 300px;
+        height: 300px;
+      }
+
+      .btn:hover {
+        transform: translateY(-4px) scale(1.08);
+        box-shadow: 0 15px 40px rgba(232, 121, 249, 0.6), 0 0 60px rgba(167, 139, 250, 0.4);
+      }
+
+      .btn.secondary {
+        background: rgba(26, 11, 46, 0.8);
+        color: var(--accent);
+        border: 2px solid var(--accent);
+        box-shadow: 0 4px 15px rgba(167, 139, 250, 0.2);
+      }
+
+      .btn.secondary:hover {
+        background: linear-gradient(135deg, var(--accent), #e879f9);
+        color: #ffffff;
+        border-color: #e879f9;
+      }
+
+      .btn:hover span:last-child {
+        transform: translateX(5px);
+      }
+
+      /* Links Section - Mobile First */
+      .links-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin: 1.5rem auto;
+        max-width: 100%;
+        padding: 0 0.5rem;
+      }
+
+      @media (min-width: 640px) {
+        .links-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+          margin: 2rem auto;
+          max-width: 600px;
+          padding: 0;
+        }
+      }
+
+      .link-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 1.1rem 1.25rem;
+        background: linear-gradient(135deg, rgba(26, 11, 46, 0.7) 0%, rgba(15, 5, 23, 0.8) 100%);
+        color: var(--fg);
+        text-decoration: none;
+        border-radius: 12px;
+        border: 2px solid rgba(167, 139, 250, 0.3);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        font-size: 0.95rem;
+        font-weight: 600;
+        backdrop-filter: blur(5px);
+      }
+
+      @media (min-width: 640px) {
+        .link-button {
+          gap: 1rem;
+          padding: 1.3rem 1.5rem;
+          border-radius: 14px;
+          font-size: 1.05rem;
+        }
+      }
+
+      .link-button:hover {
+        border-color: #e879f9;
+        background: linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(232, 121, 249, 0.2) 100%);
+        transform: translateX(10px) scale(1.02);
+        box-shadow: 0 8px 30px rgba(232, 121, 249, 0.4);
+      }
+
+      .link-button span:first-child {
+        font-size: 1.5rem;
+        transition: transform 0.3s ease;
+      }
+
+      .link-button:hover span:first-child {
+        transform: scale(1.2) rotate(5deg);
+      }
+
+      /* Stats Section */
+      .stats-section {
+        margin: 4rem 0;
+      }
+
+      .stats-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 0.5rem;
+      }
+
+      @media (min-width: 640px) {
+        .stats-container {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.25rem;
+          padding: 0;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .stats-container {
+          gap: 1.5rem;
+          max-width: 900px;
+        }
+      }
+
+      .stat-card {
+        background: linear-gradient(135deg, rgba(26, 11, 46, 0.5) 0%, rgba(15, 5, 23, 0.7) 100%);
+        border: 2px solid rgba(167, 139, 250, 0.25);
+        border-radius: 12px;
+        padding: 1.25rem 0.75rem;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        backdrop-filter: blur(5px);
+      }
+
+      @media (min-width: 640px) {
+        .stat-card {
+          padding: 1.5rem 1rem;
+          border-radius: 14px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .stat-card {
+          padding: 2rem 1.5rem;
+          border-radius: 16px;
+        }
+      }
+
+      .stat-card:hover {
+        transform: translateY(-8px) scale(1.05);
+        border-color: var(--accent);
+        box-shadow: 0 15px 40px rgba(167, 139, 250, 0.4);
+        background: linear-gradient(135deg, rgba(26, 11, 46, 0.8) 0%, rgba(15, 5, 23, 0.9) 100%);
+      }
+
+      .stat-icon {
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+        filter: drop-shadow(0 4px 10px rgba(167, 139, 250, 0.3));
+        transition: transform 0.3s ease;
+      }
+
+      @media (min-width: 640px) {
+        .stat-icon {
+          font-size: 2rem;
+          margin-bottom: 0.75rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .stat-icon {
+          font-size: 2.5rem;
+          margin-bottom: 1rem;
+        }
+      }
+
+      .stat-card:hover .stat-icon {
+        transform: scale(1.2) rotate(10deg);
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .stat-value {
+        font-size: 1.3rem;
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      /* Fun extras */
+      .emoji-float {
+        display: inline-block;
+        animation: emoji-bounce 2s ease-in-out infinite;
+      }
+
+      @keyframes emoji-bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+      }
+
+      /* Smooth scroll behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Selection styling */
+      ::selection {
+        background: linear-gradient(135deg, var(--accent), #e879f9);
+        color: #ffffff;
+      }
+
+      /* Scrollbar styling */
+      ::-webkit-scrollbar {
+        width: 12px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, var(--accent), #e879f9);
+        border-radius: 6px;
+        border: 2px solid var(--bg);
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, #e879f9, var(--accent));
+      }
+    </style>
   </head>
   <body>
     <Header />
-    <div class="home-container">
-      <section class="hero-section">
-        <div class="hero-image">
-          <div class="image-frame">
-            <div class="image-glow-ring"></div>
-            <Image 
-              src={ladishImg} 
-              alt="Callum Ladish" 
-              loading="eager"
-            />
-          </div>
+
+    <main class="container">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="profile-image-wrapper">
+          <Image 
+            src={ladishImg} 
+            alt="Callum Ladish" 
+            loading="eager"
+            width={200}
+            height={200}
+            class="profile-image"
+          />
         </div>
         
-        <div class="hero-content">
-          <div class="hero-glass-backdrop">
-            <div class="glass-glow"></div>
+        <h1><span class="name">Callum B</span></h1>
+        <p class="tagline">Cyber Security Graduate & Full-Stack Developer</p>
+        <p class="description">
+          <strong>Age: <span id="myAgeResult">21</span> | London, UK</strong><br>
+          Building secure, user-friendly applications and exploring the intersection of security and development.
+        </p>
+
+        <div class="button-links">
+          <a href="/resume" class="btn">View Resume</a>
+          <a href="/projects" class="btn secondary">View Projects</a>
+        </div>
+
+        <div class="social-links">
+          {activeSocialLinks.map(link => (
+            <a href={link.url} class="social-link" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" fill="currentColor"><use href={`#icon-${link.icon}`}/></svg>
+              {link.name}
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <!-- Quick Stats -->
+      <section class="stats-section">
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-icon">🎓</div>
+            <div class="stat-label">Cyber Security</div>
+            <div class="stat-value">Graduate</div>
           </div>
-          
-          <div class="hero-content-inner">
-            <h1 class="hero-title">
-              I am <span class="hero-highlight">Callum</span>
-            </h1>
-            
-            <div class="hero-subtitle">Cyber Security Graduate & Full-Stack Developer</div>
-            
-            <p class="hero-description">
-              <strong>Age: <span id="myAgeResult">21</span> | London, UK</strong><br>
-              Cyber Security Graduate and Full-Stack Developer focused on secure, user-friendly applications.
-            </p>
-            
-            <div class="action-buttons">
-              <a href="/resume" class="action-button primary">
-                <span>View Resume</span>
-                <div class="button-shine"></div>
-              </a>
-              <a href="/projects" class="action-button secondary">
-                <span>View Projects</span>
-                <div class="button-glow"></div>
-              </a>
-            </div>
-            
-            <div class="hero-links">
-              <a href="https://bsky.app/profile/ladishdev.bsky.social" aria-label="BlueSky" target="_blank" rel="noopener noreferrer" class="social-link">
-                <svg width="20" height="20" fill="currentColor"><use href="#icon-bluesky"/></svg>
-                <div class="link-ripple"></div>
-              </a>
-              <a href="https://github.com/LadishDev" aria-label="GitHub" target="_blank" rel="noopener noreferrer" class="social-link">
-                <svg width="20" height="20" fill="currentColor"><use href="#icon-github"/></svg>
-                <div class="link-ripple"></div>
-              </a>
-              <a href="https://www.linkedin.com/in/callum-ladish/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" class="social-link">
-                <svg width="20" height="20" fill="currentColor"><use href="#icon-linkedin"/></svg>
-                <div class="link-ripple"></div>
-              </a>
-            </div>
+          <div class="stat-card">
+            <div class="stat-icon">💻</div>
+            <div class="stat-label">Full-Stack</div>
+            <div class="stat-value">Developer</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🔒</div>
+            <div class="stat-label">Security</div>
+            <div class="stat-value">Focused</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📍</div>
+            <div class="stat-label">London</div>
+            <div class="stat-value">UK</div>
           </div>
         </div>
       </section>
-      <div class="scroll-indicator">
-        <span class="scroll-text">Scroll to explore</span>
-        <svg class="scroll-arrow" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-          <use href="#icon-arrow-down"/>
-        </svg>
-      </div>
-    </div>
 
-    <!-- Transition Bridge -->
-    <div class="hero-transition">
-      <div class="transition-line"></div>
-      <div class="transition-glow"></div>
-    </div>
+      <!-- Featured Projects -->
+      <section id="projects">
+        <h2>Featured Projects</h2>
+        <div class="projects-grid">
+          <a href="/projects/finetrack_app" class="project-card">
+            <h3>🚗 FineTrack Mobile App</h3>
+            <p>
+              A cross-platform app to help vehicle owners track fines, MOT dates, insurance renewals, and expenses. 
+              Privacy-first design with support for multiple vehicles.
+            </p>
+            <div class="project-tags">
+              <span class="tag">Mobile</span>
+              <span class="tag">Privacy</span>
+              <span class="tag">Analytics</span>
+            </div>
+          </a>
 
-    <main class="main-content">
-      <!-- Content Introduction -->
-      <section class="intro-section">
-        <div class="intro-container">
-          <div class="intro-badge">
-            <span class="badge-icon">✨</span>
-            <span>What I've Been Working On</span>
-          </div>
-          <h2 class="intro-title">
-            Building the <span class="gradient-text">Future</span>,<br>
-            One Project at a <span class="gradient-text-alt">Time</span>
-          </h2>
-          <p class="intro-description">
-            I've been working on some interesting projects lately - from researching RFID/NFC security vulnerabilities to developing a privacy-focused vehicle management app, and building this portfolio site you're currently on.<br>
-            <span class="intro-emphasis">Each project teaches me something new about security, design, and development.</span>
-          </p>
+          <a href="/projects/rfid_nfc_research_project" class="project-card">
+            <h3>🔐 RFID/NFC Security Research</h3>
+            <p>
+              Research project exploring RFID/NFC security vulnerabilities and practical mitigation strategies.
+            </p>
+            <div class="project-tags">
+              <span class="tag">Security</span>
+              <span class="tag">Research</span>
+              <span class="tag">RFID</span>
+            </div>
+          </a>
+
+          <a href="/projects/personal-website" class="project-card">
+            <h3>🌐 Portfolio Platform</h3>
+            <p>
+              This website you're on! Built with Astro for speed, featuring custom animations and responsive design.
+            </p>
+            <div class="project-tags">
+              <span class="tag">Astro</span>
+              <span class="tag">Web Dev</span>
+              <span class="tag">Design</span>
+            </div>
+          </a>
+
+          <a href="/projects/discojam_api_app" class="project-card">
+            <h3>🎵 DiscoJam API</h3>
+            <p>
+              A social music platform for creating and sharing playlists together in real-time.
+            </p>
+            <div class="project-tags">
+              <span class="tag">API</span>
+              <span class="tag">Music</span>
+              <span class="tag">Social</span>
+            </div>
+          </a>
+        </div>
+
+        <div style="text-align: center; margin-top: 2.5rem;">
+          <a href="/projects" class="btn">
+            <span style="position: relative; z-index: 1;">View All Projects</span>
+            <span style="margin-left: 0.5rem; display: inline-block; transition: transform 0.3s ease;">→</span>
+          </a>
         </div>
       </section>
 
       <!-- About Section -->
-      <section class="about-section">
-        <div class="container">
-          <div class="about-content">
-            <div class="about-header">
-              <div class="section-badge">
-                <span class="badge-pulse">💡</span>
-                <span>About Me</span>
-              </div>
-              <h2 class="section-title">
-                What I'm <span class="gradient-text">About</span>
-              </h2>
-            </div>
-            
-            <div class="about-description">
-              <p class="lead-text">
-                I graduated with a degree in Cyber Security and have been exploring full-stack development ever since. 
-                My work spans from security research and penetration testing to building mobile apps and web platforms.
-              </p>
-              <p class="about-details">
-                <strong>What interests me most:</strong> Finding the sweet spot between security and usability. 
-                I believe the best solutions are both secure and actually enjoyable to use.
-              </p>
-              <p class="about-focus">
-                🎯 <strong>Focus:</strong> Cybersecurity & Full-Stack Development<br>
-                🌍 <strong>Based:</strong> London, United Kingdom<br>  
-                🚀 <strong>Currently:</strong> Working on personal projects and learning new tech
-              </p>
-            </div>
-          </div>
+      <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+          <p>
+            <strong>What interests me most:</strong> Finding the sweet spot between security and usability. 
+            I believe the best solutions are both secure and actually enjoyable to use.
+          </p>
+          <p>
+            My work spans from security research and penetration testing to building mobile apps and web platforms.
+            I'm passionate about creating solutions that don't compromise on either security or user experience.
+          </p>
+          <p>
+            📸 When I'm not coding, I enjoy photography - mostly landscapes and nature shots. 
+            I also like hiking and keeping up with new tech developments in AI and IoT.
+          </p>
         </div>
       </section>
 
-      <!-- Stats Section 
-      <section class="stats-section">
-        <div class="container">
-          <div class="stats-grid">
-            <div class="stat-item">
-              <div class="stat-number">4+</div>
-              <div class="stat-label">Years Experience</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-number">15+</div>
-              <div class="stat-label">Projects Completed</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-number">100%</div>
-              <div class="stat-label">Passion Driven</div>
-            </div>
-          </div>
-        </div>
-      </section> -->
-
-      <!-- Featured Projects -->
-      <section class="projects-showcase-section">
-        <div class="container">
-          <div class="showcase-header">
-            <div class="header-glow"></div>
-            <div class="header-content">
-              <h2 class="showcase-title">
-                Featured <span class="gradient-text">Projects</span>
-              </h2>
-              <p class="showcase-subtitle">
-                A few projects I'm particularly proud of
-              </p>
-            </div>
-          </div>
-          
-          <div class="projects-constellation">
-            <!-- Primary Project Spotlight -->
-            <div class="main-project-spotlight">
-              <a href="/projects/finetrack_app" class="main-project-card">
-                <div class="project-backdrop">
-                  <div class="backdrop-glow primary"></div>
-                  <div class="backdrop-pattern"></div>
-                </div>
-                
-                <div class="project-content">
-                  <div class="project-header">
-                    <div class="project-badge featured">
-                      <span class="badge-icon">⭐</span>
-                      <span class="badge-text">Featured Project</span>
-                    </div>
-                  </div>
-                  
-                  <h3 class="project-title">FineTrack Mobile App</h3>
-                  <p class="project-description">
-                    A cross-platform app I built to help vehicle owners keep track of fines, MOT dates, insurance renewals, and expenses. 
-                    It includes reminders, analytics, and supports multiple vehicles - all while keeping your data private and secure.
-                  </p>
-                  
-                  <div class="project-technologies">
-                    <div class="tech-cluster">
-                      <span class="tech-badge primary">Cross-Platform</span>
-                      <span class="tech-badge secondary">Mobile Dev</span>
-                      <span class="tech-badge accent">Data Security</span>
-                      <span class="tech-badge">Analytics</span>
-                    </div>
-                  </div>
-                  
-                  <div class="project-metrics">
-                    <div class="metric">
-                      <span class="metric-value">Multi-Vehicle</span>
-                      <span class="metric-label">Support</span>
-                    </div>
-                    <div class="metric">
-                      <span class="metric-value">Privacy-First</span>
-                      <span class="metric-label">Design</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="project-visual">
-                  <div class="visual-orb"></div>
-                  <div class="visual-circuit"></div>
-                  <div class="interaction-hint">
-                    <span class="hint-text">Explore Project</span>
-                    <span class="hint-arrow">→</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- Secondary Projects Grid -->
-            <div class="secondary-projects-grid">
-              <a href="/projects/rfid_nfc_research_project" class="secondary-project-card">
-                <div class="card-backdrop">
-                  <div class="backdrop-glow secondary"></div>
-                </div>
-                
-                <div class="card-content">
-                  <div class="project-icon-wrapper">
-                    <div class="project-icon">🔐</div>
-                    <div class="icon-pulse"></div>
-                  </div>
-                  
-                  <div class="project-info">
-                    <h4 class="card-title">Cybersecurity Research</h4>
-                    <p class="card-description">
-                      My research project on RFID/NFC security vulnerabilities. I explored various attack vectors and documented practical mitigation strategies.
-                    </p>
-                    
-                    <div class="card-tags">
-                      <span class="tag">Security</span>
-                      <span class="tag">Research</span>
-                      <span class="tag">RFID</span>
-                    </div>
-                  </div>
-                  
-                  <div class="card-interaction">
-                    <div class="interaction-orb"></div>
-                  </div>
-                </div>
-              </a>
-
-              <a href="/projects/personal-website" class="secondary-project-card">
-                <div class="card-backdrop">
-                  <div class="backdrop-glow tertiary"></div>
-                </div>
-                
-                <div class="card-content">
-                  <div class="project-icon-wrapper">
-                    <div class="project-icon">🌐</div>
-                    <div class="icon-pulse"></div>
-                  </div>
-                  
-                  <div class="project-info">
-                    <h4 class="card-title">Portfolio Platform</h4>
-                    <p class="card-description">
-                      This website you're on right now! Built with Astro for speed and includes custom animations and responsive design throughout.
-                    </p>
-                    
-                    <div class="card-tags">
-                      <span class="tag">Astro</span>
-                      <span class="tag">Web Dev</span>
-                      <span class="tag">Design</span>
-                    </div>
-                  </div>
-                  
-                  <div class="card-interaction">
-                    <div class="interaction-orb"></div>
-                  </div>
-                </div>
-              </a>
-
-              <a href="/projects/discojam_api_app" class="secondary-project-card">
-                <div class="card-backdrop">
-                  <div class="backdrop-glow quaternary"></div>
-                </div>
-                
-                <div class="card-content">
-                  <div class="project-icon-wrapper">
-                    <div class="project-icon">🎵</div>
-                    <div class="icon-pulse"></div>
-                  </div>
-                  
-                  <div class="project-info">
-                    <h4 class="card-title">DiscoJam API</h4>
-                    <p class="card-description">
-                      A social music platform I worked on that lets people create and share playlists together in real-time.
-                    </p>
-                    
-                    <div class="card-tags">
-                      <span class="tag">API</span>
-                      <span class="tag">Music</span>
-                      <span class="tag">Social</span>
-                      <span class="tag">GUI</span>
-                    </div>
-                  </div>
-                  
-                  <div class="card-interaction">
-                    <div class="interaction-orb"></div>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- Projects Navigation -->
-            <div class="projects-navigation">
-              <a href="/projects" class="nav-showcase-button">
-                <span class="button-content">
-                  <span class="button-text">Explore Full Portfolio</span>
-                  <span class="button-icon">🚀</span>
-                </span>
-                <div class="button-glow"></div>
-                <div class="cta-icon">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="m9 18 6-6-6-6"/>
-                  </svg>
-                </div>
-              </a>
-            </div>
-          </div>
+      <!-- Links -->
+      <section id="links">
+        <h2>Explore More</h2>
+        <div class="links-grid">
+          <a href="https://homelab.ladish.dev" class="link-button">
+            <span>🏠</span>
+            <span>My Homelab</span>
+          </a>
+          <a href="https://instagram.com/callumb.photography" class="link-button" target="_blank" rel="noopener noreferrer">
+            <span>📸</span>
+            <span>Photography</span>
+          </a>
         </div>
       </section>
 
-      <!-- Experience Grid -->
-      <section class="experience-section">
-        <div class="container">
-          <div class="experience-grid">
-            <!-- Homelab Card -->
-            <div class="experience-card homelab-card">
-              <div class="experience-bg"></div>
-              <div class="experience-content">
-                <div class="experience-icon">🏠</div>
-                <h3 class="experience-title">Homelab</h3>
-                <p class="experience-text">
-                  My home server setup where I experiment with virtualization, networking, and self-hosted services. 
-                  Currently running Proxmox, Docker containers, and various security monitoring tools.
-                </p>
-                <a href="https://homelab.ladish.dev" class="experience-link">
-                  <span>Explore Homelab</span>
-                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17l10-10M17 7H7"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            <!-- Photography Card -->
-            <div class="experience-card photography-card">
-              <div class="photo-container">
-                <Image src={photography1} alt="Sunset of waves crashing up and through rocks" class="photo-image" />
-                <div class="photo-overlay"></div>
-              </div>
-              <div class="experience-content">
-                <div class="experience-icon">📸</div>
-                <h3 class="experience-title">Beyond Code</h3>
-                <p class="experience-text">
-                  When I'm not coding, I enjoy photography - mostly landscapes and nature shots. I also like hiking and keeping up with new tech developments in AI and IoT.
-                </p>
-                <a href="https://instagram.com/callumb.photography" target="_blank" rel="noopener noreferrer" class="experience-link">
-                  <span>@callumb.photography</span>
-                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17l10-10M17 7H7"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
+
     <Footer />
     <SvgIcons />
+
     <script>
       // Age calculation
       (function(){
@@ -406,136 +1085,11 @@ import "../styles/index.css";
           if(m<0||(m===0&&t.getDate()<b.getDate()))a--;
           var e=document.getElementById("myAgeResult");
           if(e)e.textContent=String(a);
-          var e2=document.getElementById("myAgeResult2");
-          if(e2)e2.textContent=String(a);
         }catch(_){
           var e=document.getElementById("myAgeResult");
           if(e)e.textContent="21";
-          var e2=document.getElementById("myAgeResult2");
-          if(e2)e2.textContent="21";
         }
       })();
-
-      // Enhanced animations and interactions
-      document.addEventListener('DOMContentLoaded', function() {
-        // Animated counter for stats
-        function animateCounter(element, target, duration = 2000) {
-          let start = 0;
-          const increment = target / (duration / 16);
-          
-          function update() {
-            start += increment;
-            if (start < target) {
-              element.textContent = Math.floor(start) + '+';
-              requestAnimationFrame(update);
-            } else {
-              element.textContent = target + '+';
-            }
-          }
-          update();
-        }
-
-        // Intersection Observer for animations
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
-              
-              // Animate stat numbers
-              const statNumbers = entry.target.querySelectorAll('.stat-number');
-              statNumbers.forEach(stat => {
-                if (stat.textContent.includes('50')) {
-                  animateCounter(stat, 50);
-                } else if (stat.textContent.includes('3')) {
-                  animateCounter(stat, 3);
-                }
-              });
-            }
-          });
-        }, { threshold: 0.1 });
-
-        // Observe elements for animation
-        document.querySelectorAll('.glass-card, .experience-card, .project-glass-card, .spotlight-card').forEach(el => {
-          el.style.opacity = '0';
-          el.style.transform = 'translateY(50px)';
-          observer.observe(el);
-        });
-
-        // Skill orb click effects
-        document.querySelectorAll('.skill-orb').forEach(orb => {
-          orb.addEventListener('click', function() {
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-              this.style.transform = '';
-            }, 150);
-          });
-        });
-
-        // Mouse follow effect for glass cards
-        document.querySelectorAll('.glass-card, .experience-card').forEach(card => {
-          card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
-            
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
-          });
-          
-          card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
-          });
-        });
-
-        // Typewriter effect for intro title
-        const titleElement = document.querySelector('.intro-title');
-        if (titleElement) {
-          const text = titleElement.innerHTML;
-          titleElement.innerHTML = '';
-          titleElement.style.opacity = '1';
-          
-          let index = 0;
-          function typeWriter() {
-            if (index < text.length) {
-              if (text.charAt(index) === '<') {
-                // Skip HTML tags
-                const tagEnd = text.indexOf('>', index);
-                titleElement.innerHTML += text.substring(index, tagEnd + 1);
-                index = tagEnd + 1;
-              } else {
-                titleElement.innerHTML += text.charAt(index);
-                index++;
-              }
-              setTimeout(typeWriter, 50);
-            }
-          }
-          
-          setTimeout(typeWriter, 1000);
-        }
-      });
     </script>
-
-    <style>
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(50px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      
-      .intro-title {
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-    </style>
   </body>
 </html>
