@@ -572,7 +572,6 @@ import "../styles/global.css";
 
       @media (min-width: 1024px) {
         .about-content {
-          max-width: 55rem;
           padding: 3.5rem;
           border-radius: 24px;
         }
@@ -717,9 +716,16 @@ import "../styles/global.css";
         .links-grid {
           grid-template-columns: repeat(2, 1fr);
           gap: 1.5rem;
-          margin: 2rem auto;
-          max-width: 600px;
+          margin: 2.5rem auto;
+          max-width: 700px;
           padding: 0;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .links-grid {
+          max-width: 800px;
+          gap: 2rem;
         }
       }
 
@@ -728,14 +734,14 @@ import "../styles/global.css";
         align-items: center;
         justify-content: center;
         gap: 0.75rem;
-        padding: 1.1rem 1.25rem;
+        padding: 1.25rem 1.5rem;
         background: linear-gradient(135deg, rgba(26, 11, 46, 0.7) 0%, rgba(15, 5, 23, 0.8) 100%);
         color: var(--fg);
         text-decoration: none;
-        border-radius: 12px;
+        border-radius: 14px;
         border: 2px solid rgba(167, 139, 250, 0.3);
         transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        font-size: 0.95rem;
+        font-size: 1rem;
         font-weight: 600;
         backdrop-filter: blur(5px);
       }
@@ -743,9 +749,16 @@ import "../styles/global.css";
       @media (min-width: 640px) {
         .link-button {
           gap: 1rem;
-          padding: 1.3rem 1.5rem;
-          border-radius: 14px;
-          font-size: 1.05rem;
+          padding: 1.5rem 2rem;
+          border-radius: 16px;
+          font-size: 1.1rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .link-button {
+          padding: 1.75rem 2.5rem;
+          font-size: 1.15rem;
         }
       }
 
@@ -757,8 +770,20 @@ import "../styles/global.css";
       }
 
       .link-button span:first-child {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
         transition: transform 0.3s ease;
+      }
+
+      @media (min-width: 640px) {
+        .link-button span:first-child {
+          font-size: 2rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .link-button span:first-child {
+          font-size: 2.25rem;
+        }
       }
 
       .link-button:hover span:first-child {
