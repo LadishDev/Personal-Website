@@ -48,6 +48,7 @@ const navigate = (page) => {
         <a @click="navigate('docs')" class="mobile-tab" :class="{ active: currentPage === 'docs' }">Docs</a>
         <a @click="navigate('lab-notes')" class="mobile-tab" :class="{ active: currentPage === 'lab-notes' }">Lab Notes</a>
         <a @click="navigate('infrastructure')" class="mobile-tab" :class="{ active: currentPage === 'infrastructure' }">Infrastructure</a>
+        <a @click="navigate('stats')" class="mobile-tab" :class="{ active: currentPage === 'stats' }">Stats</a>
       </div>
     </div>
   </nav>

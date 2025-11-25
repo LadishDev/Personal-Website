@@ -170,6 +170,9 @@ provide('currentPage', currentPage)
           <h1>Infrastructure</h1>
           <p class="intro-text">Infrastructure page coming soon...</p>
         </div>
+        <div v-else-if="currentPage === 'stats'" class="page-content">
+          <HomelabSidebar class="mobile-stats-page" />
+        </div>
       </div>
     </main>
   </div>
@@ -193,6 +196,14 @@ provide('currentPage', currentPage)
   .desktop-only {
     display: block;
   }
+}
+
+/* Show sidebar as page content on mobile stats page */
+.mobile-stats-page {
+  display: block;
+  width: 100%;
+  min-height: auto;
+  position: relative;
 }
 
 /* Main Content */
