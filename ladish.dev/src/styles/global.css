@@ -23,6 +23,20 @@
 	--black-background: var(--bg);
 	--white-text: var(--fg);
 }
+/* Global resets to avoid mobile horizontal scroll and improve layout consistency */
+html,
+body {
+	max-width: 100vw;
+	overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
+	overscroll-behavior-x: contain;
+	touch-action: pan-y;
+}
+
+/* Use border-box universally to avoid unexpected width/overflow */
+*, *::before, *::after {
+	box-sizing: border-box;
+}
 @font-face {
 	font-family: "Atkinson";
 	src: url("/fonts/atkinson-regular.woff") format("woff");
@@ -385,6 +399,13 @@ hr {
 	}
 	main {
 		padding: 1em;
+	}
+
+	/* Ensure headings remain high-contrast and readable on small screens */
+	h1, h2, h3, h4, h5, h6 {
+		color: var(--fg) !important;
+		/* Reset any text-fill overrides used for gradient text */
+		-webkit-text-fill-color: unset !important;
 	}
 }
 

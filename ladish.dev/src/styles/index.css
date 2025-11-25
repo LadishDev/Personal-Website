@@ -1,5 +1,3 @@
-/* Modern Professional Index Page Styles - MOBILE FIRST */
-
 /* Home Container - Mobile First */
 .home-container {
   display: flex;
@@ -3610,9 +3608,3 @@
     border-color: rgba(255, 107, 107, 0.6);
   }
 }
-
-/* Legacy CTA responsive styles removed - now using mobile-first approach */
-
-/* Legacy responsive styles removed - Projects and Expertise sections now use mobile-first approach */
-
-
