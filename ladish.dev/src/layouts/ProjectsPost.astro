@@ -215,16 +215,9 @@ const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, heroI
 			}
 
 			.back-button {
-				width: 720px;
-				max-width: calc(100% - 2em);
+				width: 100%;
+				max-width: 720px;
 				margin: 1em auto;
-				padding: 0.75em 1.25em;
-				background: linear-gradient(135deg, rgba(232, 121, 249, 0.2), rgba(167, 139, 250, 0.2));
-				border: 2px solid rgba(167, 139, 250, 0.3);
-				border-radius: 12px;
-				text-align: left;
-				transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-				backdrop-filter: blur(10px);
 			}
 			
 			.back-button a {
@@ -234,9 +227,15 @@ const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, heroI
 				color: var(--fg);
 				text-decoration: none;
 				font-weight: 600;
+				padding: 0.6em 1em;
+				background: linear-gradient(135deg, rgba(232, 121, 249, 0.2), rgba(167, 139, 250, 0.2));
+				border: 2px solid rgba(167, 139, 250, 0.3);
+				border-radius: 12px;
+				transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+				backdrop-filter: blur(10px);
 			}
 			
-			.back-button:hover {
+			.back-button a:hover {
 				background: linear-gradient(135deg, rgba(232, 121, 249, 0.3), rgba(167, 139, 250, 0.3));
 				border-color: var(--accent-bright);
 				transform: translateX(-5px);
