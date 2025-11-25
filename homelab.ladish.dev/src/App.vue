@@ -210,13 +210,18 @@ provide('currentPage', currentPage)
 .homelab-main {
   flex: 1;
   padding: 0;
-  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .content-section {
   padding: 40px;
+  padding-top: 20px;
   width: 100%;
   font-family: 'Courier New', 'Consolas', monospace;
+  flex: 1;
 }
 
 .content-section h1 {
