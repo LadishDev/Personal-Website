@@ -90,6 +90,13 @@ body::after {
 }
 
 /* Custom scrollbar styling */
+/* Firefox */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--accent) var(--bg);
+}
+
+/* WebKit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
 	width: 12px;
 }
