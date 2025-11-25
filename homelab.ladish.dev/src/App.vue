@@ -185,6 +185,8 @@ provide('currentPage', currentPage)
   gap: 0;
   background: var(--color-background);
   align-items: stretch;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* Hide sidebar on screens smaller than 1024px */
@@ -214,14 +216,19 @@ provide('currentPage', currentPage)
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
 }
 
 .content-section {
   padding: 40px;
   padding-top: 20px;
   width: 100%;
+  max-width: 100%;
   font-family: 'Courier New', 'Consolas', monospace;
   flex: 1;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .content-section h1 {

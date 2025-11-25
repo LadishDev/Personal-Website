@@ -170,4 +170,36 @@ kbd {
   color: #ffaa00;
   box-shadow: 0 0 5px rgba(255, 153, 0, 0.3);
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-container {
+    max-width: 100%;
+    width: 100%;
+    margin: 20px 0 30px 0;
+  }
+  
+  .search-wrapper {
+    padding: 10px 12px;
+  }
+  
+  .search-prompt {
+    display: none;
+  }
+  
+  .search-input {
+    font-size: 0.9rem;
+  }
+  
+  .clear-btn {
+    padding: 3px 8px;
+    font-size: 0.8rem;
+    margin-left: 6px;
+  }
+  
+  .search-hint {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+}
 </style>

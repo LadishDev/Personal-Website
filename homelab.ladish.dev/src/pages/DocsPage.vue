@@ -163,6 +163,14 @@ const isSearching = computed(() => searchQuery.value.length > 0)
 <style scoped>
 .page-content {
   font-family: 'Courier New', 'Consolas', monospace;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.page-content * {
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .page-content h1 {
@@ -180,11 +188,12 @@ const isSearching = computed(() => searchQuery.value.length > 0)
   line-height: 1.8;
   color: var(--color-text);
   margin-bottom: 30px;
-  max-width: 800px;
+  max-width: min(800px, 100%);
   border-left: 3px solid #ff9900;
   padding: 15px 20px;
   background: rgba(255, 153, 0, 0.05);
   box-shadow: 0 0 10px rgba(255, 153, 0, 0.2);
+  box-sizing: border-box;
 }
 
 /* Filter Tabs */
@@ -194,6 +203,10 @@ const isSearching = computed(() => searchQuery.value.length > 0)
   margin: 30px 0;
   border-bottom: 2px solid rgba(255, 153, 0, 0.2);
   padding-bottom: 0;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .filter-tab {
@@ -305,9 +318,11 @@ const isSearching = computed(() => searchQuery.value.length > 0)
 
 .doc-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: 20px;
   margin-top: 20px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .doc-card {
@@ -486,5 +501,78 @@ const isSearching = computed(() => searchQuery.value.length > 0)
   align-items: center;
   gap: 10px;
   flex-wrap: nowrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-content {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .page-content h1 {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+  }
+  
+  .intro-text {
+    font-size: 1rem;
+    padding: 12px 15px;
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .filter-tabs {
+    flex-wrap: wrap;
+    gap: 6px;
+    overflow-x: visible;
+    width: 100%;
+    margin: 20px 0;
+  }
+  
+  .filter-tab {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex: 0 1 auto;
+  }
+  
+  .doc-grid {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+  
+  .doc-card {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .doc-header {
+    flex-wrap: wrap;
+  }
+  
+  .doc-meta {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .guide-list {
+    width: 100%;
+  }
+  
+  .guide-item {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .guide-header {
+    flex-wrap: wrap;
+  }
+  
+  .guide-meta {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
 }
 </style>
