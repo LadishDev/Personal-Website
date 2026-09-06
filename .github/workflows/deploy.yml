@@ -1,0 +1,126 @@
+name: Build and Deploy Monorepo
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      ladish: ${{ steps.filter.outputs.ladish }}
+      homelab: ${{ steps.filter.outputs.homelab }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            ladish:
+              - 'ladish.dev/**'
+            homelab:
+              - 'homelab.ladish.dev/**'
+
+  build-ladish:
+    needs: check-changes
+    if: needs.check-changes.outputs.ladish == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: |
+            ladish.dev/package-lock.json
+            homelab.ladish.dev/package-lock.json
+          
+      - name: Install and Build Ladish.dev
+        run: |
+          cd ladish.dev
+          npm ci
+          npm run build
+
+      - name: Create Clean Production Package
+        run: |
+          mkdir -p ./production-build/ladish.dev
+          cp -r ladish.dev/dist ./production-build/ladish.dev/dist
+          cp ladish.dev/package.json ./production-build/ladish.dev/package.json
+          cp ladish.dev/package-lock.json ./production-build/ladish.dev/package-lock.json
+          
+          cd ./production-build/ladish.dev
+          npm ci --omit=dev --ignore-scripts
+
+      - name: Deploy Only Production Files to VPS
+        uses: easingthemes/ssh-deploy@v5
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.VPS_HOST }}
+          REMOTE_USER: ${{ secrets.VPS_USER }}
+          SOURCE: "production-build/ladish.dev/"
+          TARGET: "/home/ubuntu/Projects/Personal-Website/ladish.dev/"
+          ARGS: "-rva --delete"
+
+      - name: Restart Ladish PM2 Process
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/Projects/Personal-Website/ladish.dev
+            pm2 restart "Ladish.dev Website"
+
+  build-homelab:
+    needs: check-changes
+    if: needs.check-changes.outputs.homelab == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: |
+            ladish.dev/package-lock.json
+            homelab.ladish.dev/package-lock.json
+          
+      - name: Install and Build Homelab Website
+        run: |
+          cd homelab.ladish.dev
+          npm ci
+          npm run build
+
+      - name: Create Clean Production Package
+        run: |
+          mkdir -p ./production-build/homelab.ladish.dev
+          cp -r homelab.ladish.dev/dist ./production-build/homelab.ladish.dev/dist
+          cp homelab.ladish.dev/server.js ./production-build/homelab.ladish.dev/server.js
+          cp -r homelab.ladish.dev/public ./production-build/homelab.ladish.dev/public 2>/dev/null || true
+          cp homelab.ladish.dev/package.json ./production-build/homelab.ladish.dev/package.json
+          cp homelab.ladish.dev/package-lock.json ./production-build/homelab.ladish.dev/package-lock.json
+          
+          cd ./production-build/homelab.ladish.dev
+          npm ci --omit=dev --ignore-scripts
+
+      - name: Deploy Only Production Files to VPS
+        uses: easingthemes/ssh-deploy@v5
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.VPS_HOST }}
+          REMOTE_USER: ${{ secrets.VPS_USER }}
+          SOURCE: "production-build/homelab.ladish.dev/"
+          TARGET: "/home/ubuntu/Projects/Personal-Website/homelab.ladish.dev/"
+          ARGS: "-rva --delete"
+
+      - name: Restart Homelab PM2 Process
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/Projects/Personal-Website/homelab.ladish.dev
+            pm2 restart "homelab.ladish.dev Website"
