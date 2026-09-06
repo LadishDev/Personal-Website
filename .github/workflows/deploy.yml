@@ -69,7 +69,10 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /home/ubuntu/Projects/Personal-Website/ladish.dev
+            cd /var/www/Personal-Website/ladish.dev
+            # Ensure www-data permissions stay intact after deployment
+            sudo chown -R ${USER}:www-data /var/www/Personal-Website
+            sudo chmod -R 775 /var/www/Personal-Website
             pm2 restart "Ladish.dev Website"
 
   build-homelab:
@@ -122,5 +125,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /home/ubuntu/Projects/Personal-Website/homelab.ladish.dev
+            cd /var/www/Personal-Website/homelab.ladish.dev
+            sudo chown -R ${USER}:www-data /var/www/Personal-Website
+            sudo chmod -R 775 /var/www/Personal-Website
             pm2 restart "homelab.ladish.dev Website"
