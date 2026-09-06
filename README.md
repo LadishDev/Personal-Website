@@ -1,24 +1,34 @@
-# Personal Website
+<h1 align="center">Personal Websites</h1>
 
-This is the source code for my personal website, built with Astro and modern web technologies. The site showcases my projects, blog posts, and portfolio, and is designed for speed, accessibility, and maintainability.
+Source code for the websites hosted under `ladish.dev`. The repository contains a personal portfolio, a homelab dashboard and notes site, and a small links page.
 
 ## 🚀 Features
 
 - Project portfolio with detailed write-ups and repo links
-- Blog and documentation sections (MDX-powered)
+- Project write-ups and resume pages
+- MDX-powered homelab documentation and lab notes
 - Responsive, mobile-first design
-- Fast static site generation with Astro
+- Static site generation with Astro and Vite
 - Custom components and layouts
-- SEO and social sharing optimized
-- Modern CSS (global styles, custom fonts)
+- SEO, RSS, and sitemap support on the portfolio site
+- Custom CSS, fonts, and lightweight JavaScript
 
 ## 🛠️ Tech Stack
+- ladish.dev
+	- [Astro](https://astro.build/) (static site generator)
+	- [MDX](https://mdxjs.com/) (Markdown + JSX for content)
+	- Astro Node, RSS, and sitemap integrations
 
-- [Astro](https://astro.build/) (static site generator)
-- [React](https://react.dev/) (for interactive components)
-- [Vite](https://vitejs.dev/) (build tool)
-- [Tailwind CSS](https://tailwindcss.com/) (utility-first CSS framework)
-- [MDX](https://mdxjs.com/) (Markdown + JSX for content)
+- homelab.ladish.dev
+	- [Vue](https://vuejs.org/)
+	- [Vite](https://vitejs.dev/)
+	- Express server for production serving
+
+- links.ladish.dev
+	- Static HTML, CSS, and JavaScript
+
+- under_construction.html
+	- Static HTML, CSS, and JavaScript
 
 ## 📂 Project Structure
 
@@ -26,31 +36,70 @@ This is the source code for my personal website, built with Astro and modern web
   - `src/` — Source code (components, pages, content, assets)
   - `public/` — Static assets (images, fonts, scripts)
   - `astro.config.mjs`, `tsconfig.json` — Config files
-- `links.ladish.dev/` — Static links page
+
+- `homelab.ladish.dev/` — Homelab Vue/Vite project
+	- `src/pages/` — Dashboard, documentation, and lab-note pages
+	- `src/content/` — MDX documentation and lab notes
+	- `src/components/` — Shared navigation and UI components
+	- `public/` — Static assets and generated badges
+	- `scripts/` — Build-time data collection scripts
+
+- `links.ladish.dev/` — Static links page, styles, and Matrix-style background script
+
+- `under_construction.html` — Standalone temporary landing page for pages that are still being developed
 
 ## 🧑‍💻 Getting Started
 
-1. **Clone the repo:**
+Each site is an independent project with its own dependencies.
+
+**Clone the repository:**
 	```sh
 	git clone https://github.com/LadishDev/personal-website.git
-	cd personal-website/ladish.dev
+	cd personal-website
 	```
-2. **Install dependencies:**
+
+### Portfolio
+
+Install dependencies and start the Astro development server:
+
 	```sh
+	cd ladish.dev
 	npm install
-	```
-3. **Run the dev server:**
-	```sh
 	npm run dev
 	```
-4. **Build for production:**
+
+Build the portfolio for production:
+
 	```sh
+	cd ladish.dev
 	npm run build
 	```
 
+### Homelab
+
+Install dependencies and start the Vite development server:
+
+	```sh
+	cd homelab.ladish.dev
+	npm install
+	npm run dev
+	```
+
+Build and preview the homelab site:
+
+	```sh
+	cd homelab.ladish.dev
+	npm run build
+	npm run preview
+	```
+
+The homelab production build refreshes commit data before generating the Vite output. To serve the built site with Express, use `npm run serve` instead of `npm run preview`.
+
+The `links.ladish.dev/` page and `under_construction.html` have no build step and can be opened directly in a browser.
+
 ## 🌐 Deployment
 
-The site can be deployed to any static hosting provider (e.g., Vercel, Netlify, GitHub Pages). See the Astro docs for deployment guides.
+`ladish.dev`, `links.ladish.dev`, and `under_construction.html` can be deployed to any static hosting provider. `homelab.ladish.dev` can be served with its Express server after building or deployed as the generated Vite output where appropriate.
 
 ## 🤝 Contributing
 
